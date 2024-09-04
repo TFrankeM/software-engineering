@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Requisitos - Plataforma de Vendas Online</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Relatório de Requisitos - Plataforma de Vendas Online</h1>
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Página Inicial</a></li>
+            <li><a href="elicitacao.html">Elicitação de Requisitos</a></li>
+            <li><a href="especificacao.html">Especificação de Requisitos</a></li>
+            <li><a href="historias.html">Histórias de Usuários</a></li>
+            <li><a href="casosdeuso.html">Casos de Uso</a></li>
+            <li><a href="pdf.html">Relatório completo</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="section-title">
+            <h2>Casos de Uso</h2>
+        </div>
+
+        <div class="case-study">
+            <h3>Personalização de Recomendações de Produtos</h3>
+            <p><strong>Ator Principal:</strong> Usuário regular do aplicativo do tipo consumidor</p>
+            <p><strong>Objetivo:</strong> Receber recomendações personalizadas de produtos.</p>
+            <p><strong>Pré-condições:</strong> O consumidor deve estar logado no aplicativo e ter um perfil com informações sobre preferências e características pessoais.</p>
+            <p><strong>Fluxo Principal:</strong></p>
+            <ol>
+                <li>O consumidor acessa o aplicativo e navega para a seção “Recomendações”.</li>
+                <li>O aplicativo analisa as informações do perfil do consumidor e histórico de compras.</li>
+                <li>O sistema gera uma lista de produtos recomendados que atendem às preferências e necessidades do consumidor.</li>
+                <li>O consumidor visualiza as recomendações e pode selecionar produtos para compra.</li>
+            </ol>
+            <p><strong>Pós-condições:</strong> O consumidor tem a opção de comprar produtos diretamente das recomendações.</p>
+            <p><strong>Fluxo Alternativo:</strong> Caso não haja dados suficientes para recomendações personalizadas, o sistema exibe os itens mais vendidos ou promoções atuais.</p>
+        </div>
+
+        <div class="case-study">
+            <h3>Geração de Relatórios de Vendas</h3>
+            <p><strong>Ator Principal:</strong> Usuário do tipo vendedor</p>
+            <p><strong>Objetivo:</strong> Gerar relatórios detalhados sobre as vendas, avaliações e estoque.</p>
+            <p><strong>Pré-condições:</strong> O vendedor deve estar autenticado com permissões adequadas.</p>
+            <p><strong>Fluxo Principal:</strong></p>
+            <ol>
+                <li>O vendedor acessa o painel de controle do sistema.</li>
+                <li>O vendedor seleciona a opção “Gerar Relatórios”.</li>
+                <li>O vendedor configura os parâmetros do relatório, como intervalo de datas e categorias de produtos.</li>
+                <li>O sistema processa os dados e gera o relatório conforme especificado.</li>
+                <li>O relatório é exibido na tela e está disponível para download em formatos CSV ou Excel.</li>
+            </ol>
+            <p><strong>Pós-condições:</strong> O vendedor tem acesso a informações detalhadas para auxiliar na tomada de decisões operacionais.</p>
+            <p><strong>Fluxo Alternativo:</strong> Se não houver dados suficientes para gerar o relatório, o sistema notifica o vendedor sobre a falta de dados.</p>
+        </div>
+
+        <div class="case-study">
+            <h3>Recebimento de Notificações de Promoções</h3>
+            <p><strong>Ator Principal:</strong> Usuário regular do aplicativo do tipo consumidor</p>
+            <p><strong>Objetivo:</strong> Receber notificações automáticas de promoções relevantes.</p>
+            <p><strong>Pré-condições:</strong> O consumidor deve ter optado por receber notificações e deve estar logado no aplicativo.</p>
+            <p><strong>Fluxo Principal:</strong></p>
+            <ol>
+                <li>O sistema identifica novas promoções baseadas nas preferências do consumidor e nas máquinas de venda que ele frequenta.</li>
+                <li>O sistema envia uma notificação para o dispositivo do consumidor informando sobre a promoção.</li>
+                <li>O consumidor recebe a notificação e pode abrir o aplicativo para ver detalhes da promoção.</li>
+                <li>O consumidor pode escolher aproveitar a promoção diretamente através do aplicativo.</li>
+            </ol>
+            <p><strong>Pós-condições:</strong> O consumidor está informado sobre promoções e tem a opção de aproveitar ofertas especiais.</p>
+            <p><strong>Fluxo Alternativo:</strong> Caso o consumidor tenha desativado as notificações, ele não receberá os alertas de promoção, mas ainda poderá acessar promoções atuais através do aplicativo.</p>
+        </div>
+
+    </div>
+
+</body>
+</html>
