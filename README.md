@@ -21,6 +21,6 @@
   include in the   future code snippets of the application addressed during requirements elicitation, 
   which will provide valuable contributions to the study of software engineering.
 
-  In addition, we incorporated a <a href = "outro pdf">reflexive analysis<a/> on the production chain dynamics, carried out on 
+  In addition, we incorporated a <a href = "Reflexão_aviões_de_papel.pdf">reflexive analysis<a/> on the production chain dynamics, carried out on 
   09/03/2024, to enrich our understanding of the process.
 </p>
