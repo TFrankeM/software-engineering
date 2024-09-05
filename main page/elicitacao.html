@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elicitação de Requisitos - Plataforma de Máquinas de Vendas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <div class="top-bar">
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Página Inicial</a></li>
+            <li><a href="elicitacao.html">Elicitação de Requisitos</a></li>
+            <li><a href="especificacao.html">Especificação de Requisitos</a></li>
+            <li><a href="historias.html">Histórias de Usuários</a></li>
+            <li><a href="casosdeuso.html">Casos de Uso</a></li>
+            <li><a href="pdf.html">Relatório completo</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="section-title">
+            <h2>Elicitação de Requisitos</h2>
+        </div>
+
+        <h3 class="subsection-title">Requisitos de Usuário</h3>
+        <h4>Requisitos Funcionais</h4>
+        <hr>
+        <ul>
+            <li>O perfil do usuário consumidor deve conter foto, informações pessoais e histórico de compras, podendo ser aberto ou anônimo.</li>
+            <li>O aplicativo deve permitir vendas, promoções e recomendações personalizadas de produtos com base no perfil/histórico de compras do usuário.</li>
+            <li>Deve ser possível gerar relatórios de vendas, avaliações de produtos e estoque, que possam ser personalizados e exportados em formatos como CSV e Excel.</li>
+            <li>As máquinas devem estar conectadas ao aplicativo.</li>
+            <li>Caso o aplicativo apresente alguma falha, as máquinas não devem ser impactadas por ela.</li>
+            <li>Um sistema para notificar consumidores e vendedores sobre quando a máquina ficar indisponível.</li>
+            <li>O aplicativo deve permitir que usuários sigam perfis específicos de máquinas de venda para receber notificações sobre promoções e novidades.</li>
+            <li>Implementação de um programa de recompensas para fidelizar usuários que frequentemente compram através do aplicativo.</li>
+        </ul>
+        
+        <h4>Requisitos Não-Funcionais</h4>
+        <hr>
+        <ul>
+            <li>A interface do aplicativo deve ser simples e rápida, minimizando o tempo e as etapas necessárias para realizar uma compra.</li>
+            <li>O aplicativo deve estar acessível em diferentes locais da instituição, incluindo áreas com acesso externo liberado.</li>
+            <li>O sistema deve estar disponível a todos em horário acadêmico da instituição.</li>
+            <li>O funcionamento das máquinas não deve ser dependente do funcionamento do aplicativo.</li>
+        </ul>
+
+        <h3 class="subsection-title">Requisitos de Sistema</h3>
+        <h4>Requisitos Funcionais</h4>
+        <hr>
+        <ul>
+            <li>O usuário terá a opção de adicionar, alterar e deletar sua foto de perfil, bem como suas informações pessoais em uma aba da aplicação.</li>
+            <li>Cada usuário deve poder visualizar em uma aba do aplicativo seu histórico de compras.</li>
+            <li>As máquinas de venda devem operar independentemente do aplicativo, garantindo que as vendas possam ser realizadas mesmo quando o aplicativo estiver offline.</li>
+            <li>O sistema deve fornecer funcionalidades para agendar manutenções e alertar administradores e usuários sobre máquinas fora de operação.</li>
+            <li>Em caso de falha de uma máquina, um alerta deve ser emitido imediatamente.</li>
+            <li>O sistema deve monitorar o estoque das máquinas em tempo real e alertar sobre condições que possam afetar a qualidade dos produtos.</li>
+        </ul>
+
+        <h4>Requisitos Não-Funcionais</h4>
+        <hr>
+        <ul>
+            <li>Confiabilidade: O sistema deve garantir alta disponibilidade e funcionamento contínuo das máquinas de venda.</li>
+            <li>Segurança: Proteções adequadas devem ser implementadas para garantir a segurança das transações e dos dados dos usuários.</li>
+            <li>Escalabilidade: O sistema deve ser capaz de escalar conforme o aumento do número de usuários e máquinas sem degradação do desempenho.</li>
+            <li>O sistema deve estar disponível para todos durante o horário de funcionamento dos cursos da instituição.</li>
+            <li>Em caso de falhas não relacionadas à máquina, as vendas devem continuar normalmente, mas os dados não serão armazenados.</li>
+        </ul>
+    </div>
+
+</body>
+</html>
