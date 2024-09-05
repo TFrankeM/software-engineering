@@ -16,11 +16,11 @@
 <h3> Content: </h3>
 
 <p>
-  This repository hosts the detailed <a href = "https://tfrankem.github.io/software-engineering/main.html">report<a/> on our stakeholder interview activities, carried out 
+  This repository hosts the detailed <a href = "https://tfrankem.github.io/software-engineering/main%20page/index.html">report<a/> on our stakeholder interview activities, carried out 
   within the scope of the study and application of requirements engineering techniques. We plan to 
   include in the   future code snippets of the application addressed during requirements elicitation, 
   which will provide valuable contributions to the study of software engineering.
 
   In addition, we incorporated a <a href = "Reflexão_aviões_de_papel.pdf">reflexive analysis<a/> on the production chain dynamics, carried out on 
-  09/03/2024, to enrich our understanding of the process.
+  September 3, 2024, to enrich our understanding of the process.
 </p>
