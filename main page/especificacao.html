@@ -4,15 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatório de Requisitos - Plataforma de Vendas Online</title>
+    <title>Especificação de Requisitos - Plataforma de Máquinas de Vendas</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
 
-    <div class="container">
-        <h1>Relatório de Requisitos - Plataforma de Vendas Online</h1>
+    <div class="top-bar">
     </div>
 
     <nav>
@@ -28,69 +27,99 @@
 
     <div class="container">
         <div class="section-title">
-            <h1>Especificação de Requisitos</h1>
+            <h2>Especificação de Requisitos</h2>
         </div>
 
-        <h2>Requisitos de Usuário</h2>
+        <h3>Requisitos de Usuário</h3>
 
-        <h3>Requisitos Funcionais</h3>
-        <h4>RF-001: Perfil do Usuário Consumidor</h4>
-        <p><strong>Input Necessário:</strong></p>
-        <ul>
-            <li>Foto do Usuário: Imagem em formato JPG ou PNG.</li>
-            <li>Informações Pessoais: Nome, e-mail, endereço, etc., em formato de texto.</li>
-            <li>Histórico de Compras: Data, produtos comprados, quantidades, em formato de dados estruturados.</li>
-        </ul>
-        <p><strong>Descrição:</strong> O sistema deve permitir que o usuário adicione, altere ou remova sua foto de perfil, suas informações pessoais, e visualize seu histórico de compras. O usuário pode optar por ter um perfil aberto ou anônimo.</p>
-        <p><strong>Critérios de Aceitação:</strong> O usuário deve conseguir visualizar e gerenciar essas informações, com a opção de tornar seu perfil público ou anônimo.</p>
+        <h4>Requisitos Funcionais</h4>
 
-        <h4>RF-002: Personalização de Vendas, Promoções e Recomendações</h4>
-        <p><strong>Input Necessário:</strong></p>
         <ul>
-            <li>Dados do Perfil do Usuário: Informações pessoais e preferências em formato de texto e dados estruturados.</li>
-            <li>Histórico de Compras: Produtos adquiridos, características físicas do usuário, em formato de dados estruturados.</li>
-        </ul>
-        <p><strong>Descrição:</strong> Com base nas informações do perfil e no histórico de compras, o sistema deve fornecer recomendações personalizadas e promoções específicas para o usuário.</p>
-        <p><strong>Critérios de Aceitação:</strong> As recomendações devem ser precisas e relevantes para pelo menos 90% dos usuários com perfis semelhantes.</p>
+            <hr>
 
-        <h4>RF-003: Geração de Relatórios de Vendas, Avaliações e Estoque</h4>
-        <p><strong>Input Necessário:</strong></p>
-        <ul>
-            <li>Dados de Vendas: Informações sobre produtos vendidos, datas de venda, quantidades, em formato de dados estruturados.</li>
-            <li>Avaliações de Produtos: Feedback dos usuários sobre os produtos, em formato de texto.</li>
-            <li>Status de Estoque: Quantidade de produtos em estoque, em formato de dados estruturados.</li>
-        </ul>
-        <p><strong>Descrição:</strong> O sistema deve permitir a geração e exportação de relatórios personalizados em formatos como CSV e Excel, abrangendo dados de vendas, avaliações de produtos e status de estoque.</p>
-        <p><strong>Critérios de Aceitação:</strong> Relatórios devem ser gerados com dados precisos e ser exportáveis nos formatos especificados.</p>
+            <li>
+            <h4>RF-001: Perfil do Usuário Consumidor</h4>
+            <p><strong>Input Necessário:</strong></p>
+            <ul>
+                <li>Foto do Usuário: Imagem em formato JPG ou PNG.</li>
+                <li>Informações Pessoais: Nome, e-mail, endereço, etc., em formato de texto.</li>
+                <li>Histórico de Compras: Data, produtos comprados, quantidades, em formato de dados estruturados.</li>
+            </ul>
+            <p><strong>Descrição:</strong> O sistema deve permitir que o usuário adicione, altere ou remova sua foto de perfil, suas informações pessoais, e visualize seu histórico de compras. O usuário pode optar por ter um perfil aberto ou anônimo.</p>
+            <p><strong>Critérios de Aceitação:</strong> O usuário deve conseguir visualizar e gerenciar essas informações, com a opção de tornar seu perfil público ou anônimo.</p>
+            </li>
+            <hr>
 
-        <h4>RF-004: Notificações de Indisponibilidade de Máquinas</h4>
-        <p><strong>Input Necessário:</strong></p>
-        <ul>
-            <li>Status da Máquina: Informações sobre a disponibilidade ou indisponibilidade das máquinas, em formato de dados estruturados.</li>
-            <li>Dados de Contato: Informações de contato dos consumidores e vendedores, em formato de texto.</li>
-        </ul>
-        <p><strong>Descrição:</strong> O sistema deve notificar consumidores e vendedores quando uma máquina estiver indisponível, indicando a hora da indisponibilidade e o andar onde a máquina está localizada.</p>
-        <p><strong>Critérios de Aceitação:</strong> Notificações devem ser enviadas em tempo real para todos os usuários afetados.</p>
+            <li>
+            <h4>RF-002: Personalização de Vendas, Promoções e Recomendações</h4>
+            <p><strong>Input Necessário:</strong></p>
+            <ul>
+                <li>Dados do Perfil do Usuário: Informações pessoais e preferências em formato de texto e dados estruturados.</li>
+                <li>Histórico de Compras: Produtos adquiridos, características físicas do usuário, em formato de dados estruturados.</li>
+            </ul>
+            <p><strong>Descrição:</strong> Com base nas informações do perfil e no histórico de compras, o sistema deve fornecer recomendações personalizadas e promoções específicas para o usuário.</p>
+            <p><strong>Critérios de Aceitação:</strong> As recomendações devem ser precisas e relevantes para pelo menos 90% dos usuários com perfis semelhantes.</p>
+            </li>
 
-        <h4>RF-005: Seguir Perfis Específicos de Máquinas</h4>
-        <p><strong>Input Necessário:</strong></p>
-        <ul>
-            <li>Lista de Máquinas Disponíveis: Informações sobre cada máquina disponível para ser seguida, em formato de dados estruturados.</li>
-            <li>Preferências do Usuário: Dados sobre quais máquinas o usuário deseja seguir, em formato de texto ou dados estruturados.</li>
-        </ul>
-        <p><strong>Descrição:</strong> O aplicativo deve permitir que os usuários sigam perfis de máquinas de venda específicas para receber notificações sobre promoções e novidades.</p>
-        <p><strong>Critérios de Aceitação:</strong> O usuário deve conseguir receber notificações apenas das máquinas que escolheu seguir.</p>
+            <hr>
 
-        <h4>RF-006: Programa de Recompensas</h4>
-        <p><strong>Input Necessário:</strong></p>
-        <ul>
-            <li>Histórico de Compras: Informações sobre a frequência e o valor das compras realizadas pelo usuário, em formato de dados estruturados.</li>
-            <li>Regras de Recompensa: Critérios definidos para recompensas, como pontos acumulados por compra, em formato de dados estruturados.</li>
+            <li>
+            <h4>RF-003: Geração de Relatórios de Vendas, Avaliações e Estoque</h4>
+            <p><strong>Input Necessário:</strong></p>
+            <ul>
+                <li>Dados de Vendas: Informações sobre produtos vendidos, datas de venda, quantidades, em formato de dados estruturados.</li>
+                <li>Avaliações de Produtos: Feedback dos usuários sobre os produtos, em formato de texto.</li>
+                <li>Status de Estoque: Quantidade de produtos em estoque, em formato de dados estruturados.</li>
+            </ul>
+            <p><strong>Descrição:</strong> O sistema deve permitir a geração e exportação de relatórios personalizados em formatos como CSV e Excel, abrangendo dados de vendas, avaliações de produtos e status de estoque.</p>
+            <p><strong>Critérios de Aceitação:</strong> Relatórios devem ser gerados com dados precisos e ser exportáveis nos formatos especificados.</p>
+            </li>
+
+            <hr>
+
+            <li>
+            <h4>RF-004: Notificações de Indisponibilidade de Máquinas</h4>
+            <p><strong>Input Necessário:</strong></p>
+            <ul>
+                <li>Status da Máquina: Informações sobre a disponibilidade ou indisponibilidade das máquinas, em formato de dados estruturados.</li>
+                <li>Dados de Contato: Informações de contato dos consumidores e vendedores, em formato de texto.</li>
+            </ul>
+            <p><strong>Descrição:</strong> O sistema deve notificar consumidores e vendedores quando uma máquina estiver indisponível, indicando a hora da indisponibilidade e o andar onde a máquina está localizada.</p>
+            <p><strong>Critérios de Aceitação:</strong> Notificações devem ser enviadas em tempo real para todos os usuários afetados.</p>
+            </li>
+
+            <hr>
+
+            <li>
+            <h4>RF-005: Seguir Perfis Específicos de Máquinas</h4>
+            <p><strong>Input Necessário:</strong></p>
+            <ul>
+                <li>Lista de Máquinas Disponíveis: Informações sobre cada máquina disponível para ser seguida, em formato de dados estruturados.</li>
+                <li>Preferências do Usuário: Dados sobre quais máquinas o usuário deseja seguir, em formato de texto ou dados estruturados.</li>
+            </ul>
+            <p><strong>Descrição:</strong> O aplicativo deve permitir que os usuários sigam perfis de máquinas de venda específicas para receber notificações sobre promoções e novidades.</p>
+            <p><strong>Critérios de Aceitação:</strong> O usuário deve conseguir receber notificações apenas das máquinas que escolheu seguir.</p>
+            </li>
+
+            <hr>
+
+            <li>
+            <h4>RF-006: Programa de Recompensas</h4>
+            <p><strong>Input Necessário:</strong></p>
+            <ul>
+                <li>Histórico de Compras: Informações sobre a frequência e o valor das compras realizadas pelo usuário, em formato de dados estruturados.</li>
+                <li>Regras de Recompensa: Critérios definidos para recompensas, como pontos acumulados por compra, em formato de dados estruturados.</li>
+            </ul>
+            <p><strong>Descrição:</strong> O sistema deve implementar um programa de recompensas que incentive a fidelidade dos usuários que compram regularmente através do aplicativo.</p>
+            <p><strong>Critérios de Aceitação:</strong> Recompensas devem ser atribuídas corretamente com base nos critérios estabelecidos e ser visíveis no perfil do usuário.</p>
+            </li>
         </ul>
-        <p><strong>Descrição:</strong> O sistema deve implementar um programa de recompensas que incentive a fidelidade dos usuários que compram regularmente através do aplicativo.</p>
-        <p><strong>Critérios de Aceitação:</strong> Recompensas devem ser atribuídas corretamente com base nos critérios estabelecidos e ser visíveis no perfil do usuário.</p>
 
         <h3>Requisitos Não-Funcionais</h3>
+        
+        <ul>
+        <hr>
+        <li>
         <h4>RNF-001: Simplicidade e Rapidez da Interface</h4>
         <p><strong>Input Necessário:</strong></p>
         <ul>
@@ -98,7 +127,11 @@
         </ul>
         <p><strong>Descrição:</strong> A interface do aplicativo deve ser simples e rápida, minimizando o tempo e as etapas necessárias para realizar uma compra.</p>
         <p><strong>Critérios de Aceitação:</strong> O usuário deve conseguir completar uma compra com o mínimo de etapas e em um tempo rápido, idealmente em menos de 3 cliques.</p>
+        </li>
 
+        <hr>
+
+        <li>
         <h4>RNF-002: Acessibilidade em Diferentes Locais</h4>
         <p><strong>Input Necessário:</strong></p>
         <ul>
@@ -106,7 +139,11 @@
         </ul>
         <p><strong>Descrição:</strong> O aplicativo deve estar acessível em diferentes locais da instituição, incluindo áreas com acesso externo liberado.</p>
         <p><strong>Critérios de Aceitação:</strong> O aplicativo deve funcionar corretamente em todas as áreas cobertas pela rede da instituição.</p>
+        </li>
 
+        <hr>
+        
+        <li>
         <h4>RNF-003: Disponibilidade do Sistema</h4>
         <p><strong>Input Necessário:</strong></p>
         <ul>
@@ -114,29 +151,127 @@
         </ul>
         <p><strong>Descrição:</strong> O sistema deve estar disponível a todos durante o horário acadêmico da instituição.</p>
         <p><strong>Critérios de Aceitação:</strong> O sistema deve estar online e operacional durante todo o horário de funcionamento definido pela instituição.</p>
-
-        <h2>Requisitos de Sistema</h2>
-
-        <h3>Requisitos Funcionais</h3>
-        <h4>RF-007: Gerenciamento de Perfil do Usuário</h4>
-        <p><strong>Input Necessário:</strong></p>
-        <ul>
-            <li>Foto do Usuário: Imagem em formato JPG ou PNG.</li>
-            <li>Informações Pessoais: Nome, e-mail, endereço, etc., em formato de texto.</li>
+        </li>
         </ul>
-        <p><strong>Descrição:</strong> O usuário terá a opção de adicionar, alterar e deletar sua foto de perfil, bem como suas informações pessoais em uma aba da aplicação.</p>
-        <p><strong>Critérios de Aceitação:</strong> O usuário deve conseguir gerenciar suas informações pessoais e foto de perfil de forma intuitiva e rápida.</p>
 
-        <h3>Requisitos Não-Funcionais</h3>
-        <h4>RNF-004: Segurança de Dados</h4>
-        <p><strong>Input Necessário:</strong></p>
-        <ul>
-            <li>Dados Pessoais do Usuário: Nome, e-mail, endereço, etc., em formato de texto.</li>
-            <li>Dados de Transações: Informações de compras e pagamentos, em formato de dados estruturados.</li>
-        </ul>
-        <p><strong>Descrição:</strong> O sistema deve garantir a segurança dos dados pessoais e de transações do usuário, seguindo padrões de segurança como criptografia e autenticação multifator.</p>
-        <p><strong>Critérios de Aceitação:</strong> Dados devem estar protegidos contra acessos não autorizados e seguir as melhores práticas de segurança da informação.</p>
-    </div>
+        <h3>Requisitos do sistema</h3>
+
+        <h4>Requisitos Funcionais</h4>
+    <ul>
+        <hr>
+        <li>
+            <h4>RF-007: Gerenciamento de Perfil do Usuário</h4>
+            <p><strong>Input Necessário:</strong></p>
+            <ul>
+                <li>Foto do Usuário: Imagem em formato JPG ou PNG.</li>
+                <li>Informações Pessoais: Nome, e-mail, endereço, etc., em formato de texto.</li>
+            </ul>
+            <p><strong>Descrição:</strong> O usuário terá a opção de adicionar, alterar e deletar sua foto de perfil, bem como suas informações pessoais em uma aba da aplicação.</p>
+            <p><strong>Critérios de Aceitação:</strong> O usuário deve conseguir gerenciar suas informações pessoais e foto de perfil sem dificuldades.</p>
+        </li>
+
+        <hr>
+
+        <li>
+            <h4>RF-008: Visualização do Histórico de Compras</h4>
+            <p><strong>Input Necessário:</strong></p>
+            <ul>
+                <li>Histórico de Compras: Data, produtos comprados, quantidades, em formato de dados estruturados.</li>
+            </ul>
+            <p><strong>Descrição:</strong> Cada usuário possuirá e deve poder visualizar em uma aba do aplicativo seu histórico de compras contendo a data da compra, os produtos comprados e suas respectivas quantidades.</p>
+            <p><strong>Critérios de Aceitação:</strong> O usuário deve ter acesso fácil e rápido ao seu histórico de compras.</p>
+        </li>
+
+        <hr>
+
+        <li>
+            <h4>RF-009: Integração Independente com Máquinas de Venda</h4>
+            <p><strong>Input Necessário:</strong></p>
+            <ul>
+                <li>Dados de Operação das Máquinas: Status de funcionamento das máquinas, em formato de dados estruturados.</li>
+            </ul>
+            <p><strong>Descrição:</strong> As máquinas de venda devem operar independentemente do aplicativo, garantindo que as vendas possam ser realizadas mesmo quando o aplicativo estiver offline.</p>
+            <p><strong>Critérios de Aceitação:</strong> As vendas devem continuar operacionais mesmo com falhas na conexão do aplicativo.</p>
+        </li>
+
+        <hr>
+
+        <li>
+            <h4>RF-010: Monitoramento e Alertas de Manutenção</h4>
+            <p><strong>Input Necessário:</strong></p>
+            <ul>
+                <li>Agenda de Manutenção: Datas e horários de manutenções programadas, em formato de dados estruturados.</li>
+                <li>Status das Máquinas: Informações sobre o funcionamento das máquinas, em formato de dados estruturados.</li>
+            </ul>
+            <p><strong>Descrição:</strong> O sistema deve fornecer funcionalidades para agendar manutenções e alertar administradores e usuários quando máquinas estiverem fora de operação ou precisarem de manutenção.</p>
+            <p><strong>Critérios de Aceitação:</strong> Alertas e agendamentos de manutenção devem ser precisos e enviados em tempo real.</p>
+        </li>
+
+        <hr>
+
+        <li>
+            <h4>RF-011: Gerenciamento de Estoque em Tempo Real</h4>
+            <p><strong>Input Necessário:</strong></p>
+            <ul>
+                <li>Dados de Estoque: Quantidade e status dos produtos em estoque, em formato de dados estruturados.</li>
+                <li>Condições Ambientais: Dados como temperatura e umidade que possam afetar a qualidade dos produtos, em formato de dados estruturados.</li>
+            </ul>
+            <p><strong>Descrição:</strong> O sistema deve ser capaz de monitorar o estoque das máquinas em tempo real e alertar sobre condições que possam afetar a qualidade dos produtos.</p>
+            <p><strong>Critérios de Aceitação:</strong> O estoque deve ser monitorado continuamente, com alertas precisos sobre quaisquer condições adversas.</p>
+        </li>
+    </ul>
+
+    <h3>Requisitos Não-Funcionais</h3>
+    <ul>
+        <hr>
+
+        <li>
+            <h4>RNF-004: Confiabilidade do Sistema</h4>
+            <p><strong>Input Necessário:</strong></p>
+            <ul>
+                <li>Dados de Operação do Sistema: Logs de atividade, status de operação de software e hardware, em formato de dados estruturados.</li>
+            </ul>
+            <p><strong>Descrição:</strong> O sistema deve garantir alta disponibilidade e funcionamento contínuo das máquinas de venda, com mecanismos robustos para lidar com falhas de software ou hardware.</p>
+            <p><strong>Critérios de Aceitação:</strong> O sistema deve ter uma disponibilidade de pelo menos 99% durante o horário de funcionamento.</p>
+        </li>
+
+        <hr>
+
+        <li>
+            <h4>RNF-005: Segurança</h4>
+            <p><strong>Input Necessário:</strong></p>
+            <ul>
+                <li>Dados do Usuário: Informações pessoais, dados de pagamento, histórico de compras, em formato de dados estruturados.</li>
+                <li>Transações: Detalhes das transações realizadas pelo usuário, em formato de dados estruturados.</li>
+            </ul>
+            <p><strong>Descrição:</strong> Proteções adequadas devem ser implementadas para garantir a segurança das transações e dos dados dos usuários.</p>
+            <p><strong>Critérios de Aceitação:</strong> Nenhum dado sensível deve ser comprometido durante as operações do sistema.</p>
+        </li>
+
+        <hr>
+
+        <li>
+            <h4>RNF-006: Escalabilidade</h4>
+            <p><strong>Input Necessário:</strong></p>
+            <ul>
+                <li>Dados de Usuários e Máquinas: Número de usuários ativos, número de máquinas operacionais, em formato de dados estruturados.</li>
+            </ul>
+            <p><strong>Descrição:</strong> O sistema deve ser capaz de escalar conforme o aumento do número de usuários e máquinas sem degradação do desempenho.</p>
+            <p><strong>Critérios de Aceitação:</strong> O sistema deve manter um desempenho estável mesmo com um aumento de 100% no número de usuários e máquinas.</p>
+        </li>
+
+        <hr>
+
+        <li>
+            <h4>RNF-007: Disponibilidade em Horário Acadêmico</h4>
+            <p><strong>Input Necessário:</strong></p>
+            <ul>
+                <li>Horário de Funcionamento da Instituição: Informações sobre os horários de funcionamento dos cursos de graduação, mestrado e doutorado, em formato de dados estruturados.</li>
+            </ul>
+            <p><strong>Descrição:</strong> O sistema deve estar disponível para todos os presentes em horário de funcionamento dos cursos de graduação, mestrado e doutorado.</p>
+            <p><strong>Critérios de Aceitação:</strong> O sistema deve estar online e acessível durante todo o horário de funcionamento acadêmico.</p>
+        </li>
+    </ul>
 
 </body>
 </html>
