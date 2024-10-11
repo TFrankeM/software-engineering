@@ -12,7 +12,6 @@ import sys, os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../src")))
 from product import Product
 
-print("boi: ", os.path.join(os.path.dirname(__file__), "../src"))
 class TestProduct(unittest.TestCase):
 
     def test_initial_attributes(self):
@@ -25,7 +24,7 @@ class TestProduct(unittest.TestCase):
     def test_initial_attibutes(self):
         product = Product("Chocolate", "p0001", 5.00, 10)
         product.update_quantity(0)
-        self.assertEqual(product.quantity, 15)
+        self.assertEqual(product.quantity, 0)
     
 if __name__ == "__main__":
     unittest.main()
