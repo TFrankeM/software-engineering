@@ -42,3 +42,18 @@ class Review:
         else:
             return False
 
+
+    def save_to_db(self, connection):
+        """
+        Save the review to the SQLite database.
+
+        Parameters:
+        -----------
+        connection (sqlite3.Connection): Connection to the SQLite database.
+        """
+        with connection:
+            connection.execute("""
+                INSERT INTO reviews (id, date, comment, rating, user_id, recipient_id)
+                VALUES (?, ?, ?, ?, ?, ?)
+            """, (str(self.id), self.date, self.comment, self.rating, self.user_id, self.recipient_id))
+

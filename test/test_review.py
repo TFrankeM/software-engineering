@@ -16,14 +16,41 @@ from review import Review
 
 class TestReview(unittest.TestCase):
     
+    def setUp(self):
+        """
+        Método de configuração inicial. Este método é executado antes de cada teste.
+        Cria uma conexão com o banco de dados SQLite em memória e a tabela 'reviews'.
+        """
+        # Conectar a um banco de dados temporário em memória
+        self.connection = sqlite3.connect(':memory:')
+        
+        # Criar a tabela 'reviews' no banco de dados em memória
+        self.connection.execute("""
+            CREATE TABLE reviews (
+                id TEXT PRIMARY KEY,
+                date TEXT,
+                comment TEXT,
+                rating INTEGER,
+                user_id INTEGER,
+                recipient_id INTEGER
+            )
+        """)
+
+        # Exemplo de avaliação para uso nos testes
+        self.review = Review(user_id=101, recipient_id=202, rating=4, comment="Good product!")
+    
+    def tearDown(self):
+        """
+        Método de finalização. Este método é executado após cada teste.
+        Fecha a conexão com o banco de dados.
+        """
+        self.connection.close()
+    
     def test_review_creation(self):
         """
         Testa se a criação de uma instância da classe Review ocorre corretamente.
         Verifica se os atributos são corretamente atribuídos.
         """
-        # Exemplo de avaliação para uso nos testes
-        self.review = Review(user_id=101, recipient_id=202, rating=4, comment="Good product!")
-
         self.assertIsNotNone(self.review.id)  # O id deve ser criado automaticamente com uuid
         self.assertEqual(self.review.user_id, 101)
         self.assertEqual(self.review.recipient_id, 202)
@@ -43,13 +70,26 @@ class TestReview(unittest.TestCase):
         self.assertFalse(invalid_review.validate_rating())  # Nota inválida
     
 
+    def test_save_to_db(self):
+        """
+        Testa se uma avaliação pode ser salva corretamente no banco de dados SQLite.
+        """
+        self.review.save_to_db(self.connection)
+        
+        # Recupera a avaliação do banco de dados
+        cursor = self.connection.execute("SELECT * FROM reviews WHERE id = ?", (str(self.review.id),))
+        result = cursor.fetchone()
+        
+        self.assertIsNotNone(result)  # Deve existir um resultado
+        self.assertEqual(result[3], 4)  # O campo 'rating' deve ser 4
+        self.assertEqual(result[4], 101)  # O campo 'user_id' deve ser 101
+        self.assertEqual(result[5], 202)  # O campo 'recipient_id' deve ser 202
+    
+
     def test_str_method(self):
         """
         Testa se o método __str__ retorna a string correta.
         """
-        # Exemplo de avaliação para uso nos testes
-        self.review = Review(user_id=101, recipient_id=202, rating=4, comment="Good product!")
-        
         expected_str = "Review by User 101 for 202: 4/5 - Good product!"
         self.assertEqual(str(self.review), expected_str)
 
