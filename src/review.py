@@ -45,14 +45,17 @@ class Review:
             rating (int): Rating provided by the user (0 to 5).
 
         Raises:
-            ValueError: If the rating is not between 0 and 5.
+            ValueError: If the rating is not between 0 and 5 or is not provided..
         """
+        if rating is None or not isinstance(rating, int):
+            raise ValueError("Rating must be an integer between 0 and 5.")
+    
         if 0 <= rating <= 5:
             return rating
         else:
             raise ValueError("Rating must be between 0 and 5.")
         
-        
+
     def validate_comment(self, comment):
         """
         Validate the comment, ensuring it doesn't exceed the maximum allowed length.

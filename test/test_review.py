@@ -16,6 +16,8 @@ from review import Review
 
 
 class TestReview(unittest.TestCase):
+    MAX_COMMENT_LENGTH = 250
+
     def setUp(self):
         """
         Set up method to initialize the test environment.
@@ -112,12 +114,14 @@ class TestReview(unittest.TestCase):
         """
         Test that an invalid review (with invalid rating or comment) cannot be saved to the database.
         """
+         # test invalid rating
         with self.assertRaises(ValueError):
             invalid_review = Review(user_id=102, recipient_id=203, rating=6, comment="Invalid rating")
             invalid_review.save_to_db(self.connection)
-
-        long_comment_review = Review(user_id=102, recipient_id=203, rating=4, comment="A" * 251)
+        
+        # test invlaid comment (too long)
         with self.assertRaises(ValueError):
+            long_comment_review = Review(user_id=102, recipient_id=203, rating=4, comment="A" * (self.MAX_COMMENT_LENGTH+1))
             long_comment_review.save_to_db(self.connection)
     
 
@@ -159,7 +163,7 @@ class TestReview(unittest.TestCase):
         """
         Test the boundary case where the rating is exactly 0.
         """
-        review_min_rating = Review(user_id=101, recipient_id=202, rating=0, comment="Era melhor ter ido assitir ao filme do Pelé.")
+        review_min_rating = Review(user_id=101, recipient_id=202, rating=0, comment="It would have been better to go and watch the Pelé film.")
         self.assertEqual(review_min_rating.rating, 0)
 
 
