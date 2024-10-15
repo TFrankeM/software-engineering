@@ -28,7 +28,7 @@ class TestProblemReport(unittest.TestCase):
 
     def test_system_report_creation(self):
         """
-        Test the creation of a problem report for a system issue (no machine_id).
+            Test the creation of a problem report for a system issue (no machine_id).
         """
         report = ProblemReport(author_id=self.author_id, problem_type=self.system_problem_type)
         

@@ -1,3 +1,4 @@
+from problem_types import SYSTEM_PROBLEM_TYPES, MACHINE_PROBLEM_TYPES
 from datetime import datetime
 import uuid
 
@@ -7,22 +8,8 @@ class ProblemReport:
     Class to represent a reported problem in the system or with a specific machine.
     """
 
-    # Tipos de problema pré-definidos
-    # Novas opções podem ser adicionados futuramente a medida que a complexidade da implementação cresce.
-    SYSTEM_PROBLEM_TYPES = [
-        "Erro de login",
-        "Página lenta",
-        "Erro de carregamento",
-        "Outro"
-    ]
+    MAX_COMMENT_LENGTH = 250  
     
-    MACHINE_PROBLEM_TYPES = [
-        "Produto esgotado",
-        "Máquina fora de serviço",
-        "Erro no pagamento",
-        "Outro"
-    ]
-
     def __init__(self, author_id, problem_type, comment=None, machine_id=None):
         """
         Initialize the problem report with details about the problem.
@@ -47,6 +34,7 @@ class ProblemReport:
             self._validate_machine_problem_type(problem_type)
 
         self.problem_type = problem_type
+        
         self.comment = self._validate_comment(comment, problem_type)
     
 
@@ -57,8 +45,8 @@ class ProblemReport:
         Raises:
             ValueError: If the problem_type is not in the predefined system problem types.
         """
-        if problem_type not in self.SYSTEM_PROBLEM_TYPES:
-            raise ValueError(f"Invalid system problem type: {problem_type}. Choose from: {self.SYSTEM_PROBLEM_TYPES}")
+        if problem_type not in SYSTEM_PROBLEM_TYPES:
+            raise ValueError(f"Invalid system problem type: {problem_type}. Choose from: {SYSTEM_PROBLEM_TYPES}")
 
 
     def _validate_machine_problem_type(self, problem_type):
@@ -68,24 +56,30 @@ class ProblemReport:
         Raises:
             ValueError: If the problem_type is not in the predefined machine problem types.
         """
-        if problem_type not in self.MACHINE_PROBLEM_TYPES:
-            raise ValueError(f"Invalid machine problem type: {problem_type}. Choose from: {self.MACHINE_PROBLEM_TYPES}")
+        if problem_type not in MACHINE_PROBLEM_TYPES:
+            raise ValueError(f"Invalid machine problem type: {problem_type}. Choose from: {MACHINE_PROBLEM_TYPES}")
 
 
     def _validate_comment(self, comment, problem_type):
         """
-        Validate the comment. A comment is required if "Outro" is chosen as the problem type.
-        
+         Validate the comment. A comment is required if "other" is chosen as the problem type,
+        and the comment should not exceed the maximum allowed length.
+
         Raises:
-            ValueError: If the problem type is "Outro" and no comment is provided.
+            ValueError: If the problem type is "other" and no comment is provided.
+            ValueError: If the comment exceeds the maximum allowed length.
         """
-        if problem_type == "Outro" and (not comment or comment.strip() == ""):
+
+        # Checks if comment is required (required for "Other")
+        if (problem_type == SYSTEM_PROBLEM_TYPES[-1] or problem_type == MACHINE_PROBLEM_TYPES[-1]) and (not comment or comment.strip() == ""):
             raise ValueError("A comment is required when 'Outro' is selected as the problem type.")
         
-        # Return the comment or None if no comment is needed
-        return comment if problem_type == "Outro" else None
-
-
+        # Validates if the comment does not exceed the maximum size
+        if comment and len(comment) > self.MAX_COMMENT_LENGTH:
+            raise ValueError(f"Comment cannot exceed {self.MAX_COMMENT_LENGTH} characters.")
+        
+        return comment
+    
     def __str__(self):
         """
         Return a string representation of the problem report.
