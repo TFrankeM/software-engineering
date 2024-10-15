@@ -9,7 +9,7 @@ import sys, os
     os.path.abspath(B): converte o caminho relativo '../src' em um caminho absoluto (C)
     sys.path.insert(0, C): insere o caminho absoluto da pasta src no início da lista sys.path (uma lista de diretórios que o Python procura quando importa um módulo) 
 """
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../src")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src/classes")))
 from seller import Seller
 
 
