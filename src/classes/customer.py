@@ -4,7 +4,7 @@ class Customer(User):
     """
     A class representing a customer in the system.
     """
-    def __init__(self, name, email, address, password, profile_picture_path=None, anonymous_profile=True):
+    def __init__(self, name, email, password, address=None, anonymous_profile=True):
         """
         Initialize a new customer.
 
@@ -16,7 +16,7 @@ class Customer(User):
             profile_picture_path (str): The path to the customer's profile picture.
             anonymous_profile (bool): Whether the customer's profile is anonymous (default is True).
         """
-        super().__init__(name, email, address, password, profile_picture_path, anonymous_profile)
+        super().__init__(name, email, password, address, anonymous_profile)
         self.reviews = []
         self.orders = []
     
