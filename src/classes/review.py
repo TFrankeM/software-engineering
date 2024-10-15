@@ -9,10 +9,11 @@ class Review:
 
     MAX_COMMENT_LENGTH = 250
 
-    def __init__(self, user_id, recipient_id, rating, comment=None):
+    def __init__(self, user_id, rating, comment=None, product_id=None, machine_id=None):
         """
-        Initialize the review with id, user_id, recipient_id, rating, and an optional comment.
-        
+        Initialize the review with user_id, rating, and an optional comment. Either product_id
+        or machine_id must be provided, but not both.
+
         Parameters:
             user_id (int): ID of the user who made the review.
             recipient_id (int): ID of the recipient being reviewed.
@@ -26,16 +27,25 @@ class Review:
         self.id = uuid.uuid4()
         self.date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.user_id = user_id
-        self.recipient_id = recipient_id
         self.rating = self.validate_rating(rating)
         self.comment = self.validate_comment(comment)
+
+        # Validate that exactly one of product_id or machine_id is provided
+        if (product_id is None and machine_id is None) or (product_id is not None and machine_id is not None):
+            raise ValueError("You must provide exactly one of 'product_id' or 'machine_id'.")
+        
+        self.product_id = product_id
+        self.machine_id = machine_id
+
 
     def __str__(self):
         """
         Return a string representation of the review.
         """
-        return f"Review by User {self.user_id} for {self.recipient_id}: {self.rating}/5 - {self.comment}"
-
+        if self.product_id:
+            return f"Review by User {self.user_id} for Product {self.product_id}: {self.rating}/5 - {self.comment or 'No comment'}"
+        else:
+            return f"Review by User {self.user_id} for Machine {self.machine_id}: {self.rating}/5 - {self.comment or 'No comment'}"
 
     def validate_rating(self, rating):
         """
@@ -69,19 +79,4 @@ class Review:
         if comment and len(comment) > self.MAX_COMMENT_LENGTH:
             raise ValueError(f"Comment cannot exceed {self.MAX_COMMENT_LENGTH} characters.")
         return comment
-
-
-    def save_to_db(self, connection):
-        """
-        Save the review to the SQLite database.
-
-        Parameters:
-        -----------
-        connection (sqlite3.Connection): Connection to the SQLite database.
-        """
-        with connection:
-            connection.execute("""
-                INSERT INTO reviews (id, date, comment, rating, user_id, recipient_id)
-                VALUES (?, ?, ?, ?, ?, ?)
-            """, (str(self.id), self.date, self.comment, self.rating, self.user_id, self.recipient_id))
 
