@@ -2,7 +2,7 @@ import uuid
 import bcrypt
 
 class User:
-    def __init__(self, name, email, password, address=None):
+    def __init__(self, name, email, password, address=None, anonymous_profile=True):
         """Initialize a new User instance with the given attributes.
 
         Args:
@@ -17,6 +17,7 @@ class User:
         self.__address = address          # Private address attribute
         self.__password = self._hash_password(password)  # Private hashed password
         self.__profile_picture_path = "../imgs/default.png"  # Default profile picture path
+        self.anonymous_profile = anonymous_profile  # Anonymous profile flag
 
     @property
     def user_id(self):
