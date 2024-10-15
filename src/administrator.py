@@ -4,7 +4,7 @@ class Administrator(User):
     """
     A class representing an administrator in the system.
     """
-    def __init__(self, name, email, address, password, profile_picture_path=None, anonymous_profile=True):
+    def __init__(self, name, email, password, address=None, anonymous_profile=True):
         """
         Initialize a new administrator.
 
@@ -16,9 +16,9 @@ class Administrator(User):
             profile_picture_path (str): The path to the administrator's profile picture.
             anonymous_profile (bool): Whether the administrator's profile is anonymous (default is True).
         """
-        super().__init__(name, email, address, password, profile_picture_path, anonymous_profile)
+        super().__init__(name, email, password, address, anonymous_profile)
         self.vending_machines = [] # List of vending machines managed by the administrator.
-        
+
     
             
 
