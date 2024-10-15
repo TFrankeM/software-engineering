@@ -4,7 +4,7 @@ class Seller(User):
     """
     A class representing a seller in the system.
     """
-    def __init__(self, name, email, address, password, profile_picture_path=None, anonymous_profile=True):
+    def __init__(self, name, email, password, address=None, anonymous_profile=True):
         """
         Initialize a new seller.
 
@@ -16,7 +16,7 @@ class Seller(User):
             profile_picture_path (str): The path to the seller's profile picture.
             anonymous_profile (bool): Whether the seller's profile is anonymous (default is True).
         """
-        super().__init__(name, email, address, password, profile_picture_path, anonymous_profile)
+        super().__init__(name, email, password, address, anonymous_profile)
         self.products = []
         self.orders = []
     
@@ -55,3 +55,6 @@ class Seller(User):
         Returns:
             list: A list of orders placed with the seller.
         """
+        return self.orders
+
+

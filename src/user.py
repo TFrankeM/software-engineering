@@ -14,10 +14,10 @@ class User:
         self.__user_id = uuid.uuid4()  # Unique user ID generated using UUID
         self._name = name                # Protected name attribute
         self._email = email              # Protected email attribute
-        self.__address = address          # Private address attribute
         self.__password = self._hash_password(password)  # Private hashed password
+        self.__address = address          # Private address attribute
         self.__profile_picture_path = "../imgs/default.png"  # Default profile picture path
-        self.anonymous_profile = anonymous_profile  # Anonymous profile flag
+        self.anonymous_profile = anonymous_profile  # Public anonymous profile attribute
 
     @property
     def user_id(self):
