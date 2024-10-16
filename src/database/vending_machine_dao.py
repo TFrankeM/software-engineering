@@ -93,9 +93,8 @@ class VendingMachineDAO:
         
         # Create VendingMachine objects for each row
         for row in rows:
-            vending_machine = VendingMachine(name=row[1], location=row[2])
-            vending_machine.id = row[0]  # Set the ID of the vending machine
-            vending_machine.owner_id=seller_id
+            vending_machine = VendingMachine(name=row[1], location=row[2], owner_id=seller_id)
+            vending_machine.id = row[0]
             vending_machines.append(vending_machine)
         
         return vending_machines
@@ -115,20 +114,26 @@ class VendingMachineDAO:
             INSERT INTO vending_machines (id, name, location, owner_id)
             VALUES (?, ?, ?, ?)
         ''', (str(vending_machine.id), vending_machine.name, vending_machine.location, vending_machine.owner_id))
-        
+        #print("Chave inserida no db: ", str(vending_machine.id))
         self.connection.commit()
 
 
     def delete_vending_machine(self, vending_machine_id):
         """
-            Delete a vending machine from the database by its ID.
+        Delete a vending machine from the database by its ID.
 
         Parameters:
             vending_machine_id (str): The ID of the vending machine to delete.
         """
         cursor = self.connection.cursor()
+
+        try:
+            # Delete the vending machine
+            cursor.execute('DELETE FROM vending_machines WHERE id = ?', (vending_machine_id,))
+            self.connection.commit()
+            #print(f"Máquina de venda com ID {vending_machine_id} deletada com sucesso.")
         
-        # Delete the vending machine
-        cursor.execute('DELETE FROM vending_machines WHERE id = ?', (vending_machine_id,))
-        
-        self.connection.commit()
+        except sqlite3.IntegrityError as e:
+            # Se houver restrições de integridade, como chaves estrangeiras
+            print(f"Erro ao deletar a máquina de venda: {e}")
+
