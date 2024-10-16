@@ -40,24 +40,6 @@ class VendingMachineDAO:
         self.connection.commit()
 
 
-    def insert_vending_machine(self, vending_machine):
-        """
-            Insert a vending machine into the database.
-
-        Parameters:
-            vending_machine (VendingMachine): A VendingMachine object to be inserted into the database.
-        """
-        cursor = self.connection.cursor()
-        
-        # Insert vending machine details, including the owner_id
-        cursor.execute('''
-            INSERT INTO vending_machines (id, name, location, owner_id)
-            VALUES (?, ?, ?, ?)
-        ''', (str(vending_machine.id), vending_machine.name, vending_machine.location, vending_machine.owner_id))
-        
-        self.connection.commit()
-
-
     def get_vending_machine_by_id(self, vending_machine_id):
         """
             Retrieve a vending machine from the database by its ID.
@@ -87,6 +69,54 @@ class VendingMachineDAO:
         )
         vending_machine.id = vending_machine_data[0]
         return vending_machine
+
+
+    def get_vending_machines_by_seller_id(self, seller_id):
+        """
+        Retrieve all vending machines associated with a specific seller (owner) from the database.
+
+        Parameters:
+            seller_id (str): The ID of the seller whose vending machines are to be retrieved.
+
+        Returns:
+            list: A list of VendingMachine objects associated with the seller.
+        """
+        cursor = self.connection.cursor()
+        
+        # Fetch the vending machines where the owner_id matches the seller_id
+        cursor.execute('''
+            SELECT id, name, location FROM vending_machines WHERE owner_id = ?
+        ''', (seller_id,))
+        rows = cursor.fetchall()
+
+        vending_machines = []
+        
+        # Create VendingMachine objects for each row
+        for row in rows:
+            vending_machine = VendingMachine(name=row[1], location=row[2])
+            vending_machine.id = row[0]  # Set the ID of the vending machine
+            vending_machine.owner_id=seller_id
+            vending_machines.append(vending_machine)
+        
+        return vending_machines
+
+
+    def insert_vending_machine(self, vending_machine):
+        """
+            Insert a vending machine into the database.
+
+        Parameters:
+            vending_machine (VendingMachine): A VendingMachine object to be inserted into the database.
+        """
+        cursor = self.connection.cursor()
+        
+        # Insert vending machine details, including the owner_id
+        cursor.execute('''
+            INSERT INTO vending_machines (id, name, location, owner_id)
+            VALUES (?, ?, ?, ?)
+        ''', (str(vending_machine.id), vending_machine.name, vending_machine.location, vending_machine.owner_id))
+        
+        self.connection.commit()
 
 
     def delete_vending_machine(self, vending_machine_id):
