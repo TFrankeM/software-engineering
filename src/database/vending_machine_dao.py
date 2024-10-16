@@ -131,7 +131,7 @@ class VendingMachineDAO:
             # Delete the vending machine
             cursor.execute('DELETE FROM vending_machines WHERE id = ?', (vending_machine_id,))
             self.connection.commit()
-            #print(f"Máquina de venda com ID {vending_machine_id} deletada com sucesso.")
+            # print(f"Máquina de venda com ID {vending_machine_id} deletada com sucesso.")
         
         except sqlite3.IntegrityError as e:
             # Se houver restrições de integridade, como chaves estrangeiras

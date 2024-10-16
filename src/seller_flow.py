@@ -29,6 +29,7 @@ def view_vending_machine_details(vending_machine, db_connection, vending_machine
     Parameters:
         vending_machine (VendingMachine): The selected vending machine object.
         db_connection (sqlite3.Connection): The database connection.
+        product_dao (ProductDAO): Data access object for interacting with products in the database.
     """
     product_dao = ProductDAO(db_connection)
 
@@ -53,9 +54,9 @@ def view_vending_machines_basic_info(seller_id, db_connection, vending_machine_d
     Parameters:
         seller_id (str): The ID of the seller.
         db_connection (sqlite3.Connection): The database connection.
-        vending_machine_dao: sql table.
+        product_dao (ProductDAO): Data access object for interacting with products in the database.
+
     """
-    
 
     # Fetch all vending machines owned by this seller
     vending_machines = vending_machine_dao.get_vending_machines_by_seller_id(seller_id)
@@ -118,6 +119,7 @@ def insert_new_vending_machine(seller_id, db_connection, vending_machine_dao):
     Parameters:
         seller_id (str): The ID of the seller.
         db_connection (sqlite3.Connection): The database connection.
+        product_dao (ProductDAO): Data access object for interacting with products in the database.
     """
     clear_console()
     print("\n", "~"*10, "Insira nova máquina de venda", "~"*10, "\n")
@@ -139,7 +141,7 @@ def insert_new_vending_machine(seller_id, db_connection, vending_machine_dao):
         return
     
     new_vending_machine = VendingMachine(name=name, location=location, owner_id = seller_id)
-    print("Id logo após a criação da instância da classe VendingMachine: ", new_vending_machine.id)
+    #print("Id logo após a criação da instância da classe VendingMachine: ", new_vending_machine.id)
     # Insert the new vending machine into the database
     vending_machine_dao.insert_vending_machine(new_vending_machine)
     print(f"\nMáquina de venda '{name}' foi inserida com sucesso.")
