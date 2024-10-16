@@ -25,7 +25,7 @@ def identificar_usuario():
     print("1. Administrador")
     print("2. Vendedor")
     print("3. Cliente")
-    print("4. Sair")
+    print("0. Sair")
     
     escolha = input("Digite o número correspondente: ")
 
@@ -35,7 +35,7 @@ def identificar_usuario():
         return "Vendedor"
     elif escolha == "3":
         return "Cliente"
-    elif escolha == "4":
+    elif escolha == "0":
         return "Sair"
     else:
         print("\rOpção inválida. Tente novamente.", flush=True)
