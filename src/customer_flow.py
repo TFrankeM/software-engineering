@@ -16,8 +16,7 @@ def clear_console():
 
 def customer_actions(customer_id, db_connection):    
     """
-    Funções específicas do usuário comum.
-    Este método deve ser expandido com as opções específicas para usuários.
+    Main function for the customer panel.
     """
     clear_console()
     
