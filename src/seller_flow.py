@@ -77,7 +77,7 @@ def seller_actions(seller_id, db_connection):
         print("1. Ver lista de Vending Machines")
         print("2. Inserir nova Vending Machine")
         print("3. Apagar Vending Machine")
-        print("4. Sair")
+        print("0. Voltar")
         action = input("Escolha uma ação: ")
 
         if action == "1":
@@ -86,8 +86,8 @@ def seller_actions(seller_id, db_connection):
             insert_new_vending_machine(seller_id, db_connection, vending_machine_dao)
         elif action == "3":
             delete_vending_machine(seller_id, db_connection, vending_machine_dao)
-        elif action == "4":
-            print("Saindo...")
+        elif action == "0":
+            print("Voltando...")
             break
         else:
             print("\rOpção inválida. Tente novamente.", flush=True)
