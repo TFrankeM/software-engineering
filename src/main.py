@@ -24,7 +24,7 @@ def identificar_usuario():
     print("Selecione o tipo de usuário:")
     print("1. Administrador")
     print("2. Vendedor")
-    print("3. Usuário")
+    print("3. Cliente")
     print("4. Sair")
     
     escolha = input("Digite o número correspondente: ")
@@ -56,7 +56,8 @@ def main():
             seller_id = '1'  # Simulação de um ID de vendedor
             seller_actions(seller_id=seller_id, db_connection=db_connection)  # Chama as ações do vendedor
         elif user_type == "Cliente":
-            customer_actions()  # Chama as ações do cliente
+            customer_id = '1'
+            customer_actions(customer_id=customer_id, db_connection=db_connection)  # Chama as ações do cliente
         elif user_type == "Sair":
             print("Saindo do sistema...")
             time.sleep(2)
