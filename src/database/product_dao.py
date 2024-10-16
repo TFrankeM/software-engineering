@@ -81,6 +81,41 @@ class ProductDAO:
         return cursor.fetchone()
 
 
+    def get_products_by_vending_machine_id(self, vending_machine_id):
+        """
+        Retrieve all products associated with a specific vending machine by its ID and return them as Product objects.
+
+        Parameters:
+            vending_machine_id (str): The ID of the vending machine.
+
+        Returns:
+            list: A list of Product objects representing the products in the vending machine.
+        """
+        cursor = self.connection.cursor()
+
+        # Query to fetch all products related to the given vending machine ID
+        cursor.execute('''
+            SELECT * FROM products WHERE machine_id = ?
+        ''', (vending_machine_id,))
+
+        rows = cursor.fetchall()
+
+        # Create a list of Product objects
+        products = []
+        for row in rows:
+            product = Product(
+                name=row[1],            # Name of the product
+                description=row[2],     # Description of the product
+                price=row[3],           # Price of the product
+                quantity=row[4]         # Quantity of the product
+            )
+            product.id = row[0]           # Set the product ID
+            product.machine_id = row[5]   # Set the machine ID
+            products.append(product)
+
+        return products
+
+
     def update_product_quantity(self, product_id, new_quantity):
         """
             Update the quantity of a product.
