@@ -1,25 +1,33 @@
-class Vending_Machine:
-    """
-        first version of the product class
-    """
-    def __init__(self, name, id, location):
-        self.name = name
-        self.id = id
-        self.location = location
-        self.products = {}
+import uuid
+import product
+import review
 
-    def add_product(self, product, quantity):
-        if product.id in self.products:
-            self.products[product.id].update_quantity(quantity)
-        else:
-            product.update_quantity(quantity)
-            self.products[product.id] = product
-        
-    def list_products(self):
-        return [str(product.name) for product in self.products.values()]
+class VendingMachine:
+    """
+    Class to represent a vending machine.
+    """
     
-    def check_stock(self, product_id):
-        if product_id in self.products:
-            return self.products[product_id].quantity
-        return 0
-    
+    def __init__(self, name, location, owner_id, products=None, reviews=None):
+        """
+        Initialize the vending machine with a name, location, owner (seller), and optional lists of products and reviews.
+
+        Parameters:
+            name (str): Name of the vending machine.
+            location (str): Location of the vending machine.
+            owner_id (str): ID of the owner (seller) of the vending machine.
+            products (list, optional): List of Product objects contained in the vending machine.
+            reviews (list, optional): List of reviews (Review objects) for the vending machine.
+        """
+        self.id = uuid.uuid4()
+        self.name = name
+        self.location = location
+        self.owner_id = owner_id  # New owner attribute
+        self.products = products if products is not None else []
+        self.reviews = reviews if reviews is not None else []
+
+
+    def __str__(self):
+        """
+            Return a string representation of the vending machine.
+        """
+        return f"Vending Machine '{self.name}' located at {self.location} owned by {self.owner_id}"

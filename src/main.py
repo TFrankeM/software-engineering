@@ -1,35 +1,69 @@
-# Organização de ideias
-"""
-/src
-│
-├── main.py                  # Ponto de entrada do sistema
-├── admin_flow.py            # Controle e funcionalidades para o Administrador
-├── vendor_flow.py           # Controle e funcionalidades para o Vendedor/Gestor
-├── user_flow.py             # Controle e funcionalidades para o Usuário comum
-├── classes/
-│   ├── vending_machine.py    # Classe Vending Machine
-│   ├── product.py            # Classe Produto
-│   ├── problem_report.py      # Classe para Reports de Problemas
-│   ├── review.py             # Classe para Avaliações
-│   └── user.py               # Classe para Usuários (Administrador, Vendedor, Usuário)
-"""
+from administrator_flow import administrator_actions
+from seller_flow import seller_actions
+from customer_flow import customer_actions
+from db_initializer import initialize_db 
+import time
+import os
 
-# Pseudocodigo do loop principal
-'''
-from admin_flow import admin_actions
-from vendor_flow import vendor_actions
-from user_flow import user_actions
+
+def clear_console():
+    """
+    Console clearing function, (just works in Windows and Unix-based).
+    """
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
+def identificar_usuario():
+    """
+    Function to identify the user type. It can be via login or a simple selection.
+    Returns the user type as a string.
+    """
+    clear_console()
+    
+    print("~"*10, "Bem-vindo ao Sistema Compre Aqui!", "~"*10, "\n")
+    print("Selecione o tipo de usuário:")
+    print("1. Administrador")
+    print("2. Vendedor")
+    print("3. Usuário")
+    print("4. Sair")
+    
+    escolha = input("Digite o número correspondente: ")
+
+    if escolha == "1":
+        return "Administrador"
+    elif escolha == "2":
+        return "Vendedor"
+    elif escolha == "3":
+        return "Cliente"
+    elif escolha == "4":
+        return "Sair"
+    else:
+        print("\rOpção inválida. Tente novamente.", flush=True)
+        time.sleep(2)
+        return identificar_usuario()
+
 
 def main():
+    # Inicializa o banco de dados
+    db_connection = initialize_db()  # Chama a função que inicializa o banco de dados
+    
     while True:
-        user_type = identificar_usuario()  # Exemplo de login ou seleção de tipo de usuário
+        user_type = identificar_usuario()
         
         if user_type == "Administrador":
-            admin_actions()  # Chama as ações do administrador definidas no módulo admin_flow.py
+            administrator_actions()  # Chama as ações do administrador
         elif user_type == "Vendedor":
-            vendor_actions()  # Chama as ações do vendedor no módulo vendor_flow.py
-        elif user_type == "Usuario":
-            user_actions()  # Chama as ações do usuário no módulo user_flow.py
+            seller_id = '1'  # Simulação de um ID de vendedor
+            seller_actions(seller_id=seller_id, db_connection=db_connection)  # Chama as ações do vendedor
+        elif user_type == "Cliente":
+            customer_actions()  # Chama as ações do cliente
         elif user_type == "Sair":
+            print("Saindo do sistema...")
+            time.sleep(2)
+            clear_console()
+            print("~"*10, "Volte sempre", "~"*10)
             break  # Finaliza o programa
-'''
+
+
+if __name__ == "__main__":
+    main()
