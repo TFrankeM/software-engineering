@@ -4,6 +4,7 @@ import sys, os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../classes")))
 from product import Product
 
+
 class ProductDAO:
     """
         Data Access Object (DAO) for managing Product entities in the database.
@@ -21,7 +22,7 @@ class ProductDAO:
 
     def create_table(self):
         """
-            Create the product table in the database if it doesn"t already exist.
+            Create the product table in the database if it doesn't already exist.
         """
         cursor = self.connection.cursor()
         cursor.execute("""
@@ -30,7 +31,9 @@ class ProductDAO:
                 name TEXT NOT NULL,
                 description TEXT,
                 price REAL NOT NULL,
-                quantity INTEGER NOT NULL
+                quantity INTEGER NOT NULL,
+                machine_id TEXT NOT NULL,  -- Foreign key referencing the vending machine
+                FOREIGN KEY (machine_id) REFERENCES vending_machines(id)
             );
         """)
         self.connection.commit()
@@ -45,9 +48,9 @@ class ProductDAO:
         """
         cursor = self.connection.cursor()
         cursor.execute("""
-            INSERT INTO products (id, name, description, price, quantity)
-            VALUES (?, ?, ?, ?, ?)
-        """, (str(product.id), product.name, product.description, product.price, product.quantity))
+            INSERT INTO products (id, name, description, price, quantity, machine_id)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (str(product.id), product.name, product.description, product.price, product.quantity, product.machine_id))
         self.connection.commit()
 
 
@@ -105,4 +108,3 @@ class ProductDAO:
         cursor = self.connection.cursor()
         cursor.execute("DELETE FROM products WHERE id = ?", (product_id,))
         self.connection.commit()
-

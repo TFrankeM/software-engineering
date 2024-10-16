@@ -7,7 +7,7 @@ class Product:
         Class representing a product in the vending machine system.
     """
 
-    def __init__(self, name, description, price, quantity=0, reviews=None):
+    def __init__(self, name, description, price, quantity=0, machine_id=None, reviews=None):
         """
             Initialize a Product instance.
 
@@ -16,6 +16,7 @@ class Product:
             description (str): Description of the product.
             price (float): Price of the product.
             quantity (int): Quantity of the product in stock.
+            machine_id (str): The UUID of the vending machine that contains this product.
             reviews (list of Review, optional): List of reviews associated with the product.
         """
         self.id = uuid.uuid4()
@@ -23,7 +24,8 @@ class Product:
         self.description = description
         self.price = price
         self.quantity = quantity
-        self.reviews = reviews if reviews is not None else []  # Initialize reviews as an empty list if not provided
+        self.machine_id = machine_id  
+        self.reviews = reviews if reviews is not None else [] # Initialize reviews as an empty list if not provided
 
 
     def add_review(self, review):

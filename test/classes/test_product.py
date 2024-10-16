@@ -1,5 +1,6 @@
 import unittest
 import sys, os
+import uuid
 
 # Corrigir caminhos
 # adding src to the system path
@@ -20,11 +21,13 @@ class TestProduct(unittest.TestCase):
         """
             Test creating a new product instance.
         """
-        product = Product(name="Chips", description="A bag of chips", price=4.99, quantity=100)
+        machine_id = uuid.uuid4()
+        product = Product(name="Chips", description="A bag of chips", price=4.99, quantity=100, machine_id=str(machine_id))
         self.assertEqual(product.name, "Chips")
         self.assertEqual(product.description, "A bag of chips")
         self.assertEqual(product.price, 4.99)
         self.assertEqual(product.quantity, 100)
+        self.assertEqual(product.machine_id, str(machine_id))
         self.assertEqual(len(product.reviews), 0)  # No reviews yet
 
 
@@ -32,8 +35,9 @@ class TestProduct(unittest.TestCase):
         """
             Test adding a review to the product.
         """
-        product = Product(name="Soda", description="A can of soda", price=1.5)
-        review = Review(user_id=101, recipient_id=product.id, rating=5, comment="Great soda!")
+        machine_id = uuid.uuid4()
+        product = Product(name="Soda", description="A can of soda", price=1.5, machine_id=str(machine_id))
+        review = Review(user_id=101, product_id=product.id, rating=5, comment="Great soda!")
         product.add_review(review)
 
         self.assertEqual(len(product.reviews), 1)
@@ -45,7 +49,8 @@ class TestProduct(unittest.TestCase):
         """
         Test applying a discount to the product"s price.
         """
-        product = Product(name="Water", description="A bottle of water", price=2.0)
+        machine_id = uuid.uuid4()  # Simulate a machine ID
+        product = Product(name="Water", description="A bottle of water", price=2.0, machine_id=str(machine_id))
         product.apply_discount(25)              # Apply a 25% discount
 
         self.assertEqual(product.price, 1.5)    # 25% discount on $2.00
@@ -55,16 +60,18 @@ class TestProduct(unittest.TestCase):
         """
         Test that adding an invalid review raises an error.
         """
-        product = Product(name="Juice", description="A bottle of juice", price=3.0)
+        machine_id = uuid.uuid4()  # Simulate a machine ID
+        product = Product(name="Juice", description="A bottle of juice", price=3.0, machine_id=str(machine_id))
         with self.assertRaises(ValueError):
             product.add_review("This is not a review")  # Should raise ValueError
 
 
     def test_invalid_discount(self):
         """
-        Test that applying an invalid discount raises an error.
+            Test that applying an invalid discount raises an error.
         """
-        product = Product(name="Juice", description="A bottle of juice", price=3.0)
+        machine_id = uuid.uuid4()  # Simulate a machine ID
+        product = Product(name="Juice", description="A bottle of juice", price=3.0, machine_id=str(machine_id))
         with self.assertRaises(ValueError):
             product.apply_discount(120)  # Discount can"t be more than 100%
 
