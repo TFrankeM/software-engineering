@@ -145,7 +145,11 @@ def create_problem_report(customer_id, db_connection):
         return
 
     # Comentário opcional
-    comment = input("Escreva um comentário sobre o problema (opcional): ")
+    if problem_choice != 4:
+        comment = input("Escreva um comentário sobre o problema (opcional): ")
+    # Comentário obrigatório(para "Outro" problema)
+    else:
+        comment = input("Escreva um comentário sobre o problema (obrigatório): ")
 
     # Cria um novo relatório de problema
     problem_report = ProblemReport(author_id=customer_id, machine_id=machine_id, problem_type=problem_type, comment=comment)
