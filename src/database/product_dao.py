@@ -54,6 +54,25 @@ class ProductDAO:
         self.connection.commit()
 
 
+    def update_product(self, product):
+        """
+        Update product information in the database.
+
+        Parameters:
+            product (Product): The product object containing updated information.
+        """
+        cursor = self.connection.cursor()
+        
+        # Atualiza as informações do produto na tabela 'products'
+        cursor.execute("""
+            UPDATE products
+            SET name = ?, description = ?, price = ?, quantity = ?
+            WHERE id = ?
+        """, (product.name, product.description, product.price, product.quantity, str(product.id)))
+
+        self.connection.commit()
+
+
     def get_all_products(self):
         """
             Retrieve all products from the database.
