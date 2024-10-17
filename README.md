@@ -1,5 +1,4 @@
-<h1 align="center">Requirements Engineering Activity</h1>
-<h2 align="center">Software Engineering discipline</h2>
+<h1 align="center">Software Engineering discipline</h1>
 
 <hr>
 
