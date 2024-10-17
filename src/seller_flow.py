@@ -17,14 +17,14 @@ from product_dao import ProductDAO
 
 def clear_console():
     """
-    Console clearing function, (just works in Windows and Unix-based).
+        Console clearing function, (just works in Windows and Unix-based).
     """
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def create_new_product(vending_machine, product_dao):
     """
-    Create and add a new product to the selected vending machine.
+        Create and add a new product to the selected vending machine.
     
     Parameters:
         vending_machine (VendingMachine): The selected vending machine object.
@@ -64,7 +64,7 @@ def create_new_product(vending_machine, product_dao):
 
 def remove_product(df, products, vending_machine, product_dao):
     """
-    Remove a product from the selected vending machine.
+        Remove a product from the selected vending machine.
     
     Parameters:
         df (pd.DataFrame): Dataframe with products data.
@@ -124,7 +124,7 @@ def remove_product(df, products, vending_machine, product_dao):
 
 def update_product(df, products, vending_machine, product_dao):
     """
-    Update product information for a selected product in the vending machine.
+        Update product information for a selected product in the vending machine.
     
     Parameters:
         df (pd.DataFrame): Dataframe with products data.
@@ -209,7 +209,7 @@ def update_product(df, products, vending_machine, product_dao):
 
 def view_vending_machine_details(vending_machine, db_connection, product_dao):
     """
-    Display details of the selected vending machine, including products and stock.
+        Display details of the selected vending machine, including products and stock.
 
     Parameters:
         vending_machine (VendingMachine): The selected vending machine object.
@@ -277,7 +277,7 @@ def view_vending_machine_details(vending_machine, db_connection, product_dao):
 
 def view_vending_machines_basic_info(seller_id, db_connection, vending_machine_dao, product_dao):
     """
-    List all vending machines owned by the seller and display basic info.
+        List all vending machines owned by the seller and display basic info.
 
     Parameters:
         seller_id (str): The ID of the seller.
@@ -343,7 +343,7 @@ def view_vending_machines_basic_info(seller_id, db_connection, vending_machine_d
 
 def insert_new_vending_machine(seller_id, db_connection, vending_machine_dao):
     """
-    Insert a new vending machine for the seller.
+        Insert a new vending machine for the seller.
 
     Parameters:
         seller_id (str): The ID of the seller.
@@ -377,14 +377,15 @@ def insert_new_vending_machine(seller_id, db_connection, vending_machine_dao):
     time.sleep(2)
 
 
-def delete_vending_machine(seller_id, db_connection, vending_machine_dao):
+def delete_vending_machine(seller_id, db_connection, vending_machine_dao, product_dao):
     """
-    Delete a vending machine owned by the seller.
+        Delete a vending machine owned by the seller and all associated products.
 
     Parameters:
         seller_id (str): The ID of the seller.
         db_connection (sqlite3.Connection): The database connection.
-        vending_machine_dao (VendingMachineDAO): Data access object for interacting with vending machine in the database.
+        vending_machine_dao (VendingMachineDAO): Data access object for interacting with vending machines in the database.
+        product_dao (ProductDAO): Data access object for interacting with products in the database.
     """
     # Fetch all vending machines owned by this seller
     vending_machines = vending_machine_dao.get_vending_machines_by_seller_id(seller_id)
@@ -397,15 +398,29 @@ def delete_vending_machine(seller_id, db_connection, vending_machine_dao):
         time.sleep(2)
         return    
     
+        # Organize the data into a DataFrame
+    vending_machines_data = {
+        "Index": [],
+        "Nome": [],
+        "Localização": []
+    }
+    
+    for index, vm in enumerate(vending_machines, start=1):
+        vending_machines_data["Index"].append(index)
+        vending_machines_data["Nome"].append(vm.name)
+        vending_machines_data["Localização"].append(vm.location)
+    # Create the DataFrame
+    df = pd.DataFrame(vending_machines_data)
+
     while True:
         try:
             clear_console()
             print("\n", "~"*10, "Delete uma máquina de venda", "~"*10, "\n")
 
             print("\nLista de Vending Machines para deletar:")
-            for index, vm in enumerate(vending_machines, start=1):
-                print(f"{index}. Nome: {vm.name}, Localização: {vm.location}")
-
+            
+            print(df.to_string(index=False))  # Display the table without pandas' automatic index
+            
             print("\n==> Digite 0 para cancelar a operação e voltar ao menu anterior.")
             selected_machine = int(input("Digite o número da máquina que deseja deletar: "))
 
@@ -415,16 +430,24 @@ def delete_vending_machine(seller_id, db_connection, vending_machine_dao):
                 return
             
             elif 0 < selected_machine <= len(vending_machines):
-                # Converter o UUID para string antes de passar para o banco de dados
-                vending_machine_dao.delete_vending_machine(str(vending_machines[selected_machine - 1].id))
-                #print('Id da máquina que queremos deletar:', str(vending_machines[selected_machine - 1].id))
-                print(f"Máquina '{vending_machines[selected_machine - 1].name}' foi deletada com sucesso.")
+                selected_machine_id = str(vending_machines[selected_machine - 1].id)
+                selected_machine_name = vending_machines[selected_machine - 1].name
+
+                #deletar os produtos associados à máquina
+                product_dao.delete_products_by_vending_machine_id(selected_machine_id)
+
+                # Deletar a máquina de venda
+                vending_machine_dao.delete_vending_machine(selected_machine_id)
+
+                #print('Id da máquina que quero deletar:', str(vending_machines[selected_machine - 1].id))
+                print(f"Máquina '{selected_machine_name}' foi deletada com sucesso.")
                 time.sleep(2)
                 break
 
             else:
                 print("Número inválido. Escolha uma opção válida.")
                 time.sleep(1)
+
         except ValueError:
             print("Entrada inválida. Por favor, insira um número.")
             time.sleep(1)
@@ -432,7 +455,7 @@ def delete_vending_machine(seller_id, db_connection, vending_machine_dao):
 
 def seller_actions(seller_id, db_connection):
     """
-    Main flow for a seller to manage vending machines.
+        Main flow for a seller to manage vending machines.
     
     Parameters:
         seller_id (str): The ID of the seller (owner of vending machines).
@@ -466,7 +489,7 @@ def seller_actions(seller_id, db_connection):
         print("1. Ver lista de Vending Machines")
         print("2. Inserir nova Vending Machine")
         print("3. Apagar Vending Machine")
-        print("4. Sair")
+        print("0. Sair")
         action = input("Escolha uma ação: ")
 
         if action == "1":
@@ -474,8 +497,8 @@ def seller_actions(seller_id, db_connection):
         elif action == "2":
             insert_new_vending_machine(seller_id, db_connection, vending_machine_dao)
         elif action == "3":
-            delete_vending_machine(seller_id, db_connection, vending_machine_dao)
-        elif action == "4":
+            delete_vending_machine(seller_id, db_connection, vending_machine_dao, product_dao)
+        elif action == "0":
             print("Saindo...")
             break
         else:

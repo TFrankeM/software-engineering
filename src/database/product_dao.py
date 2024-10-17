@@ -162,3 +162,17 @@ class ProductDAO:
         cursor = self.connection.cursor()
         cursor.execute("DELETE FROM products WHERE id = ?", (product_id,))
         self.connection.commit()
+
+    def delete_products_by_vending_machine_id(self, vending_machine_id):
+        """
+            Delete all products associated with a specific vending machine.
+
+        Parameters:
+            vending_machine_id (str): The ID of the vending machine whose products should be deleted.
+        """
+        cursor = self.connection.cursor()
+
+        # Deletar todos os produtos associados à máquina de venda
+        cursor.execute('DELETE FROM products WHERE machine_id = ?', (vending_machine_id,))
+
+        self.connection.commit()
