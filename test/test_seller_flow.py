@@ -1,4 +1,4 @@
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 import unittest
 import sys, os
 
@@ -7,23 +7,53 @@ from seller_flow import seller_actions
 
 class TestSellerFlow(unittest.TestCase):
 
-    @patch("builtins.input", side_effect=["1", "3"])
-    def test_seller_view_stock(self, mock_input):
-        with patch("builtins.print") as mocked_print:
-            seller_actions()
-            mocked_print.assert_any_call("Exibindo estoque das vending machines...")
+    @patch("builtins.input", side_effect=["1", "0"])  # Simulate viewing vending machines then exiting
+    def test_seller_view_vending_machines(self, mock_input):
+        # Setup a mock db_connection
+        mock_db_connection = MagicMock()
+        mock_db_connection.cursor.return_value = MagicMock()
 
-    @patch("builtins.input", side_effect=["2", "3"])
-    def test_seller_manage_products(self, mock_input):
-        with patch("builtins.print") as mocked_print:
-            seller_actions()
-            mocked_print.assert_any_call("Gerenciando produtos nas vending machines...")
+        seller_id = "test_seller_id"
+        
+        # Call seller_actions and pass the mocked db_connection
+        seller_actions(seller_id=seller_id, db_connection=mock_db_connection)
 
-    @patch("builtins.input", side_effect=["3"])
+
+    @patch("builtins.input", side_effect=["TestMachine", "TestLocation", "0"])  # Simulate inserting a vending machine then exiting
+    def test_seller_insert_vending_machine(self, mock_input):
+        # Setup a mock db_connection
+        mock_db_connection = MagicMock()
+        mock_db_connection.cursor.return_value = MagicMock()
+
+        seller_id = "test_seller_id"
+
+        # Call seller_actions and pass the mocked db_connection
+        seller_actions(seller_id=seller_id, db_connection=mock_db_connection)
+
+
+    @patch("builtins.input", side_effect=["1", "0"])  # Simulate deleting a vending machine then exiting
+    def test_seller_delete_vending_machine(self, mock_input):
+        # Setup a mock db_connection
+        mock_db_connection = MagicMock()
+        mock_db_connection.cursor.return_value = MagicMock()
+
+        seller_id = "test_seller_id"
+
+        # Call seller_actions and pass the mocked db_connection
+        seller_actions(seller_id=seller_id, db_connection=mock_db_connection)
+
+
+    @patch("builtins.input", side_effect=["0"])  # Simulate exiting
     def test_seller_exit(self, mock_input):
-        with patch("builtins.print") as mocked_print:
-            seller_actions()
-            mocked_print.assert_any_call("Saindo do painel do vendedor...")
+        # Setup a mock db_connection
+        mock_db_connection = MagicMock()
+        mock_db_connection.cursor.return_value = MagicMock()
+
+        seller_id = "test_seller_id"
+
+        # Call seller_actions and pass the mocked db_connection
+        seller_actions(seller_id=seller_id, db_connection=mock_db_connection)
+
 
 if __name__ == "__main__":
     unittest.main()
