@@ -40,6 +40,31 @@ class VendingMachineDAO:
         self.connection.commit()
 
 
+    def get_all_vending_machines(self):
+        """
+        Retrieve all vending machines from the database.
+        
+        Returns:
+            list: A list of VendingMachine objects representing the vending machines in the database.
+        """
+        cursor = self.connection.cursor()
+        
+        # Fetch all vending machines
+        cursor.execute("SELECT id, name, location, owner_id FROM vending_machines")
+        rows = cursor.fetchall()
+
+        vending_machines = []
+        
+        # Create VendingMachine objects for each row
+        for row in rows:
+            vending_machine = VendingMachine(name=row[1], location=row[2], owner_id=row[3])
+            vending_machine.id = row[0]  # Set the id from the database row
+            vending_machines.append(vending_machine)
+
+        return vending_machines
+
+
+
     def get_vending_machine_by_id(self, vending_machine_id):
         """
             Retrieve a vending machine from the database by its ID.
@@ -100,6 +125,29 @@ class VendingMachineDAO:
         return vending_machines
 
 
+    def get_vending_machines_by_name(self, machine_name):
+        """
+        Retrieve vending machines by name from the database.
+
+        Parameters:
+            machine_name (str): The name of the vending machine to search for.
+
+        Returns:
+            list: A list of VendingMachine objects that match the name.
+        """
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT * FROM vending_machines WHERE name LIKE ?", ('%' + machine_name + '%',))
+        rows = cursor.fetchall()
+
+        machines = []
+        for row in rows:
+            machine = VendingMachine(name=row[1], location=row[2], owner_id=row[3])
+            machine.id = row[0]
+            machines.append(machine)
+        
+        return machines
+    
+    
     def insert_vending_machine(self, vending_machine):
         """
             Insert a vending machine into the database.
