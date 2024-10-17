@@ -135,6 +135,29 @@ class ProductDAO:
         return products
 
 
+    def get_products_by_name(self, product_name):
+        """
+        Retrieve products by name from the database.
+
+        Parameters:
+            product_name (str): The name of the product to search for.
+
+        Returns:
+            list: A list of Product objects that match the name.
+        """
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT * FROM products WHERE name LIKE ?", ('%' + product_name + '%',))
+        rows = cursor.fetchall()
+
+        products = []
+        for row in rows:
+            product = Product(name=row[1], description=row[2], price=row[3], quantity=row[4], machine_id=row[5])
+            product.id = row[0]
+            products.append(product)
+        
+        return products
+    
+    
     def update_product_quantity(self, product_id, new_quantity):
         """
             Update the quantity of a product.

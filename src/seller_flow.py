@@ -508,13 +508,6 @@ def seller_actions(seller_id, db_connection):
             time.sleep(2)
             return seller_actions(seller_id, db_connection)
 
-    # Delete the selected machine
-    if 0 < selected_machine <= len(vending_machines):
-        vending_machine_dao.delete_vending_machine(vending_machines[selected_machine - 1].id)
-        print(f"Máquina '{vending_machines[selected_machine - 1].name}' foi deletada com sucesso.")
-    else:
-        print("Número inválido. Retornando ao menu.")
-
 
 def create_seller_account(db_connection):
     """
