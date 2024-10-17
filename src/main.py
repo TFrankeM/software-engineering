@@ -59,7 +59,7 @@ def main():
         user_type = identificar_usuario()
         
         if user_type == "Administrador":
-            administrator_actions()  # Chama as ações do administrador
+            administrator_actions(db_connection)  # Chama as ações do administrador
         elif user_type == "Vendedor":
             seller_id = '1'  # Simulação de um ID de vendedor
             seller_actions(seller_id=seller_id, db_connection=db_connection)  # Chama as ações do vendedor
