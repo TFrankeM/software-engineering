@@ -1,6 +1,8 @@
 from administrator_flow import administrator_actions
 from seller_flow import seller_actions
 from customer_flow import customer_actions
+from customer_flow import create_customer_account
+from seller_flow import create_seller_account
 from db_initializer import initialize_db 
 import time
 import os
@@ -25,6 +27,8 @@ def identificar_usuario():
     print("1. Administrador")
     print("2. Vendedor")
     print("3. Cliente")
+    print("4. Criar conta de cliente")
+    print("5. Criar conta de vendedor")
     print("0. Sair")
     
     escolha = input("Digite o número correspondente: ")
@@ -35,6 +39,10 @@ def identificar_usuario():
         return "Vendedor"
     elif escolha == "3":
         return "Cliente"
+    elif escolha == "4":
+        return "Criar Conta Cliente"
+    elif escolha == "5":
+        return "Criar Conta Vendedor"
     elif escolha == "0":
         return "Sair"
     else:
@@ -58,6 +66,16 @@ def main():
         elif user_type == "Cliente":
             customer_id = '1'
             customer_actions(customer_id=customer_id, db_connection=db_connection)  # Chama as ações do cliente
+        elif user_type == "Criar Conta Cliente":
+            print("Criando conta de cliente...")
+            clear_console()
+            create_customer_account(db_connection)
+            print("Conta de cliente criada com sucesso!")
+        elif user_type == "Criar Conta Vendedor":
+            print("Criando conta de vendedor...")
+            clear_console()
+            create_seller_account(db_connection)
+            print("Conta de vendedor criada com sucesso!")
         elif user_type == "Sair":
             print("Saindo do sistema...")
             time.sleep(2)

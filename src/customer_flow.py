@@ -7,6 +7,8 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../s
 from problem_report_dao import ProblemReportDAO
 from problem_report import ProblemReport
 from problem_types import SYSTEM_PROBLEM_TYPES, MACHINE_PROBLEM_TYPES
+from customer_dao import CustomerDAO
+from customer import Customer
 
 def clear_console():
     """
@@ -24,11 +26,11 @@ def customer_actions(customer_id, db_connection):
 
     # Check if the 'problem_report' table exists and create it if necessary
     cursor = db_connection.cursor()
-    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='problem_report';")
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='problem_reports';")
     table_exists = cursor.fetchone()
 
     if not table_exists:
-        print("Creating the problem_report table as it does not exist.")
+        print("Creating the problem_reports table as it does not exist.")
         problem_report_dao.create_table()
 
 
@@ -161,4 +163,38 @@ def create_problem_report(customer_id, db_connection):
     time.sleep(2)
 
     
+def create_customer_account(db_connection):
+    """
+    Create a new customer account.
+    """
+    print("Criar Conta de Cliente:")
+    name = input("Nome: ")
+    email = input("Email: ")
+    password = input("Senha: ")
+    address = input("Endereço: ")
+    anonymous_profile = input("Perfil anônimo (sim/não): ").strip().lower() == 'sim'
+    
+    # Cria um novo objeto Customer
+    customer = Customer(name, email, password, address, anonymous_profile)
+    
+    # Insere o novo cliente no banco de dados
+    customer_dao = CustomerDAO(db_connection)
+    # Check if the 'customer' table exists and create it if necessary
+    cursor = db_connection.cursor()
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='customers';")
+    table_exists = cursor.fetchone()
+
+    if not table_exists:
+        print("Creating the customer table as it does not exist.")
+        customer_dao.create_table()
+    
+    customer_dao.insert_customer(customer)
+    
+    print("Conta de cliente criada com sucesso!")
+    
+    #para verificar se o cliente foi criado com sucesso e inserido na tabela customers
+    """
+    cursor.execute("SELECT * FROM customers")
+    print(cursor.fetchall())
+    """
 
