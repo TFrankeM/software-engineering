@@ -45,15 +45,18 @@ class User:
         return self.__profile_picture_path
     
     def _hash_password(self, password):
-        """Hash the password using bcrypt.
+        """
+        Hash the password using bcrypt.
 
         Args:
-            password (str): The password to be hashed.
+            password (str or bytes): The password to be hashed.
 
         Returns:
             str: The hashed password.
         """
-        return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        if isinstance(password, str):
+            password = password.encode('utf-8')  # Codifica apenas se for string
+        return bcrypt.hashpw(password, bcrypt.gensalt())
     
     def verify_password(self, password):
         """Verify the password using bcrypt.

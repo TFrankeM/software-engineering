@@ -13,6 +13,8 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../s
 
 from vending_machine_dao import VendingMachineDAO
 from product_dao import ProductDAO
+from seller_dao import SellerDAO
+from seller import Seller
 
 
 def clear_console():
@@ -505,4 +507,50 @@ def seller_actions(seller_id, db_connection):
             print("\rOpção inválida. Tente novamente.", flush=True)
             time.sleep(2)
             return seller_actions(seller_id, db_connection)
+
+    # Delete the selected machine
+    if 0 < selected_machine <= len(vending_machines):
+        vending_machine_dao.delete_vending_machine(vending_machines[selected_machine - 1].id)
+        print(f"Máquina '{vending_machines[selected_machine - 1].name}' foi deletada com sucesso.")
+    else:
+        print("Número inválido. Retornando ao menu.")
+
+
+def create_seller_account(db_connection):
+    """
+    Create a new seller account and insert it into the database.
+
+    Parameters:
+        db_connection (sqlite3.Connection): The database connection.
+    """
+    print("Criar Conta de Vendedor:")
+    name = input("Nome: ")
+    email = input("Email: ")
+    password = input("Senha: ")
+    address = input("Endereço: ")
+    
+    # Cria um novo objeto Seller
+    seller = Seller(name, email, password, address)
+    
+    # Insere o novo vendedor no banco de dados
+    seller_dao = SellerDAO(db_connection)
+    # Check if the 'sellers' table exists and create it if necessary
+    cursor = db_connection.cursor()
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='sellers';")
+    table_exists = cursor.fetchone()
+
+    if not table_exists:
+        print("Creating the seller table as it does not exist.")
+        seller_dao.create_table()
+    
+    seller_dao.insert_seller(seller)
+    
+    print("Conta de vendedor criada com sucesso!")
+    #para verificar se o vendedor foi inserido corretamente e inserido na tabela sellers
+    """
+    cursor.execute("SELECT * FROM sellers")
+    print(cursor.fetchall())
+    """
+
+    
 

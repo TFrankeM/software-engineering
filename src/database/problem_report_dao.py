@@ -30,7 +30,7 @@ class ProblemReportDAO:
         # Create the problem_reports table with foreign keys for author and machine (if applicable)
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS problem_reports (
-                id TEXT PRIMARY KEY,
+                id INTEGER PRIMARY KEY,
                 author_id TEXT NOT NULL,
                 problem_type TEXT NOT NULL,
                 comment TEXT,
