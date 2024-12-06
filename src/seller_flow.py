@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../s
 from vending_machine_dao import VendingMachineDAO
 from product_dao import ProductDAO
 from seller_dao import SellerDAO
-from seller import Seller
+from user import UserFactory
 
 
 def clear_console():
@@ -523,7 +523,7 @@ def create_seller_account(db_connection):
     address = input("Endereço: ")
     
     # Cria um novo objeto Seller
-    seller = Seller(name, email, password, address)
+    seller = UserFactory(user_type="Seller",name=name, email=email, password=password, address=address)
     
     # Insere o novo vendedor no banco de dados
     seller_dao = SellerDAO(db_connection)
