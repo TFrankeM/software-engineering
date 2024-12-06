@@ -7,3 +7,6 @@ venv
 vending_system.db
 src/database/__pycache__/product_dao.cpython-312.pyc
 /src/database/__pycache__
+*.pyc
+*.pyc
+src/classes/__pycache__/problem_report.cpython-312.pyc

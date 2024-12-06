@@ -13,7 +13,7 @@ from review_dao import ReviewDAO
 from review import Review
 from problem_types import SYSTEM_PROBLEM_TYPES, MACHINE_PROBLEM_TYPES
 from customer_dao import CustomerDAO
-from customer import Customer
+from user import UserFactory
 
 def clear_console():
     """
@@ -86,7 +86,7 @@ def create_customer_account(db_connection):
     anonymous_profile = input("Perfil anônimo (sim/não): ").strip().lower() == 'sim'
     
     # Cria um novo objeto Customer
-    customer = Customer(name, email, password, address, anonymous_profile)
+    customer = UserFactory(user_type="Customer", name=name, email=email, password=password, address=address, anonymous_profile=anonymous_profile)
     
     # Insere o novo cliente no banco de dados
     customer_dao = CustomerDAO(db_connection)
