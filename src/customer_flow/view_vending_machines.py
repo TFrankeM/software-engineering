@@ -5,8 +5,6 @@ import os
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../database")))
 
-from review_service import create_review 
-
 from vending_machine_dao import VendingMachineDAO
 
 

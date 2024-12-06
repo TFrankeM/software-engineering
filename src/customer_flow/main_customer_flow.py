@@ -6,7 +6,6 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../classes")))
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../database")))
 
-from create_account import create_customer_account
 from review_service import create_review 
 from create_problem_report import create_problem_report
 from view_vending_machines import view_vending_machines_for_customer
@@ -14,7 +13,6 @@ from view_vending_machines import view_vending_machines_for_customer
 from vending_machine_dao import VendingMachineDAO
 from product_dao import ProductDAO
 from problem_report_dao import ProblemReportDAO
-from create_problem_report import ProblemReport
 from review_dao import ReviewDAO
 
 
@@ -62,7 +60,7 @@ def customer_actions(customer_id, db_connection):
     
     while True:
         clear_console()
-        print("~"*10, "Bem-vindo, Cliente!", "~"*10)
+        print("~"*10, "Bem-vindo, Cliente!", "~"*10, "\n")
 
         print("1. Visualizar vending machines")
         print("2. Reportar problemas")

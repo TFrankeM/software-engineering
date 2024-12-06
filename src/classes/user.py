@@ -138,3 +138,37 @@ class User:
             new_path (str): The new path for the user's profile picture.
         """
         self.__profile_picture_path = new_path
+
+
+
+class UserFactory:
+    @staticmethod
+    def create_user(user_type, name, email, password, address=None, anonymous_profile=True):
+        """
+        Factory method to create users based on the given type.
+
+        Args:
+            user_type (str): The type of user to create ('Administrator', 'Customer', 'Seller').
+            name (str): The name of the user.
+            email (str): The email of the user.
+            password (str): The password of the user.
+            address (str, optional): The address of the user. Defaults to None.
+            anonymous_profile (bool, optional): If the user's profile is anonymous. Defaults to True.
+
+        Returns:
+            User: An instance of the requested user type.
+
+        Raises:
+            ValueError: If the user type is invalid.
+        """
+        if user_type == "Administrator":
+            from administrator import Administrator
+            return Administrator(name, email, password, address, anonymous_profile)
+        elif user_type == "Customer":
+            from customer import Customer
+            return Customer(name, email, password, address, anonymous_profile)
+        elif user_type == "Seller":
+            from seller import Seller
+            return Seller(name, email, password, address, anonymous_profile)
+        else:
+            raise ValueError(f"Invalid user type: {user_type}")

@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../d
 
 
 from customer_dao import CustomerDAO
-from customer import Customer
+from user import UserFactory
 
 def clear_console():
     """
@@ -29,8 +29,8 @@ def create_customer_account(db_connection):
     anonymous_profile = input("Perfil anônimo (sim/não): ").strip().lower() == 'sim'
     
     # Cria um novo objeto Customer
-    customer = Customer(name, email, password, address, anonymous_profile)
-    
+    customer = UserFactory.create_user(user_type="Customer", name=name, email=email, password=password, address=address, anonymous_profile=anonymous_profile)
+
     # Insere o novo cliente no banco de dados
     customer_dao = CustomerDAO(db_connection)
     # Check if the 'customer' table exists and create it if necessary
@@ -39,12 +39,15 @@ def create_customer_account(db_connection):
     table_exists = cursor.fetchone()
 
     if not table_exists:
-        print("Creating the customer table as it does not exist.")
+        #print("Creating the customer table as it does not exist.")
         customer_dao.create_table()
     
     customer_dao.insert_customer(customer)
     
     print("Conta de cliente criada com sucesso!")
+    
+    input("\nPressione qualquer tecla para voltar.")
+    
     
     #para verificar se o cliente foi criado com sucesso e inserido na tabela customers
     """
