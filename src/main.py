@@ -1,4 +1,3 @@
-2
 from administrator_flow import administrator_actions
 from seller_flow import seller_actions
 from customer_flow import customer_actions
