@@ -1,12 +1,16 @@
 from administrator_flow import administrator_actions
 from seller_flow import seller_actions
-from customer_flow import customer_actions
+#from customer_flow import customer_actions
 from customer_flow import create_customer_account
 from seller_flow import create_seller_account
 from db_initializer import initialize_db 
 import time
+import sys
 import os
 
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "customer_flow")))
+
+from main_customer_flow import customer_actions
 
 def clear_console():
     """
