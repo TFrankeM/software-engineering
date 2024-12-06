@@ -523,7 +523,7 @@ def create_seller_account(db_connection):
     address = input("Endereço: ")
     
     # Cria um novo objeto Seller
-    seller = UserFactory(user_type="Seller",name=name, email=email, password=password, address=address)
+    seller = UserFactory.create_user(user_type="Seller",name=name, email=email, password=password, address=address)
     
     # Insere o novo vendedor no banco de dados
     seller_dao = SellerDAO(db_connection)

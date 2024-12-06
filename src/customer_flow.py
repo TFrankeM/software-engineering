@@ -86,7 +86,7 @@ def create_customer_account(db_connection):
     anonymous_profile = input("Perfil anônimo (sim/não): ").strip().lower() == 'sim'
     
     # Cria um novo objeto Customer
-    customer = UserFactory(user_type="Customer", name=name, email=email, password=password, address=address, anonymous_profile=anonymous_profile)
+    customer = UserFactory.create_user(user_type="Customer", name=name, email=email, password=password, address=address, anonymous_profile=anonymous_profile)
     
     # Insere o novo cliente no banco de dados
     customer_dao = CustomerDAO(db_connection)
