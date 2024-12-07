@@ -1,12 +1,19 @@
-from administrator_flow import administrator_actions
-from seller_flow import seller_actions
-from customer_flow import customer_actions
-from customer_flow import create_customer_account
-from seller_flow import create_seller_account
 from db_initializer import initialize_db 
 import bcrypt
 import time
+import sys
 import os
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "customer_flow")))
+from main_customer_flow import customer_actions
+from create_customer_account import create_customer_account
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "administrator_flow")))
+from main_administrator_flow import administrator_actions
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "seller_flow")))
+from main_seller_flow import seller_actions
+from create_seller_account import create_seller_account
 
 # Variáveis globais para armazenar os IDs do usuário logado
 current_customer_id = None

@@ -34,10 +34,8 @@ class ProblemReport:
             self._validate_machine_problem_type(problem_type)
 
         self.problem_type = problem_type
-        
         self.comment = self._validate_comment(comment, problem_type)
     
-
     def _validate_system_problem_type(self, problem_type):
         """
         Validate the system problem type.
@@ -89,3 +87,35 @@ class ProblemReport:
         else:
             return f"Report by User {self.author_id} for System: {self.problem_type} - {self.comment or 'No comment'}"
 
+
+class ProblemReportFactory:
+    """
+    Factory to create ProblemReport objects based on the provided problem type.
+    """
+
+    @staticmethod
+    def create_report(report_type, author_id, problem_type, comment=None, machine_id=None):
+        """
+        Create and return a ProblemReport object based on the given report type.
+
+        Parameters:
+            report_type (str): Type of report. Can be 'system' or 'machine'.
+            author_id (int): ID of the user creating the report.
+            problem_type (str): The type of the problem.
+            comment (str, optional): Additional comment (if applicable).
+            machine_id (int, optional): Machine ID (if the problem is machine-related).
+
+        Returns:
+            ProblemReport: A new ProblemReport object.
+
+        Raises:
+            ValueError: If an invalid report type is given.
+        """
+        if report_type == "system":
+            # Create a system problem report
+            return ProblemReport(author_id, problem_type, comment)
+        elif report_type == "machine":
+            # Create a machine problem report
+            return ProblemReport(author_id, problem_type, comment, machine_id)
+        else:
+            raise ValueError("Invalid report type. Choose 'system' or 'machine'.")
