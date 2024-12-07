@@ -14,6 +14,7 @@ from review import Review
 from problem_types import SYSTEM_PROBLEM_TYPES, MACHINE_PROBLEM_TYPES
 from customer_dao import CustomerDAO
 from user import UserFactory
+from money_deposit_dao import MoneyDepositDAO
 
 def clear_console():
     """
@@ -369,6 +370,35 @@ def create_review(customer_id, db_connection, review_dao, vending_machine_dao, p
     print("\n==> Sua avaliação foi registrada com sucesso!")
     time.sleep(2)
 
+def deposit_money(customer_id, db_connection):
+    """
+    Allows a customer to deposit money into their account.
+
+    Parameters:
+        customer_id (int): The ID of the customer making the deposit.
+        db_connection (sqlite3.Connection): The database connection.
+    """
+    clear_console()
+    print("~" * 10, "Depósito", "~" * 10)
+    try:
+        amount = float(input("Digite o valor que deseja depositar: R$ "))
+        if amount <= 0:
+            print("O valor deve ser maior que zero. Tente novamente.")
+            time.sleep(2)
+            return
+
+        customer_dao = CustomerDAO(db_connection)
+        print("sucesso na conexão ao costumer DAO")
+        success = customer_dao.add_balance(customer_id, amount)
+        print("sucesso ao adicionar o valor a conta do usuário")
+        
+        if success:
+            print(f"Depósito de R$ {amount:.2f} realizado com sucesso!")
+        else:
+            print("Erro ao realizar o depósito. Tente novamente.")
+    except ValueError:
+        print("Valor inválido. Insira um número válido.")
+    time.sleep(2)
 
 def customer_actions(customer_id, db_connection):    
     """
@@ -379,12 +409,13 @@ def customer_actions(customer_id, db_connection):
     review_dao = ReviewDAO(db_connection)
     product_dao = ProductDAO(db_connection)
     vending_machine_dao = VendingMachineDAO(db_connection)
+    deposit_money_dao = MoneyDepositDAO(db_connection)
 
     # Check if the 'problem_report' and 'reviews' tables exist and create them if necessary
     cursor = db_connection.cursor()
     cursor.execute("""
         SELECT name FROM sqlite_master 
-        WHERE type='table' AND name IN ('problem_report', 'reviews', 'products', 'vending_machines');
+        WHERE type='table' AND name IN ('problem_report', 'reviews', 'products', 'vending_machines', 'deposit_money');
     """)
     
     existing_tables = [table[0] for table in cursor.fetchall()]
@@ -405,21 +436,28 @@ def customer_actions(customer_id, db_connection):
         print("Creating the vending_machines table as it does not exist.")
         vending_machine_dao.create_table()
     
+    if 'deposit_money' not in existing_tables:
+        print("Creating the deposit_money table as it does not exist.")
+        deposit_money_dao.create_table()
+    
     while True:
         clear_console()
         print("~"*10, "Bem-vindo, Cliente!", "~"*10)
 
         print("1. Visualizar vending machines")
-        print("2. Reportar problemas")
-        print("3. Fazer uma avaliação (review)")
+        print("2. Fazer depósito")
+        print("3. Reportar problemas")
+        print("4. Fazer uma avaliação (review)")
         print("0. Sair")
         escolha = input("Digite o número da ação: ")
 
         if escolha == "1":
             view_vending_machines_for_customer(db_connection)
         elif escolha == "2":
-            create_problem_report(customer_id, db_connection)
+            deposit_money(customer_id, db_connection)
         elif escolha == "3":
+            create_problem_report(customer_id, db_connection)
+        elif escolha == "4":
             create_review(customer_id, db_connection, review_dao, vending_machine_dao, product_dao)
         elif escolha == "0":
             print("\nSaindo do painel do usuário...")
