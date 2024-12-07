@@ -2,7 +2,7 @@ import uuid
 import bcrypt
 
 class User:
-    def __init__(self, name, email, password, address=None, anonymous_profile=True):
+    def __init__(self, name, email, password, address=None, anonymous_profile=True, coins = 0):
         """Initialize a new User instance with the given attributes.
 
         Args:
@@ -18,6 +18,7 @@ class User:
         self.__address = address          # Private address attribute
         self.__profile_picture_path = "../imgs/default.png"  # Default profile picture path
         self.anonymous_profile = anonymous_profile  # Public anonymous profile attribute
+        self.coins = coins #number of coins
 
     @property
     def user_id(self):
@@ -55,8 +56,8 @@ class User:
             str: The hashed password.
         """
         if isinstance(password, str):
-            password = password.encode('utf-8')  # Codifica apenas se for string
-        return bcrypt.hashpw(password, bcrypt.gensalt())
+            password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        return password
     
     def verify_password(self, password):
         """Verify the password using bcrypt.
@@ -143,7 +144,7 @@ class User:
 
 class UserFactory:
     @staticmethod
-    def create_user(user_type, name, email, password, address=None, anonymous_profile=True):
+    def create_user(user_type, name, email, password, address=None, anonymous_profile=True, coins=0):
         """
         Factory method to create users based on the given type.
 
@@ -166,9 +167,9 @@ class UserFactory:
             return Administrator(name, email, password, address, anonymous_profile)
         elif user_type == "Customer":
             from customer import Customer
-            return Customer(name, email, password, address, anonymous_profile)
+            return Customer(name, email, password, address, anonymous_profile, coins)
         elif user_type == "Seller":
             from seller import Seller
-            return Seller(name, email, password, address, anonymous_profile)
+            return Seller(name, email, password, address, anonymous_profile, coins)
         else:
             raise ValueError(f"Invalid user type: {user_type}")

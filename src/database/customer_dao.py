@@ -34,7 +34,8 @@ class CustomerDAO:
                 password TEXT NOT NULL,
                 address TEXT,
                 profile_picture_path TEXT,
-                anonymous_profile BOOLEAN NOT NULL
+                anonymous_profile BOOLEAN NOT NULL,
+                coins NUMERIC
             );
         ''')
 
@@ -50,10 +51,10 @@ class CustomerDAO:
         cursor = self.connection.cursor()
 
         cursor.execute('''
-            INSERT INTO customers (id, name, email, password, address, profile_picture_path, anonymous_profile)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO customers (id, name, email, password, address, profile_picture_path, anonymous_profile, coins)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ''', (str(customer.user_id), customer.name, customer.email, customer._hash_password(customer.change_password),
-              customer.address, customer.profile_picture_path, customer.anonymous_profile))
+              customer.address, customer.profile_picture_path, customer.anonymous_profile, customer.coins))
 
         self.connection.commit()
 
@@ -90,10 +91,10 @@ class CustomerDAO:
 
         cursor.execute('''
             UPDATE customers
-            SET name = ?, email = ?, password = ?, address = ?, profile_picture_path = ?, anonymous_profile = ?
+            SET name = ?, email = ?, password = ?, address = ?, profile_picture_path = ?, anonymous_profile = ?, coins = ?
             WHERE id = ?
         ''', (customer.name, customer.email, customer._hash_password(customer.change_password),
-              customer.address, customer.profile_picture_path, customer.anonymous_profile, str(customer.user_id)))
+              customer.address, customer.profile_picture_path, customer.anonymous_profile, str(customer.user_id), customer.coins))
 
         self.connection.commit()
 
@@ -108,3 +109,35 @@ class CustomerDAO:
 
         cursor.execute('DELETE FROM customers WHERE id = ?', (customer_id,))
         self.connection.commit()
+
+    def add_balance(self, customer_id, amount):
+        """
+        Add balance to a customer's account.
+
+        Parameters:
+            customer_id (str): The ID of the customer.
+            amount (float): The amount to be added to the customer's balance.
+
+        Returns:
+            bool: True if the balance was updated successfully, False otherwise.
+        """
+        cursor = self.connection.cursor()
+
+        try:
+            # Atualiza o saldo do cliente
+            cursor.execute('''
+                UPDATE customers
+                SET coins = COALESCE(coins, 0) + ?
+                WHERE id = ?
+            ''', (amount, customer_id))
+
+            # Verifica se algum registro foi afetado
+            if cursor.rowcount == 0:
+                return False  # Cliente não encontrado
+
+            self.connection.commit()
+            return True
+        except Exception as e:
+            print(f"Erro ao adicionar saldo: {e}")
+            self.connection.rollback()
+            return False
