@@ -36,9 +36,9 @@ def login_user(user_type, db_connection):
     Returns:
         int: User ID if login is successful, None otherwise.
     """
-    import bcrypt
+    clear_console()
+    print("~"*10, f"Login {user_type}", "~"*10, "\n")
 
-    print(f"\n--- Login {user_type} ---")
     username = input("Digite seu nome de usuário: ")
     password = input("Digite sua senha: ")
 
@@ -68,13 +68,13 @@ def login_user(user_type, db_connection):
                 return user_id
             else:
                 print("Senha incorreta. Tente novamente.")
-                time.sleep(3)
+                time.sleep(2)
         else:
             print("Usuário não encontrado. Tente novamente.")
-            time.sleep(3)
+            time.sleep(2)
     except Exception as e:
         print(f"Erro ao tentar fazer login: {e}")
-        time.sleep(3)
+        time.sleep(2)
 
     return None
 
@@ -83,29 +83,67 @@ def identificar_usuario():
     Function to identify the user type. Displays the main menu.
     Returns the user's choice as a string.
     """
-    clear_console()
-    
-    print("~"*10, "Bem-vindo ao Sistema Compre Aqui!", "~"*10, "\n")
-    print("Selecione uma opção:")
-    print("1. Administrador")
-    print("2. Fazer Login")
-    print("3. Não tem conta? Crie uma conta!")
-    print("0. Sair")
 
-    escolha = input("Digite o número correspondente: ")
+    while True:
+        clear_console()
+        print("~"*10, "Bem-vindo ao Sistema Compre Aqui!", "~"*10, "\n")
 
-    if escolha == "1":
-        return "Administrador"
-    elif escolha == "2":
-        return "Login"
-    elif escolha == "3":
-        return "Criar Conta"
-    elif escolha == "0":
-        return "Sair"
-    else:
-        print("\rOpção inválida. Tente novamente.", flush=True)
-        time.sleep(2)
-        return identificar_usuario()
+        print("Selecione uma opção:")
+        print("1. Fazer Login")
+        print("2. Não tem conta? Crie uma conta!")
+        print("0. Sair")
+
+        escolha = input("\nDigite o número correspondente: ")
+
+        if escolha == "1":
+            return "Login"
+        elif escolha == "2":
+            return "Criar Conta"
+        elif escolha == "0":
+            return "Sair"
+        else:
+            print("\rOpção inválida. Tente novamente.", flush=True)
+            time.sleep(2)
+
+def fazer_login(db_connection_pool):
+    while True:
+        clear_console()
+        print("~"*10, "Selecione o tipo de login", "~"*10, "\n")
+
+        print("1. Administrador ")
+        print("2. Cliente")
+        print("3. Vendedor")
+        print("0. Voltar")
+        login_type = input("\nDigite o número correspondente: ")
+
+        if login_type == "0":
+            break
+
+        elif login_type == "1":
+            # db_connection = db_connection_pool.get_connection()         # Pega uma conexão do pool
+            # customer_id = login_user("Administrator", db_connection)
+            # db_connection_pool.release_connection(db_connection)        # Devolve a conexão ao pool
+            # IMPLEMENTE O LOGIN PRA ADMINISTRADOR
+            administrator_actions(db_connection_pool)  # Chama as ações do administrador
+
+        elif login_type == "2":
+            db_connection = db_connection_pool.get_connection()         # Pega uma conexão do pool
+            customer_id = login_user("Customer", db_connection)
+            db_connection_pool.release_connection(db_connection)        # Devolve a conexão ao pool
+
+            if customer_id:
+                customer_actions(customer_id=customer_id, db_pool=db_connection_pool)
+
+        elif login_type == "3":
+            db_connection = db_connection_pool.get_connection()         # Pega uma conexão do pool
+            seller_id = login_user("Seller", db_connection)
+            db_connection_pool.release_connection(db_connection)        # Devolve a conexão ao pool
+
+            if seller_id:
+                seller_actions(seller_id=seller_id, db_pool=db_connection_pool)
+        else:
+            print("Entrada inválida. Digite uma opção válida.")
+            time.sleep(2)
 
 def criar_conta(db_connection):
     """
@@ -114,22 +152,28 @@ def criar_conta(db_connection):
     Args:
         db_connection: Database connection object.
     """
-    clear_console()
-    print("\n--- Criar Conta ---")
-    print("Selecione o tipo de conta:")
-    print("1. Cliente")
-    print("2. Vendedor")
-    opcao = input("Digite o número correspondente: ")
+    while True:
+        clear_console()
+        print("~"*10, "Criar conta", "~"*10, "\n")
 
-    if opcao == "1":
-        create_customer_account(db_connection)
-        print("Conta de cliente criada com sucesso!")
-    elif opcao == "2":
-        create_seller_account(db_connection)
-        print("Conta de vendedor criada com sucesso!")
-    else:
-        print("Opção inválida. Retornando ao menu principal.")
-        time.sleep(2)
+        print("Selecione o tipo de conta:")
+        print("1. Cliente")
+        print("2. Vendedor")
+        print("0. Voltar")
+        opcao = input("\nDigite o número correspondente: ")
+
+        if opcao == "0":
+            return
+        elif opcao == "1":
+            create_customer_account(db_connection)
+            break
+        elif opcao == "2":
+            create_seller_account(db_connection)
+            break
+        else:
+            print("Entrada inválida. Digite uma opção válida.")
+            time.sleep(2)
+        
 
 def main():
     # Inicializa o pool de conexões com o banco de dados
@@ -138,32 +182,9 @@ def main():
     while True:
         user_choice = identificar_usuario()
 
-        if user_choice == "Administrador":
-            administrator_actions(db_connection_pool)  # Chama as ações do administrador
-        elif user_choice == "Login":
-            clear_console()
-            print("\nSelecione o tipo de login:")
-            print("1. Cliente")
-            print("2. Vendedor")
-            login_type = input("Digite o número correspondente: ")
+        if user_choice == "Login":
+            fazer_login(db_connection_pool)
 
-            if login_type == "1":
-                db_connection = db_connection_pool.get_connection()         # Pega uma conexão do pool
-                customer_id = login_user("Customer", db_connection)
-                db_connection_pool.release_connection(db_connection)        # Devolve a conexão ao pool
-
-                if customer_id:
-                    customer_actions(customer_id=customer_id, db_pool=db_connection_pool)
-            elif login_type == "2":
-                db_connection = db_connection_pool.get_connection()         # Pega uma conexão do pool
-                seller_id = login_user("Seller", db_connection)
-                db_connection_pool.release_connection(db_connection)        # Devolve a conexão ao pool
-
-                if seller_id:
-                    seller_actions(seller_id=seller_id, db_pool=db_connection_pool)
-            else:
-                print("Opção inválida. Retornando ao menu principal.")
-                time.sleep(2)
         elif user_choice == "Criar Conta":
             db_connection = db_connection_pool.get_connection()         # Pega uma conexão do pool
             criar_conta(db_connection)
@@ -172,6 +193,7 @@ def main():
         elif user_choice == "Sair":
             print("Saindo do sistema...")
             time.sleep(2)
+
             clear_console()
             print("~"*10, "Volte sempre", "~"*10)
             break  # Finaliza o programa

@@ -68,7 +68,6 @@ def seller_actions(seller_id, db_pool):
         elif action == "3":
             delete_vending_machine(seller_id, db_connection, vending_machine_dao, product_dao)
         elif action == "0":
-            print("Saindo...")
             break
         else:
             print("\rOpção inválida. Tente novamente.", flush=True)

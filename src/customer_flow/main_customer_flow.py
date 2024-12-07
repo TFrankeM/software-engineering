@@ -87,8 +87,6 @@ def customer_actions(customer_id, db_pool):
         elif escolha == "4":
             create_review(customer_id, db_connection, review_dao, vending_machine_dao, product_dao)
         elif escolha == "0":
-            print("\nSaindo do painel do usuário...")
-            time.sleep(1)
             break
         else:
             print("\nOpção inválida. Tente novamente.")
