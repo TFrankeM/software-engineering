@@ -45,7 +45,7 @@ def create_seller_account(db_connection):
     
     seller_dao.insert_seller(seller)
     
-    print("Conta de vendedor criada com sucesso!")
+    print("==> Conta de vendedor criada com sucesso!")
     
     input("\nPressione qualquer tecla para voltar.")
 

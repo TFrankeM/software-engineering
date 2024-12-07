@@ -44,7 +44,7 @@ def create_customer_account(db_connection):
     
     customer_dao.insert_customer(customer)
     
-    print("Conta de cliente criada com sucesso!")
+    print("==> Conta de cliente criada com sucesso!")
     
     input("\nPressione qualquer tecla para voltar.")
     

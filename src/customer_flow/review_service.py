@@ -13,6 +13,7 @@ def clear_console():
     Console clearing function, (just works in Windows and Unix-based).
     """
     os.system('cls' if os.name == 'nt' else 'clear')
+
 def create_review(customer_id, db_connection, review_dao, vending_machine_dao, product_dao):
     """
     Function to interactively create a review for a product or vending machine.
@@ -34,11 +35,11 @@ def create_review(customer_id, db_connection, review_dao, vending_machine_dao, p
         print("2. Criar avaliação de máquina")
         print("0. Voltar")
 
-        option = input("Escolha uma opção: ")
+        option = input("\n==> Escolha uma opção: ")
 
         if option == "0":
             print("Voltando...")
-            time.sleep(1)
+            time.sleep(0.5)
             break
         
         review_type = None
@@ -146,8 +147,8 @@ def create_review(customer_id, db_connection, review_dao, vending_machine_dao, p
             # Get the selected machine and save the ID
             selected_machine_id = machines[selected_machine - 1].id
 
-        print("Opção selecionada.")
-        time.sleep(1)
+            print("Opção selecionada.")
+            time.sleep(1)
 
         # Get user rating
         while True:
@@ -186,10 +187,12 @@ def create_review(customer_id, db_connection, review_dao, vending_machine_dao, p
             #Insert the review into the database
             review_dao.insert_review(review)
             print("\n==> Sua avaliação foi registrada com sucesso!")
-            time.sleep(2)
+
+            input("\nPressione qualquer tecla para voltar.")
             return
+        
         except ValueError as e:
             print(f"Erro ao criar avaliação: {e}")
 
-        time.sleep(2)
+            time.sleep(2)
 

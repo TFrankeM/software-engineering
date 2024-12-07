@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../c
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../database")))
 
 from review_service import create_review 
-from create_problem_report import create_problem_report
+from report_service import create_problem_report
 from view_vending_machines import view_vending_machines_for_customer
 
 from vending_machine_dao import VendingMachineDAO
