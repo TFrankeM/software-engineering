@@ -20,7 +20,7 @@ def clear_console():
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     
-def seller_actions(seller_id, db_connection):
+def seller_actions(seller_id, db_pool):
     """
         Main flow for a seller to manage vending machines.
     
@@ -28,6 +28,8 @@ def seller_actions(seller_id, db_connection):
         seller_id (str): The ID of the seller (owner of vending machines).
         db_connection (sqlite3.Connection): The database connection.
     """
+
+    db_connection = db_pool.get_connection()         # Pega uma conexão do pool
     
     vending_machine_dao = VendingMachineDAO(db_connection)
     product_dao = ProductDAO(db_connection)
@@ -71,4 +73,6 @@ def seller_actions(seller_id, db_connection):
         else:
             print("\rOpção inválida. Tente novamente.", flush=True)
             time.sleep(2)
-            return seller_actions(seller_id, db_connection)
+    
+    db_pool.release_connection(db_connection)        # Devolve a conexão ao pool
+    

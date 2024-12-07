@@ -10,12 +10,17 @@ def clear_console():
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     
-def administrator_actions(db_connection):
+def administrator_actions(db_pool):
     """
-    Funções específicas do administrador.
-    Este método deve ser expandido com as opções específicas para administradores.
+    Administrator-specific functions.
+    This method will gradually be expanded with administrator-specific options.
+    
+    Parameters:
+        db_pool: database connection pool.
     """
 
+    db_connection = db_pool.get_connection()         # Pega uma conexão do pool
+    
     while True:
         clear_console()
         print("~"*10, "Bem-vindo, Administrador!", "~"*10, "\n")
@@ -37,7 +42,10 @@ def administrator_actions(db_connection):
             time.sleep(2)
         elif escolha == "0":
             print("\nSaindo do painel do administrador...")
-            time.sleep(1.5)
+            time.sleep(1)
             break
         else:
             print("\nOpção inválida. Tente novamente.")
+    
+    db_pool.release_connection(db_connection)        # Devolve a conexão ao pool
+

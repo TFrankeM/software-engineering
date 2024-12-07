@@ -23,11 +23,13 @@ def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-def customer_actions(customer_id, db_connection):    
+def customer_actions(customer_id, db_pool):    
     """
     Main function for the customer panel.
     """
     
+    db_connection = db_pool.get_connection()         # Pega uma conexão do pool
+
     problem_report_dao = ProblemReportDAO(db_connection)
     review_dao = ReviewDAO(db_connection)
     product_dao = ProductDAO(db_connection)
@@ -81,3 +83,5 @@ def customer_actions(customer_id, db_connection):
         else:
             print("\nOpção inválida. Tente novamente.")
             time.sleep(1)
+    
+    db_pool.release_connection(db_connection)        # Devolve a conexão ao pool

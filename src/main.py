@@ -132,14 +132,14 @@ def criar_conta(db_connection):
         time.sleep(2)
 
 def main():
-    # Inicializa o banco de dados
-    db_connection = initialize_db()
+    # Inicializa o pool de conexões com o banco de dados
+    db_connection_pool = initialize_db()
 
     while True:
         user_choice = identificar_usuario()
 
         if user_choice == "Administrador":
-            administrator_actions(db_connection)  # Chama as ações do administrador
+            administrator_actions(db_connection_pool)  # Chama as ações do administrador
         elif user_choice == "Login":
             clear_console()
             print("\nSelecione o tipo de login:")
@@ -148,18 +148,27 @@ def main():
             login_type = input("Digite o número correspondente: ")
 
             if login_type == "1":
+                db_connection = db_connection_pool.get_connection()         # Pega uma conexão do pool
                 customer_id = login_user("Customer", db_connection)
+                db_connection_pool.release_connection(db_connection)        # Devolve a conexão ao pool
+
                 if customer_id:
-                    customer_actions(customer_id=customer_id, db_connection=db_connection)
+                    customer_actions(customer_id=customer_id, db_pool=db_connection_pool)
             elif login_type == "2":
+                db_connection = db_connection_pool.get_connection()         # Pega uma conexão do pool
                 seller_id = login_user("Seller", db_connection)
+                db_connection_pool.release_connection(db_connection)        # Devolve a conexão ao pool
+
                 if seller_id:
-                    seller_actions(seller_id=seller_id, db_connection=db_connection)
+                    seller_actions(seller_id=seller_id, db_pool=db_connection_pool)
             else:
                 print("Opção inválida. Retornando ao menu principal.")
                 time.sleep(2)
         elif user_choice == "Criar Conta":
+            db_connection = db_connection_pool.get_connection()         # Pega uma conexão do pool
             criar_conta(db_connection)
+            db_connection_pool.release_connection(db_connection)        # Devolve a conexão ao pool
+
         elif user_choice == "Sair":
             print("Saindo do sistema...")
             time.sleep(2)
