@@ -25,7 +25,7 @@ class NotificationDAO:
         """
         cursor = self.connection.cursor()
         cursor.execute("""
-            CREATE TABLE IF NOT EXISTS notifications (
+            CREATE TABLE IF NOT EXISTS notification (
                 id TEXT PRIMARY KEY,
                 user_id TEXT NOT NULL,
                 message TEXT NOT NULL,
@@ -44,7 +44,7 @@ class NotificationDAO:
         """
         cursor = self.connection.cursor()
         cursor.execute("""
-            INSERT INTO notifications (id, user_id, message, notification_date)
+            INSERT INTO notification (id, user_id, message, notification_date)
             VALUES (?, ?, ?, ?)
         """, (str(notification.id), notification.user_id, notification.message, notification.notification_date))
         self.connection.commit()
@@ -52,17 +52,17 @@ class NotificationDAO:
 
     def get_notifications_by_user(self, user_id):
         """
-        Retrieve all notifications for a specific user.
+        Retrieve all notifications for a specific user, ordered by most recent first.
 
         Parameters:
             user_id (str): The ID of the user whose notifications are being fetched.
 
         Returns:
-            list: A list of Notification objects for the given user.
+            list: A list of Notification objects for the given user, ordered by most recent.
         """
         cursor = self.connection.cursor()
         cursor.execute("""
-            SELECT id, user_id, message, notification_date FROM notifications WHERE user_id = ?
+            SELECT id, user_id, message, notification_date FROM notification WHERE user_id = ?
         """, (user_id,))
         rows = cursor.fetchall()
 
@@ -71,5 +71,8 @@ class NotificationDAO:
         
         # Convert the notification_date column to datetime
         notifications_df['notification_date'] = pd.to_datetime(notifications_df['notification_date'])
+
+        # Sort notifications so that the most recent one is last
+        notifications_df = notifications_df.sort_values(by='notification_date', ascending=False)
 
         return notifications_df
