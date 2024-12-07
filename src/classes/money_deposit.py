@@ -6,16 +6,15 @@ class MoneyDeposit:
     Class to represent a money deposit made by a customer in the system.
     """
 
-    MAX_AMOUNT = 10000.0  # Maximum deposit amount allowed per transaction
+    MAX_AMOUNT = 100000.0  # Maximum deposit amount allowed per transaction
     
-    def __init__(self, customer_id, amount, deposit_method):
+    def __init__(self, customer_id, amount):
         """
         Initialize the money deposit with details about the transaction.
 
         Parameters:
             customer_id (int): ID of the customer making the deposit.
             amount (float): Amount of money being deposited.
-            deposit_method (str): Method of deposit, chosen from predefined options.
 
         Raises:
             ValueError: If the amount is invalid or if the deposit_method is not recognized.
@@ -25,7 +24,6 @@ class MoneyDeposit:
         self.timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         
         self.amount = self._validate_amount(amount)
-        self.deposit_method = self._validate_deposit_method(deposit_method)
 
     def _validate_amount(self, amount):
         """

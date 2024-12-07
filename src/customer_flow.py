@@ -388,7 +388,9 @@ def deposit_money(customer_id, db_connection):
             return
 
         customer_dao = CustomerDAO(db_connection)
+        print("sucesso na conexão ao costumer DAO")
         success = customer_dao.add_balance(customer_id, amount)
+        print("sucesso ao adicionar o valor a conta do usuário")
         
         if success:
             print(f"Depósito de R$ {amount:.2f} realizado com sucesso!")

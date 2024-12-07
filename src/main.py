@@ -64,7 +64,7 @@ def main():
             seller_id = '1'  # Simulação de um ID de vendedor
             seller_actions(seller_id=seller_id, db_connection=db_connection)  # Chama as ações do vendedor
         elif user_type == "Cliente":
-            customer_id = '1'
+            customer_id = 'dee79789-d2d6-49ef-a49b-204c9cd9b1a6'
             customer_actions(customer_id=customer_id, db_connection=db_connection)  # Chama as ações do cliente
         elif user_type == "Criar Conta Cliente":
             print("Criando conta de cliente...")

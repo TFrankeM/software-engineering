@@ -30,7 +30,6 @@ class MoneyDepositDAO:
                 id TEXT PRIMARY KEY,
                 customer_id INTEGER NOT NULL,
                 amount REAL NOT NULL,
-                deposit_method TEXT NOT NULL,
                 timestamp TEXT NOT NULL
             );
         """)
@@ -45,10 +44,9 @@ class MoneyDepositDAO:
         """
         cursor = self.connection.cursor()
         cursor.execute("""
-            INSERT INTO money_deposits (id, customer_id, amount, deposit_method, timestamp)
-            VALUES (?, ?, ?, ?, ?)
-        """, (str(money_deposit.id), money_deposit.customer_id, money_deposit.amount, 
-               money_deposit.deposit_method, money_deposit.timestamp))
+            INSERT INTO money_deposits (id, customer_id, amount, timestamp)
+            VALUES (?, ?, ?, ?)
+        """, (str(money_deposit.id), money_deposit.customer_id, money_deposit.amount, money_deposit.timestamp))
         self.connection.commit()
 
     def get_all_deposits(self):
@@ -95,10 +93,9 @@ class MoneyDepositDAO:
             deposit = MoneyDeposit(
                 customer_id=row[1],
                 amount=row[2],
-                deposit_method=row[3]
             )
             deposit.id = row[0]
-            deposit.timestamp = row[4]
+            deposit.timestamp = row[3]
             deposits.append(deposit)
 
         return deposits
