@@ -34,7 +34,8 @@ class CustomerDAO:
                 password TEXT NOT NULL,
                 address TEXT,
                 profile_picture_path TEXT,
-                anonymous_profile BOOLEAN NOT NULL
+                anonymous_profile BOOLEAN NOT NULL,
+                coins NUMERIC
             );
         ''')
 
@@ -50,10 +51,10 @@ class CustomerDAO:
         cursor = self.connection.cursor()
 
         cursor.execute('''
-            INSERT INTO customers (id, name, email, password, address, profile_picture_path, anonymous_profile)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO customers (id, name, email, password, address, profile_picture_path, anonymous_profile, coins)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ''', (str(customer.user_id), customer.name, customer.email, customer._hash_password(customer.change_password),
-              customer.address, customer.profile_picture_path, customer.anonymous_profile))
+              customer.address, customer.profile_picture_path, customer.anonymous_profile, customer.coins))
 
         self.connection.commit()
 
@@ -90,10 +91,10 @@ class CustomerDAO:
 
         cursor.execute('''
             UPDATE customers
-            SET name = ?, email = ?, password = ?, address = ?, profile_picture_path = ?, anonymous_profile = ?
+            SET name = ?, email = ?, password = ?, address = ?, profile_picture_path = ?, anonymous_profile = ?, coins = ?
             WHERE id = ?
         ''', (customer.name, customer.email, customer._hash_password(customer.change_password),
-              customer.address, customer.profile_picture_path, customer.anonymous_profile, str(customer.user_id)))
+              customer.address, customer.profile_picture_path, customer.anonymous_profile, str(customer.user_id), customer.coins))
 
         self.connection.commit()
 

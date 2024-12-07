@@ -32,7 +32,8 @@ class SellerDAO:
                 password TEXT NOT NULL,
                 address TEXT,
                 profile_picture_path TEXT,
-                anonymous_profile BOOLEAN NOT NULL
+                anonymous_profile BOOLEAN NOT NULL,
+                coins NUMERIC
             );
         ''')
 
@@ -48,10 +49,10 @@ class SellerDAO:
         cursor = self.connection.cursor()
 
         cursor.execute('''
-            INSERT INTO sellers (id, name, email, password, address, profile_picture_path, anonymous_profile)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO sellers (id, name, email, password, address, profile_picture_path, anonymous_profile, coins)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ''', (str(seller.user_id), seller.name, seller.email, seller._hash_password(seller.change_password),
-              seller.address, seller.profile_picture_path, seller.anonymous_profile))
+              seller.address, seller.profile_picture_path, seller.anonymous_profile, seller.coins))
 
         self.connection.commit()
 
@@ -88,10 +89,10 @@ class SellerDAO:
 
         cursor.execute('''
             UPDATE sellers
-            SET name = ?, email = ?, password = ?, address = ?, profile_picture_path = ?, anonymous_profile = ?
+            SET name = ?, email = ?, password = ?, address = ?, profile_picture_path = ?, anonymous_profile = ?, coins = ?
             WHERE id = ?
         ''', (seller.name, seller.email, seller._hash_password(seller.change_password),
-              seller.address, seller.profile_picture_path, seller.anonymous_profile, str(seller.user_id)))
+              seller.address, seller.profile_picture_path, seller.anonymous_profile, str(seller.user_id), seller.coins))
 
         self.connection.commit()
 
