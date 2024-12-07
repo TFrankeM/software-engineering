@@ -15,9 +15,10 @@ class Seller(User):
             password (str): The password of the seller.
             profile_picture_path (str): The path to the seller's profile picture.
             anonymous_profile (bool): Whether the seller's profile is anonymous (default is True).
-            coins (float): Numbers of coins the customer have 
+            coins (float): Numbers of coins the seller have 
         """
         super().__init__(name, email, password, address, anonymous_profile)
+        self.coins = coins
         self.products = []
         self.orders = []
         
