@@ -109,3 +109,35 @@ class CustomerDAO:
 
         cursor.execute('DELETE FROM customers WHERE id = ?', (customer_id,))
         self.connection.commit()
+
+    def add_balance(self, customer_id, amount):
+        """
+        Add balance to a customer's account.
+
+        Parameters:
+            customer_id (str): The ID of the customer.
+            amount (float): The amount to be added to the customer's balance.
+
+        Returns:
+            bool: True if the balance was updated successfully, False otherwise.
+        """
+        cursor = self.connection.cursor()
+
+        try:
+            # Atualiza o saldo do cliente
+            cursor.execute('''
+                UPDATE customers
+                SET coins = COALESCE(coins, 0) + ?
+                WHERE id = ?
+            ''', (amount, customer_id))
+
+            # Verifica se algum registro foi afetado
+            if cursor.rowcount == 0:
+                return False  # Cliente não encontrado
+
+            self.connection.commit()
+            return True
+        except Exception as e:
+            print(f"Erro ao adicionar saldo: {e}")
+            self.connection.rollback()
+            return False
