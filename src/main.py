@@ -7,6 +7,9 @@ from db_initializer import initialize_db
 import time
 import os
 
+# Variáveis globais para armazenar os IDs do usuário logado
+current_customer_id = None
+current_seller_id = None
 
 def clear_console():
     """
@@ -14,21 +17,50 @@ def clear_console():
     """
     os.system('cls' if os.name == 'nt' else 'clear')
 
+def criar_nova_conta(db_connection):
+    """
+    Função para criar uma nova conta.
+    Permite escolher entre cliente ou vendedor e direciona para a tela de cadastro.
+    """
+    clear_console()
+    print("~"*10, "Criar Conta", "~"*10, "\n")
+    print("Selecione o tipo de conta a criar:")
+    print("1. Cliente")
+    print("2. Vendedor")
+    print("0. Voltar")
+
+    escolha = input("Digite o número correspondente: ")
+
+    if escolha == "1":
+        clear_console()
+        print("Criando conta de cliente...")
+        create_customer_account(db_connection)
+        print("Conta de cliente criada com sucesso!")
+    elif escolha == "2":
+        clear_console()
+        print("Criando conta de vendedor...")
+        create_seller_account(db_connection)
+        print("Conta de vendedor criada com sucesso!")
+    elif escolha == "0":
+        return
+    else:
+        print("Opção inválida. Tente novamente.")
+        time.sleep(2)
+        criar_nova_conta(db_connection)
 
 def identificar_usuario():
     """
-    Function to identify the user type. It can be via login or a simple selection.
-    Returns the user type as a string.
+    Função para identificar o tipo de usuário. Permite login ou criação de conta.
+    Retorna o tipo de usuário como uma string.
     """
     clear_console()
     
     print("~"*10, "Bem-vindo ao Sistema Compre Aqui!", "~"*10, "\n")
-    print("Selecione o tipo de usuário:")
+    print("Selecione uma opção:")
     print("1. Administrador")
     print("2. Vendedor")
     print("3. Cliente")
-    print("4. Criar conta de cliente")
-    print("5. Criar conta de vendedor")
+    print("4. Não tem conta? Crie uma conta!")
     print("0. Sair")
     
     escolha = input("Digite o número correspondente: ")
@@ -40,9 +72,7 @@ def identificar_usuario():
     elif escolha == "3":
         return "Cliente"
     elif escolha == "4":
-        return "Criar Conta Cliente"
-    elif escolha == "5":
-        return "Criar Conta Vendedor"
+        return "Criar Conta"
     elif escolha == "0":
         return "Sair"
     else:
@@ -52,6 +82,8 @@ def identificar_usuario():
 
 
 def main():
+    global current_customer_id, current_seller_id
+
     # Inicializa o banco de dados
     db_connection = initialize_db()  # Chama a função que inicializa o banco de dados
     
@@ -61,21 +93,13 @@ def main():
         if user_type == "Administrador":
             administrator_actions(db_connection)  # Chama as ações do administrador
         elif user_type == "Vendedor":
-            seller_id = '1'  # Simulação de um ID de vendedor
-            seller_actions(seller_id=seller_id, db_connection=db_connection)  # Chama as ações do vendedor
+            current_seller_id = '1'  # Aqui você pode implementar o fluxo de login para vendedores
+            seller_actions(seller_id=current_seller_id, db_connection=db_connection)
         elif user_type == "Cliente":
-            customer_id = 'dee79789-d2d6-49ef-a49b-204c9cd9b1a6'
-            customer_actions(customer_id=customer_id, db_connection=db_connection)  # Chama as ações do cliente
-        elif user_type == "Criar Conta Cliente":
-            print("Criando conta de cliente...")
-            clear_console()
-            create_customer_account(db_connection)
-            print("Conta de cliente criada com sucesso!")
-        elif user_type == "Criar Conta Vendedor":
-            print("Criando conta de vendedor...")
-            clear_console()
-            create_seller_account(db_connection)
-            print("Conta de vendedor criada com sucesso!")
+            current_customer_id = '1'  # Aqui você pode implementar o fluxo de login para clientes
+            customer_actions(customer_id=current_customer_id, db_connection=db_connection)
+        elif user_type == "Criar Conta":
+            criar_nova_conta(db_connection)  # Chama o fluxo de criação de conta
         elif user_type == "Sair":
             print("Saindo do sistema...")
             time.sleep(2)
