@@ -204,7 +204,7 @@ def create_problem_report(customer_id, db_connection):
         if option == "0":
             print("Voltando...")
             time.sleep(0.5)
-            break
+            return
         
         report_type = None
         if option == "1":
@@ -221,7 +221,15 @@ def create_problem_report(customer_id, db_connection):
             continue
 
     # Coletar dados usando a estratégia escolhida
-    machine_id, problem_type, comment = strategy.collect_data()
+    result = strategy.collect_data()
+
+    # Verificar se a coleta de dados foi cancelada (None)
+    if result is None:
+        print("Relatório cancelado.")
+        time.sleep(1)
+        return
+    
+    machine_id, problem_type, comment = result
 
     # Cria um novo relatório de problema usando o Factory Method
     problem_report = ProblemReportFactory.create_report(
