@@ -19,6 +19,7 @@ from notification_dao import NotificationDAO
 from favorite_product_machine_dao import FavoriteMachineDAO, FavoriteProductDAO
 from transaction_dao import TransactionDAO
 from item_transaction_dao import ItemTransactionDAO
+from manage_balance_dao import manage_balance
 
 def clear_console():
     """
@@ -98,6 +99,7 @@ def customer_actions(customer_id, db_pool):
         print("2. Notificações")
         print("3. Reportar problemas")
         print("4. Fazer uma avaliação (review)")
+        print("5. Gerenciar saldo")
         print("0. Sair")
         escolha = input("\nDigite o número da ação: ")
 
@@ -109,6 +111,8 @@ def customer_actions(customer_id, db_pool):
             create_problem_report(customer_id, db_connection)
         elif escolha == "4":
             create_review(customer_id, db_connection, review_dao, vending_machine_dao, product_dao)
+        elif escolha == "5":
+            manage_balance(customer_id, db_connection)
         elif escolha == "0":
             break
         else:

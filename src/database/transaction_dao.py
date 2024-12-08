@@ -20,19 +20,22 @@ class TransactionDAO:
         self.connection = db_connection
 
     def create_table(self):
-        """
-        Create the transactions table in the database if it doesn't already exist.
-        """
-        cursor = self.connection.cursor()
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS transactions (
-                id TEXT PRIMARY KEY,
-                user_id TEXT NOT NULL,
-                total_amount REAL NOT NULL,
-                transaction_date TEXT NOT NULL
-            );
-        """)
-        self.connection.commit()
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS transactions (
+                    id TEXT PRIMARY KEY,
+                    user_id TEXT NOT NULL,
+                    seller_id TEXT NOT NULL,
+                    vending_machine_id TEXT NOT NULL,
+                    total_amount REAL NOT NULL,
+                    transaction_date TEXT NOT NULL,
+                );
+            """)
+            self.connection.commit()
+            print("Tabela criada com sucesso!")
+        except sqlite3.Error as e:
+            print(f"Erro ao criar a tabela: {e}")
 
     def insert_transaction(self, transaction):
         """
@@ -43,7 +46,10 @@ class TransactionDAO:
         """
         cursor = self.connection.cursor()
         cursor.execute("""
-            INSERT INTO transactions (id, user_id, total_amount, transaction_date)
-            VALUES (?, ?, ?, ?)
-        """, (str(transaction.id), transaction.user_id, transaction.total_amount, transaction.transaction_date))
+            INSERT INTO transactions (id, user_id, seller_id, vending_machine_id, total_amount, transaction_date)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (str(transaction.id), transaction.user_id, transaction.seller_id, transaction.vending_machine_id, transaction.total_amount, transaction.transaction_date))
         self.connection.commit()
+        
+        # Obter o ID da transação recém-criada
+        return str(transaction.id)

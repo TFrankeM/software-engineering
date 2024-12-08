@@ -141,3 +141,21 @@ class CustomerDAO:
             print(f"Erro ao adicionar saldo: {e}")
             self.connection.rollback()
             return False
+    
+    def get_balance(self, customer_id):
+        """
+        Consulta o saldo do cliente no banco de dados.
+
+        Parameters:
+            customer_id (int): ID do cliente.
+
+        Returns:
+            float: Saldo atual do cliente.
+        """
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT coins FROM customers WHERE id = ?", (customer_id,))
+        result = cursor.fetchone()
+        if result:
+            return result[0]
+        else:
+            raise ValueError(f"Cliente com ID {customer_id} não encontrado.")
