@@ -29,9 +29,18 @@ def view_notification(customer_id, db_connection):
     if notifications_df.empty:
         print("\n>>> Você não tem notificações.<<")
     else:
-        print("\n~" * 10, "Suas Notificações", "~" * 10, "\n")
-        print(notifications_df.to_string(index=False))  # Exibe as notificações em formato tabular
-        print("\n~" * 10, "~" * 10)
+        # Exibe o título da seção
+        print("~" * 10, " Suas Notificações ", "~" * 10, "\n")
+
+        # Filtra e formata as colunas que queremos mostrar
+        notifications_df = notifications_df[['notification_date', 'message']]  # Manter só a data e a mensagem
+        notifications_df['notification_date'] = notifications_df['notification_date'].dt.strftime('%d/%m/%Y %H:%M:%S')  # Formatar a data
+
+        # Exibe as notificações bonitinho
+        for _, row in notifications_df.iterrows():
+            print(f"\nData: {row['notification_date']}")
+            print(f"Mensagem: {row['message']}")
+            print("-" * 40)
 
     # Espera que o usuário pressione Enter para continuar
     input("\n==> Pressione Enter para voltar ao menu.")

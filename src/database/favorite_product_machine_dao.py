@@ -1,3 +1,10 @@
+import sys, os
+
+from notification_dao import NotificationDAO
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../classes")))
+from notification import Notification
+
 class Subject:
     def __init__(self):
         pass
@@ -97,13 +104,16 @@ class FavoriteProductDAO(Subject):
 
 
     def send_notification(self, user_id, message):
-        cursor = self.connection.cursor()
-        cursor.execute("""
-            INSERT INTO notifications (user_id, message)
-            VALUES (?, ?)
-        """, (user_id, message))
-        self.connection.commit()
-
+        """
+        Sends a notification to a user.
+        
+        Parameters:
+            user_id (str): The user ID.
+            message (str): The notification message.
+        """
+        notification = Notification(user_id=user_id, message=message)
+        notification_dao = NotificationDAO(self.connection)
+        notification_dao.insert_notification(notification)
 
 class FavoriteMachineDAO(Subject):
     """
@@ -174,15 +184,27 @@ class FavoriteMachineDAO(Subject):
 
 
     def notify_observers(self, machine_id, message):
+        """
+        Notifies all users who have the machine as a favorite.
+        
+        Parameters:
+            machine_id (str): The machine ID.
+            message (str): The notification message to be sent.
+        """
         observers = self.get_observers(machine_id)
         for observer in observers:
             self.send_notification(observer, message)
 
 
     def send_notification(self, user_id, message):
-        cursor = self.connection.cursor()
-        cursor.execute("""
-            INSERT INTO notifications (user_id, message)
-            VALUES (?, ?)
-        """, (user_id, message))
-        self.connection.commit()
+        """
+        Sends a notification to a user.
+        
+        Parameters:
+            user_id (str): The user ID.
+            message (str): The notification message.
+        """
+        notification = Notification(user_id=user_id, message=message)
+        notification_dao = NotificationDAO(self.connection)
+        notification_dao.insert_notification(notification)
+
