@@ -24,6 +24,15 @@
     and the team’s unique challenges.
 </p>
 
+<h4> Final report A2: </h4>
+<p>
+    This <a href="Simulação_de_Sprint_Scrum_A2.pdf">report</a> aims to present and justify the design pattern choices adopted by our team in implementing 
+    the final version of the project for task A2 of the Software Engineering discipline. Throughout this document, we will detail the design patterns 
+    applied to the system, explaining how each one was integrated into the project architecture and the impacts they had on the final implementation. 
+    In addition, we will discuss the alternatives that were considered, what the solution would be like without the use of these patterns and the 
+    advantages they brought in terms of modularity, maintainability and scalability.
+</p>
+
 <h4> Instructions for running the Vending Machine System: </h4>
 
 <p>
@@ -66,15 +75,53 @@ cd src
 python main.py
 ```
 
-<h5>Interact with the System</h5> 
+<h4>Interact with the System</h4> 
 <p>
-  Follow the on-screen prompts to interact with the vending machine system as a seller or a customer. You will be able to:
+  Follow the on-screen prompts to interact with the vending machine system as an administrator, a seller or a customer. You will be able to:
 </p>
 
+<h5>As a User:</h5>
 <ul>
-  <li>View and manage vending machines and their inventory</li>
-  <li>Report issues with machines or the system</li>
-  <li>Make or view reviews of vending machines or products</li>
+  <li>Create an account as a user or seller.</li>
+  <li>Alternatively, use pre-existing data in the database (you can find it <a href="Lista clientes vendedores e maquinas.txt">here</a> in the List of <strong>Clients</strong>, <strong>Sellers</strong>, and <strong>Machines</strong>).</li>
+  <li>We do not allow the creation of <strong>administrator</strong> accounts due to sensitive matters. However, we provide access to an already created account, with the following credentials:
+    <ul>
+      <li><strong>Login:</strong> Rafael Pinho</li>
+      <li><strong>Password:</strong> (rafa42)</li>
+    </ul>
+  </li>
+</ul>
+
+<h5>As a Seller:</h5>
+<ul>
+  <li>Create or remove vending machines.</li>
+  <li>View and manage all your vending machine empire, with options to:
+    <ul>
+      <li>Add and remove products.</li>
+      <li>Update product information.</li>
+    </ul>
+  </li>
+  <li>Measure how popular your service is with average rating metrics for machines and products.</li>
+</ul>
+
+<h5>As an Administrator:</h5>
+<ul>
+  <li>View problem reports submitted by users.</li>
+  <li>Generate basic reports and export them in CSV format.</li>
+</ul>
+
+<h5>As a Customer:</h5>
+<ul>
+  <li>View available vending machines.</li>
+  <li>Add machines to your favorites list to receive important notifications.</li>
+  <li>View available products in each machine.</li>
+  <li>View the product's review history and average rating to know if they are trustworthy.</li>
+  <li>Make purchases of multiple products using the shopping cart.</li>
+  <li>Add products to your favorites list to receive notifications.</li>
+  <li>Receive notifications if your favorite machines are removed from service or if your favorite products are out of stock.</li>
+  <li>Write reviews for products and machines.</li>
+  <li>Report problems with the app or with machines.</li>
+  <li>Top up credit in the system.</li>
 </ul>
 
 <hr>
