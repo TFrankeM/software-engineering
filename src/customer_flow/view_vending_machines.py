@@ -3,6 +3,9 @@ import time
 import sys
 import os
 
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../classes")))
+from favorite_machine import FavoriteMachine
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../database")))
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../classes")))
 
@@ -10,6 +13,7 @@ from transaction import Transaction
 from item_transaction import ItemTransaction
 from transaction_service import view_and_buy_vending_machine_products
 
+from favorite_product_machine_dao import FavoriteMachineDAO
 from vending_machine_dao import VendingMachineDAO
 from review_dao import ReviewDAO
 from product_dao import ProductDAO
@@ -91,32 +95,53 @@ def vending_machine_details(customer_id, vending_machine, db_connection):
     Returns:
     None
     """
+    
     while True:
+        # Instanciando o DAO para verificar favoritos
+        favorite_machine_dao = FavoriteMachineDAO(db_connection)
+        
+        # Verificando se a máquina está nos favoritos
+        favorite = favorite_machine_dao.is_favorite_machine(customer_id, vending_machine.id)
+        
         clear_console()
         print("~"*10, "Detalhes da Vending Machines", "~"*10)
 
-
         print(f"\nNome: {vending_machine.name}")
-        print(f"Localição: {vending_machine.location}\n")
+        print(f"Localização: {vending_machine.location}\n")
         
-        #print(f"1. {} máquina da lista de favoritos")
+        # Se a máquina estiver nos favoritos, mostrar a opção para removê-la, caso contrário, mostrar para adicionar
+        if favorite:
+            print(f"1. Remover máquina da lista de favoritos")
+        else:
+            print(f"1. Adicionar máquina na lista de favoritos")
+        
         print("2. Ver produtos disponíveis")
         print("3. Ver Histórico de Avaliações")
         print("0. Voltar")
 
         escolha = input("\nDigite o número correspondente: ")
-        
+
         if escolha == "1":
-            pass
-            # Adicionar a lista de favoritos
+            clear_console()
+            if favorite:
+                # Se a máquina está nos favoritos, removemos
+                favorite_machine_dao.detach(customer_id, vending_machine.id)
+                print("\nMáquina removida da lista de favoritos.")
+            else:
+                # Se a máquina não está nos favoritos, adicionamos
+                # O método attach exige um objeto FavoriteMachine
+                favorite_machine_dao.attach(FavoriteMachine(customer_id, vending_machine.id))  
+                print("\nMáquina adicionada à lista de favoritos.")
+            input("\n==> Pressione Enter para escolher novamente.")
+
         elif escolha == "2":
             view_and_buy_vending_machine_products(customer_id, vending_machine, db_connection)
         elif escolha == "3":
-            # Chama a função para visualizar os comentários (essa função será implementada separadamente)
+            # Visualizar Histórico de Avaliações
             view_vending_machine_reviews(vending_machine, db_connection)
             
         elif escolha == "0":
-            return
+            return  # Voltar ao menu anterior
         else:
             print("\rOpção inválida. Tente novamente.", flush=True)
             time.sleep(2)
