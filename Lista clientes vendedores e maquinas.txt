@@ -1,0 +1,286 @@
+Clientes:
+1. Nome: Alice Mendes
+   E-mail: alice.mendes@gmail.com
+   Senha: alice1234
+   Endereço: Rua das Flores, 123
+   Anônimo: Não
+   Saldo: R$ 1.250,00
+
+2. Nome: Bruno Santana
+   E-mail: bruno.santana@hotmail.com
+   Senha: bSantana@321
+   Endereço: Avenida Central, 456
+   Anônimo: Sim
+   Saldo: R$ 895,50
+
+3. Nome: Carla Oliveira
+   E-mail: carla_oli@yahoo.com.br
+   Senha: carla!2023
+   Endereço: Travessa do Sol, 789
+   Anônimo: Não
+   Saldo: R$ 3.540,00
+
+4. Nome: Diego Costa
+   E-mail: diego.costa@gmail.com
+   Senha: dCosta#2024
+   Endereço: Rua do Rio, 12
+   Anônimo: Sim
+   Saldo: R$ 120,75
+
+5. Nome: Érica Almeida
+   E-mail: erica.almeida@gmail.com
+   Senha: erica&safe99
+   Endereço: Alameda dos Sonhos, 34
+   Anônimo: Não
+   Saldo: R$ 780,00
+
+6. Nome: Felipe Barreto
+   E-mail: felipe_barreto@gmail.com
+   Senha: F3lipe@secure
+   Endereço: Rua das Palmeiras, 567
+   Anônimo: Sim
+   Saldo: R$ 10.000,00
+
+7. Nome: Gabriela Martins
+   E-mail: gabriela.martins@outlook.com
+   Senha: gMartins77
+   Endereço: Largo das Estrelas, 89
+   Anônimo: Não
+   Saldo: R$ 5.980,00
+
+8. Nome: Henrique Souza
+   E-mail: henrique.souza@gmail.com
+   Senha: H_Souza2022
+   Endereço: Estrada do Mar, 111
+   Anônimo: Sim
+   Saldo: R$ 2.300,50
+
+9. Nome: Isadora Vieira
+   E-mail: isadora.v@gmail.com
+   Senha: IsaVieira#89
+   Endereço: Avenida Verde, 222
+   Anônimo: Não
+   Saldo: R$ 0,00
+
+10. Nome: João Pedro Lima
+    E-mail: jp.lima@hotmail.com
+    Senha: jpSecure2024
+    Endereço: Rua Nova, 333
+    Anônimo: Não
+    Saldo: R$ 15,00
+
+Vendedores:
+1. Nome: Rafael Souza
+   E-mail: rafael.souza@gmail.com
+   Senha: rafael@123
+   Endereço: Rua dos Lírios, 150
+   Anônimo: Não
+   Saldo: R$ 2.500,00
+
+2. Nome: Vanessa Martins
+   E-mail: vanessa.martins@outlook.com
+   Senha: Vanessa_2024
+   Endereço: Avenida dos Ipês, 78
+   Anônimo: Sim
+   Saldo: R$ 1.750,50
+
+3. Nome: Marcos Pereira
+   E-mail: marcos.pereira@yahoo.com.br
+   Senha: marcos!789
+   Endereço: Praça das Palmeiras, 23
+   Anônimo: Não
+   Saldo: R$ 3.100,00
+
+4. Nome: Larissa Lima
+   E-mail: larissa.lima@hotmail.com
+   Senha: Larissa@2023
+   Endereço: Rua do Sol, 45
+   Anônimo: Sim
+   Saldo: R$ 2.900,00
+
+5. Nome: João Victor Costa
+   E-mail: joao.victor@gmail.com
+   Senha: jv#12345
+   Endereço: Rua das Acácias, 301
+   Anônimo: Não
+   Saldo: R$ 1.100,00
+
+6. Nome: Patrícia Barbosa
+   E-mail: patricia.barbosa@outlook.com
+   Senha: patricia&secure
+   Endereço: Avenida Rio Branco, 400
+   Anônimo: Não
+   Saldo: R$ 5.000,00
+
+   1. Rafael Souza
+
+Máquina 1
+
+Nome: Máquina Rápida
+Localização: Rua dos Lírios, 150
+Produtos:
+Nome: Hambúrguer Vegano
+Descrição: Hambúrguer feito com grão de bico e especiarias.
+Preço: R$ 18,00
+Estoque: 25 unidades
+Nome: Batata Frita
+Descrição: Batatas fritas crocantes, cortadas em palitos finos.
+Preço: R$ 10,00
+Estoque: 30 unidades
+Nome: Pizza de Calabresa
+Descrição: Pizza de calabresa com queijo muçarela e molho especial.
+Preço: R$ 25,00
+Estoque: 20 unidades
+Máquina 2
+
+Nome: Máquina Gamer
+Localização: Avenida Central, 45
+Produtos:
+Nome: Lanche de Frango
+Descrição: Lanche com frango grelhado, alface e molho especial.
+Preço: R$ 15,00
+Estoque: 22 unidades
+Nome: Refrigerante
+Descrição: Refrigerante de cola, 500ml.
+Preço: R$ 6,00
+Estoque: 40 unidades
+2. Vanessa Martins
+
+Máquina 1
+
+Nome: Máquina Fashion
+Localização: Avenida dos Ipês, 78
+Produtos:
+Nome: Sorvete de Chocolate
+Descrição: Sorvete cremoso de chocolate belga.
+Preço: R$ 12,00
+Estoque: 25 unidades
+Nome: Coxinha de Frango
+Descrição: Coxinha crocante recheada com frango desfiado.
+Preço: R$ 8,00
+Estoque: 30 unidades
+Máquina 2
+
+Nome: Máquina de Estilo
+Localização: Praça Central, 22
+Produtos:
+Nome: Pão de Queijo
+Descrição: Pão de queijo quentinho e recheado de queijo minas.
+Preço: R$ 5,00
+Estoque: 35 unidades
+Nome: Biscoito de Polvilho
+Descrição: Biscoito de polvilho leve e crocante.
+Preço: R$ 7,00
+Estoque: 25 unidades
+3. Marcos Pereira
+
+Máquina 1
+
+Nome: Máquina Fitness
+Localização: Praça das Palmeiras, 23
+Produtos:
+Nome: Barrinha de Proteína
+Descrição: Barrinha de proteína com sabor chocolate e amendoim.
+Preço: R$ 10,00
+Estoque: 30 unidades
+Nome: Salada de Frutas
+Descrição: Mix de frutas frescas da estação.
+Preço: R$ 12,00
+Estoque: 25 unidades
+Máquina 2
+
+Nome: Máquina de Corrida
+Localização: Avenida do Esporte, 100
+Produtos:
+Nome: Sanduíche de Atum
+Descrição: Sanduíche com atum, alface e molho de mostarda.
+Preço: R$ 14,00
+Estoque: 30 unidades
+Nome: Suco Natural de Laranja
+Descrição: Suco fresco de laranja, sem adição de açúcar.
+Preço: R$ 8,00
+Estoque: 30 unidades
+4. Larissa Lima
+
+Máquina 1
+
+Nome: Máquina de Beleza
+Localização: Rua do Sol, 45
+Produtos:
+Nome: Chocolate Meio Amargo
+Descrição: Chocolate meio amargo com 70% de cacau.
+Preço: R$ 15,00
+Estoque: 40 unidades
+Nome: Pão de Mel
+Descrição: Pão de mel recheado com doce de leite e cobertura de chocolate.
+Preço: R$ 9,00
+Estoque: 30 unidades
+Máquina 2
+
+Nome: Máquina de Cabelos
+Localização: Rua da Paz, 10
+Produtos:
+Nome: Brownie de Chocolate
+Descrição: Brownie de chocolate com nozes e pedaços de chocolate.
+Preço: R$ 13,00
+Estoque: 35 unidades
+Nome: Bolo de Cenoura
+Descrição: Bolo de cenoura com cobertura de chocolate.
+Preço: R$ 12,00
+Estoque: 30 unidades
+5. João Victor Costa
+
+Máquina 1
+
+Nome: Máquina Tech
+Localização: Rua das Acácias, 301
+Produtos:
+Nome: Sanduíche Vegetariano
+Descrição: Sanduíche com legumes grelhados e molho pesto.
+Preço: R$ 18,00
+Estoque: 25 unidades
+Nome: Pizza de Margherita
+Descrição: Pizza de mussarela, tomate e manjericão fresco.
+Preço: R$ 20,00
+Estoque: 20 unidades
+Máquina 2
+
+Nome: Máquina de Tecnologia
+Localização: Avenida das Torres, 100
+Produtos:
+Nome: Macarrão à Bolonhesa
+Descrição: Macarrão com molho bolonhesa, carne moída e molho de tomate.
+Preço: R$ 22,00
+Estoque: 30 unidades
+Nome: Lasanha Vegetariana
+Descrição: Lasanha com molho branco e legumes grelhados.
+Preço: R$ 25,00
+Estoque: 20 unidades
+6. Patrícia Barbosa
+
+Máquina 1
+
+Nome: Máquina Gourmet
+Localização: Avenida Rio Branco, 400
+Produtos:
+Nome: Esfiha de Carne
+Descrição: Esfiha com carne temperada e molho especial.
+Preço: R$ 8,00
+Estoque: 35 unidades
+Nome: Kibe Frito
+Descrição: Kibe frito recheado com carne moída e temperos.
+Preço: R$ 10,00
+Estoque: 25 unidades
+Máquina 2
+
+Nome: Máquina Gourmet 2
+Localização: Rua das Águas, 50
+Produtos:
+Nome: Pastel de Carne
+Descrição: Pastel frito com recheio de carne moída e queijo.
+Preço: R$ 7,00
+Estoque: 30 unidades
+Nome: Churros com Doce de Leite
+Descrição: Churros crocantes com recheio de doce de leite.
+Preço: R$ 12,00
+Estoque: 20 unidades

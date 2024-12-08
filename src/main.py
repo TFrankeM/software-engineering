@@ -55,7 +55,7 @@ def login_user(user_type, db_connection):
         if user_type == 'Customer':
             table = 'customers' 
         elif user_type == 'Seller':
-            table = 'customers' 
+            table = 'sellers' 
         else:
             table = 'administrators'
         query = f"SELECT id, password FROM {table} WHERE name = ?"
