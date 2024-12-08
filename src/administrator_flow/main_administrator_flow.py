@@ -3,6 +3,8 @@ import time
 import sys
 import os
 
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../database")))
+from sales_report import main_menu
 
 def clear_console():
     """
@@ -26,7 +28,7 @@ def administrator_actions(db_pool):
         print("~"*10, "Bem-vindo, Administrador!", "~"*10, "\n")
 
         print("1. Visualizar reportes de problemas")
-        print("2. Ver Relatórios Básicos")
+        print("2. Gerar Relatórios")
         print("3. Gerenciar permissões")
         print("0. Sair")
         escolha = input("Digite o número da ação: ")
@@ -34,9 +36,8 @@ def administrator_actions(db_pool):
         if escolha == "1":
             visualize_problem_reports(db_connection)
         elif escolha == "2":
-            print("Funcionalidade ainda não disponível. Fique atento para futuras atualizações.")
+            main_menu(db_connection)
             time.sleep(2)
-            # Área de futura expanção: lógica para gerenciar permissões
         elif escolha == "3":
             print("Funcionalidade ainda não disponível. Fique atento para futuras atualizações.")
             time.sleep(2)
