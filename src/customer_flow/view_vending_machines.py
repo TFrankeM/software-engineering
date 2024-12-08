@@ -4,11 +4,16 @@ import sys
 import os
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../database")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../classes")))
+
+from transaction import Transaction
 
 from vending_machine_dao import VendingMachineDAO
 from review_dao import ReviewDAO
 from product_dao import ProductDAO
 from customer_dao import CustomerDAO
+from seller_dao import SellerDAO
+from transaction_dao import TransactionDAO
 
 def clear_console():
     """
@@ -30,6 +35,9 @@ def view_vending_machine_products(customer_id, vending_machine, db_connection):
 
     # Create DAO instances
     product_dao = ProductDAO(db_connection)
+    customer_dao = CustomerDAO(db_connection)
+    seller_dao = SellerDAO(db_connection)  # Accessing the Seller table
+    transaction_dao = TransactionDAO(db_connection)
     
     # Get products for the vending machine
     products = product_dao.get_products_by_vending_machine_id(vending_machine.id)
@@ -59,7 +67,7 @@ def view_vending_machine_products(customer_id, vending_machine, db_connection):
     # Display the products as a DataFrame
     products_df = pd.DataFrame(products_data)
     
-     # Carrinho de compras (armazenando produtos e quantidades)
+    # Carrinho de compras (armazenando produtos e quantidades)
     shopping_cart = {}  # {product_id: quantity}
 
     while True:
@@ -97,6 +105,47 @@ def view_vending_machine_products(customer_id, vending_machine, db_connection):
         elif choice == "1000":
             # Aqui você chamaria a função de transação (ex: transaction_service)
             print("\nFinalizando a compra...")
+            
+            # Calcular o total da compra
+            total_value = sum(products[product_id - 1].price * quantity for product_id, quantity in shopping_cart.items())
+            
+            # Verificar se o cliente tem coins suficientes
+            customer = customer_dao.get_customer_by_id(customer_id)
+            customer_coins = customer_dao.get_balance(customer_id)
+            
+            if  customer_coins < total_value:
+                print("\nVocê não tem coins suficientes para finalizar a compra.")
+                input("\n==> Pressione Enter para voltar ao menu.")
+                return
+
+            # Deduzir as coins do cliente
+            print("cobrando o cliente")
+            customer_dao.add_balance(customer_id, -(total_value))
+            print("cliente cobrado")
+
+            # Buscar o seller (vendedor) pela máquina de vendas (owner_id)
+            seller = seller_dao.get_seller_by_id(vending_machine.owner_id)
+            
+            print("pagando o vendedor!")
+            # Transferir o valor da compra para o vendedor
+            seller_dao.add_balance(vending_machine.owner_id, total_value)
+            print("Vendedor pago!")
+            
+            # Atualizar o estoque
+            for product_id, quantity in shopping_cart.items():
+                product = products[product_id - 1]
+                new_quantity = product.quantity - quantity
+                product_dao.update_product_quantity(product.id, new_quantity)
+
+            # Criar o objeto da transação
+            transaction_dao.create_table()
+            transaction = Transaction(user_id=customer_id, seller_id = vending_machine.owner_id, vending_machine_id = vending_machine.id, total_amount=total_value)
+
+            # Inserir a transação no banco de dados
+            transaction_dao.insert_transaction(transaction)
+            
+            print(f"\nCompra finalizada com sucesso! Total pago: R$ {total_value:.2f}")
+            input("\n==> Pressione Enter para voltar ao menu.")
             return
 
         try:
@@ -116,9 +165,7 @@ def view_vending_machine_products(customer_id, vending_machine, db_connection):
                     else:
                         shopping_cart[product_index] = quantity  # Adiciona o produto ao carrinho
 
-                    # Add the product to the cart (you would implement the cart handling here)
                     print(f"\nProduto {product.name} adicionado ao carrinho, quantidade: {quantity}")
-                    # Atualize o carrinho aqui (adicionar produto com a quantidade desejada)
                     input("\n==> Pressione Enter para escolher novamente.")
 
             else:

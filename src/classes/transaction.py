@@ -6,7 +6,7 @@ class Transaction:
     """
     Class representing a transaction (purchase of product(s)) made by a customer.
     """
-    def __init__(self, user_id, total_amount, transaction_date=None):
+    def __init__(self, user_id, seller_id, vending_machine_id, total_amount, transaction_date=None):
         """
         Initialize a new transaction instance.
 
@@ -18,6 +18,8 @@ class Transaction:
 
         self.id = uuid.uuid4()
         self.user_id = user_id
+        self.seller_id = seller_id
+        self.vending_machine_id = vending_machine_id
         self.total_amount = total_amount
         self.transaction_date = transaction_date or datetime.now()
 
