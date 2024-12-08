@@ -41,8 +41,6 @@ def administrator_actions(db_pool):
             print("Funcionalidade ainda não disponível. Fique atento para futuras atualizações.")
             time.sleep(2)
         elif escolha == "0":
-            print("\nSaindo do painel do administrador...")
-            time.sleep(1)
             break
         else:
             print("\nOpção inválida. Tente novamente.")

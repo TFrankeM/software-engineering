@@ -26,31 +26,36 @@ def create_customer_account(db_connection):
     email = input("Email: ")
     password = input("Senha: ")
     address = input("Endereço: ")
-    anonymous_profile = input("Perfil anônimo (sim/não): ").strip().lower() == 'sim'
+    anonymous_profile = input("Perfil anônimo (sim/nao): ").strip().lower() == 'sim'
     
-    # Cria um novo objeto Customer
-    customer = UserFactory.create_user(user_type="Customer", name=name, email=email, password=password, address=address, anonymous_profile=anonymous_profile)
+    confirm = input("\nConfirma criação de conta? [s/n]: ").strip().lower()
 
-    # Insere o novo cliente no banco de dados
-    customer_dao = CustomerDAO(db_connection)
-    # Check if the 'customer' table exists and create it if necessary
-    cursor = db_connection.cursor()
-    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='customers';")
-    table_exists = cursor.fetchone()
+    if confirm == "n":
+        print("==> Operação cancela.")
+        input("\nPressione qualquer tecla para voltar.")
+        return
+    
+    elif confirm == "s":
+        # Cria um novo objeto Customer
+        customer = UserFactory.create_user(user_type="Customer", name=name, email=email, password=password, address=address, anonymous_profile=anonymous_profile)
 
-    if not table_exists:
-        #print("Creating the customer table as it does not exist.")
-        customer_dao.create_table()
+        # Insere o novo cliente no banco de dados
+        customer_dao = CustomerDAO(db_connection)
+        # Check if the 'customer' table exists and create it if necessary
+        cursor = db_connection.cursor()
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='customers';")
+        table_exists = cursor.fetchone()
+
+        if not table_exists:
+            #print("Creating the customer table as it does not exist.")
+            customer_dao.create_table()
+        
+        customer_dao.insert_customer(customer)
+        
+        print("==> Conta de cliente criada com sucesso!")
     
-    customer_dao.insert_customer(customer)
-    
-    print("==> Conta de cliente criada com sucesso!")
-    
+    else:
+        print("==> Entrada inválida. Operação cancela.")
+
     input("\nPressione qualquer tecla para voltar.")
     
-    
-    #para verificar se o cliente foi criado com sucesso e inserido na tabela customers
-    """
-    cursor.execute("SELECT * FROM customers")
-    print(cursor.fetchall())
-    """
