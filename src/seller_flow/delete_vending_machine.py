@@ -3,6 +3,9 @@ import sys
 import os
 import pandas as pd
 
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../database")))
+from favorite_product_machine_dao import FavoriteMachineDAO
+
 
 def clear_console():
     """
@@ -21,6 +24,9 @@ def delete_vending_machine(seller_id, db_connection, vending_machine_dao, produc
         vending_machine_dao (VendingMachineDAO): Data access object for interacting with vending machines in the database.
         product_dao (ProductDAO): Data access object for interacting with products in the database.
     """
+
+    favorite_machine_dao = FavoriteMachineDAO(db_connection)    # Instance for managing favorite machines
+
     # Fetch all vending machines owned by this seller
     vending_machines = vending_machine_dao.get_vending_machines_by_seller_id(seller_id)
 
@@ -77,6 +83,14 @@ def delete_vending_machine(seller_id, db_connection, vending_machine_dao, produc
                 #print('Id da máquina que quero deletar:', str(vending_machines[selected_machine - 1].id))
                 print(f"Máquina '{selected_machine_name}' foi deletada com sucesso.")
                 
+                # Notificar todos os usuários que favoritaram essa máquian
+                notification_message = (f"Olá, \n\n" f"Gostaríamos de informar que a máquina de venda '{selected_machine_name}' foi removida das nossas operações.\n" 
+                                        f"Agradecemos pelo seu interesse e seguimos comprometidos em oferecer o melhor serviço. \n\n" 
+                                        f"Fique à vontade para verificar outras máquinas disponíveis em nossa rede.\n\n" 
+                                        f"Atenciosamente, \n" 
+                                        f"Equipe de Suporte")
+                favorite_machine_dao.notify_observers(selected_machine_id, notification_message)
+
                 input("\n==> Pressione Enter para voltar ao menu.")
                 break
 
