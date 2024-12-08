@@ -34,8 +34,8 @@ def create_seller_account(db_connection):
     confirm = input("\nConfirma criação de conta? [s/n]: ").strip().lower()
 
     if confirm == "n":
-        print("==> Operação cancela.")
-        input("\nPressione qualquer tecla para voltar.")
+        print("Operação cancela.")
+        input("\n==> Pressione Enter para voltar ao menu.")
         return
     
     elif confirm == "s":
@@ -60,4 +60,4 @@ def create_seller_account(db_connection):
     else:
         print("==> Entrada inválida. Operação cancela.")
 
-    input("\nPressione qualquer tecla para voltar.")
+    input("\n==> Pressione Enter para voltar ao menu.")

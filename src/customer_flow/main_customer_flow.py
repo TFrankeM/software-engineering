@@ -76,10 +76,10 @@ def customer_actions(customer_id, db_pool):
         print("3. Reportar problemas")
         print("4. Fazer uma avaliação (review)")
         print("0. Sair")
-        escolha = input("Digite o número da ação: ")
+        escolha = input("\nDigite o número da ação: ")
 
         if escolha == "1":
-            view_vending_machines_for_customer(db_connection)
+            view_vending_machines_for_customer(customer_id, db_connection)
         elif escolha == "2":
             view_notification(customer_id, db_connection)
         elif escolha == "3":

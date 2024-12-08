@@ -36,7 +36,7 @@ def view_vending_machine_details(vending_machine, db_connection, product_dao):
 
             if not products:
                 print(">>> Não há produtos cadastrados nesta máquina. <<<")
-            
+                
             else:
                 # Organize the product data into a DataFrame
                 product_data = {
@@ -68,8 +68,6 @@ def view_vending_machine_details(vending_machine, db_connection, product_dao):
                 update_product(df, products, vending_machine, product_dao)
 
             elif action == "0":
-                print("Voltando ao menu anterior...")
-                time.sleep(1)
                 break  # Sai do loop e volta ao menu anterior
 
             else:
@@ -99,10 +97,10 @@ def view_vending_machines_basic_info(seller_id, db_connection, vending_machine_d
         clear_console()
         print("\n", "~"*10, "Visualize suas máquinas de venda!", "~"*10, "\n")
 
-        print("\nVocê não possui máquinas de venda cadastradas.")
+        print("\n>>> Você não possui máquinas de venda cadastradas. <<<")
         print("Tente inserir uma primeiro.")
 
-        time.sleep(4)
+        input("\n==> Pressione Enter para voltar ao menu.")
         return
     
         # Organize the data into a DataFrame
@@ -130,8 +128,6 @@ def view_vending_machines_basic_info(seller_id, db_connection, vending_machine_d
             selected_machine = int(input("Digite o número da máquina que deseja ver os detalhes: "))
 
             if selected_machine == 0:
-                print("Operação cancelada. Retornando ao menu.")
-                time.sleep(1)
                 return
 
             elif 0 < selected_machine <= len(vending_machines):

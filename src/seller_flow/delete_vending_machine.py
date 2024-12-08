@@ -27,9 +27,10 @@ def delete_vending_machine(seller_id, db_connection, vending_machine_dao, produc
     if not vending_machines:
         clear_console()
         print("\n", "~"*10, "Delete uma máquina de venda", "~"*10, "\n")
-        print("\nVocê não possui máquinas de venda cadastradas.")
+        print("\n>>> Você não possui máquinas de venda cadastradas. <<<")
         print("Tente inserir uma máquina primeiro.")
-        time.sleep(2)
+        
+        input("\n==> Pressione Enter para voltar ao menu.")
         return    
     
         # Organize the data into a DataFrame
@@ -75,7 +76,8 @@ def delete_vending_machine(seller_id, db_connection, vending_machine_dao, produc
 
                 #print('Id da máquina que quero deletar:', str(vending_machines[selected_machine - 1].id))
                 print(f"Máquina '{selected_machine_name}' foi deletada com sucesso.")
-                time.sleep(2)
+                
+                input("\n==> Pressione Enter para voltar ao menu.")
                 break
 
             else:

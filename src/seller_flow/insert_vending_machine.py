@@ -32,15 +32,11 @@ def insert_new_vending_machine(seller_id, db_connection, vending_machine_dao):
     # Get the name of the new vending machine
     name = input("Digite o nome da nova máquina de venda: ")
     if name == "0":
-        print("Operação cancelada.")
-        time.sleep(0.5)
         return
     
     # Get the location of the new vending machine
     location = input("Digite a localização da nova máquina de venda: ")
     if location == "0":
-        print("Operação cancelada.")
-        time.sleep(0.5)
         return
     
     new_vending_machine = VendingMachine(name=name, location=location, owner_id = seller_id)
@@ -48,4 +44,5 @@ def insert_new_vending_machine(seller_id, db_connection, vending_machine_dao):
     # Insert the new vending machine into the database
     vending_machine_dao.insert_vending_machine(new_vending_machine)
     print(f"\nMáquina de venda '{name}' foi inserida com sucesso.")
-    time.sleep(2)
+    
+    input("\n==> Pressione Enter para voltar ao menu.")

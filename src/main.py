@@ -37,7 +37,12 @@ def login_user(user_type, db_connection):
         int: User ID if login is successful, None otherwise.
     """
     clear_console()
-    print("~"*10, f"Login {user_type}", "~"*10, "\n")
+    if user_type == "Customer":
+        name = "Cliente"
+    elif user_type == "Seller":
+        name = "Vendedor"
+
+    print("~"*10, f"Login {name}", "~"*10, "\n")
 
     username = input("Digite seu nome de usuário: ")
     password = input("Digite sua senha: ")
@@ -64,14 +69,14 @@ def login_user(user_type, db_connection):
             
             if bcrypt.checkpw(password.encode('utf-8'), hashed_password):
                 print("Login bem-sucedido!")
-                time.sleep(2)
+                time.sleep(1)
                 return user_id
             else:
                 print("Senha incorreta. Tente novamente.")
                 time.sleep(2)
         else:
             print("Usuário não encontrado. Tente novamente.")
-            time.sleep(2)
+            time.sleep()
     except Exception as e:
         print(f"Erro ao tentar fazer login: {e}")
         time.sleep(2)

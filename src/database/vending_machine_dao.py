@@ -64,7 +64,6 @@ class VendingMachineDAO:
         return vending_machines
 
 
-
     def get_vending_machine_by_id(self, vending_machine_id):
         """
             Retrieve a vending machine from the database by its ID.
