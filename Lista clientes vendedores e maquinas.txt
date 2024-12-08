@@ -32,14 +32,14 @@ Clientes:
    Senha: erica&safe99
    Endereço: Alameda dos Sonhos, 34
    Anônimo: Não
-   Saldo: R$ 780,00
+   Saldo: R$ 0
 
 6. Nome: Felipe Barreto
    E-mail: felipe_barreto@gmail.com
    Senha: F3lipe@secure
    Endereço: Rua das Palmeiras, 567
    Anônimo: Sim
-   Saldo: R$ 10.000,00
+   Saldo: R$ 0
 
 7. Nome: Gabriela Martins
    E-mail: gabriela.martins@outlook.com
@@ -55,20 +55,6 @@ Clientes:
    Anônimo: Sim
    Saldo: R$ 2.300,50
 
-9. Nome: Isadora Vieira
-   E-mail: isadora.v@gmail.com
-   Senha: IsaVieira#89
-   Endereço: Avenida Verde, 222
-   Anônimo: Não
-   Saldo: R$ 0,00
-
-10. Nome: João Pedro Lima
-    E-mail: jp.lima@hotmail.com
-    Senha: jpSecure2024
-    Endereço: Rua Nova, 333
-    Anônimo: Não
-    Saldo: R$ 15,00
-
 Vendedores:
 1. Nome: Rafael Souza
    E-mail: rafael.souza@gmail.com
@@ -81,7 +67,7 @@ Vendedores:
    E-mail: vanessa.martins@outlook.com
    Senha: Vanessa_2024
    Endereço: Avenida dos Ipês, 78
-   Anônimo: Sim
+   Anônimo: nao
    Saldo: R$ 1.750,50
 
 3. Nome: Marcos Pereira
@@ -98,19 +84,6 @@ Vendedores:
    Anônimo: Sim
    Saldo: R$ 2.900,00
 
-5. Nome: João Victor Costa
-   E-mail: joao.victor@gmail.com
-   Senha: jv#12345
-   Endereço: Rua das Acácias, 301
-   Anônimo: Não
-   Saldo: R$ 1.100,00
-
-6. Nome: Patrícia Barbosa
-   E-mail: patricia.barbosa@outlook.com
-   Senha: patricia&secure
-   Endereço: Avenida Rio Branco, 400
-   Anônimo: Não
-   Saldo: R$ 5.000,00
 
    1. Rafael Souza
 
@@ -228,59 +201,3 @@ Nome: Bolo de Cenoura
 Descrição: Bolo de cenoura com cobertura de chocolate.
 Preço: R$ 12,00
 Estoque: 30 unidades
-5. João Victor Costa
-
-Máquina 1
-
-Nome: Máquina Tech
-Localização: Rua das Acácias, 301
-Produtos:
-Nome: Sanduíche Vegetariano
-Descrição: Sanduíche com legumes grelhados e molho pesto.
-Preço: R$ 18,00
-Estoque: 25 unidades
-Nome: Pizza de Margherita
-Descrição: Pizza de mussarela, tomate e manjericão fresco.
-Preço: R$ 20,00
-Estoque: 20 unidades
-Máquina 2
-
-Nome: Máquina de Tecnologia
-Localização: Avenida das Torres, 100
-Produtos:
-Nome: Macarrão à Bolonhesa
-Descrição: Macarrão com molho bolonhesa, carne moída e molho de tomate.
-Preço: R$ 22,00
-Estoque: 30 unidades
-Nome: Lasanha Vegetariana
-Descrição: Lasanha com molho branco e legumes grelhados.
-Preço: R$ 25,00
-Estoque: 20 unidades
-6. Patrícia Barbosa
-
-Máquina 1
-
-Nome: Máquina Gourmet
-Localização: Avenida Rio Branco, 400
-Produtos:
-Nome: Esfiha de Carne
-Descrição: Esfiha com carne temperada e molho especial.
-Preço: R$ 8,00
-Estoque: 35 unidades
-Nome: Kibe Frito
-Descrição: Kibe frito recheado com carne moída e temperos.
-Preço: R$ 10,00
-Estoque: 25 unidades
-Máquina 2
-
-Nome: Máquina Gourmet 2
-Localização: Rua das Águas, 50
-Produtos:
-Nome: Pastel de Carne
-Descrição: Pastel frito com recheio de carne moída e queijo.
-Preço: R$ 7,00
-Estoque: 30 unidades
-Nome: Churros com Doce de Leite
-Descrição: Churros crocantes com recheio de doce de leite.
-Preço: R$ 12,00
-Estoque: 20 unidades

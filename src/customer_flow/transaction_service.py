@@ -9,6 +9,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../c
 from transaction import Transaction
 from item_transaction import ItemTransaction
 from favorite_product import FavoriteProduct
+from command import ShoppingCartInvoker, CheckoutCommand, AddToCartCommand
 
 from vending_machine_dao import VendingMachineDAO
 from review_dao import ReviewDAO
@@ -83,6 +84,8 @@ def view_and_buy_vending_machine_products(customer_id, vending_machine, db_conne
     # Carrinho de compras (armazenando produtos e quantidades)
     shopping_cart = {}  # {product_id: quantity}
 
+    invoker = ShoppingCartInvoker()
+
     while True:
         clear_console()
         title = "~" * 10 + f" Produtos de '{vending_machine.name}' " + "~" * 10 + "\n"
@@ -120,66 +123,24 @@ def view_and_buy_vending_machine_products(customer_id, vending_machine, db_conne
 
         #### PAGAR
         elif choice == "1000":
-            # Aqui você chamaria a função de transação (ex: transaction_service)
-            print("\nFinalizando a compra...")
+            # Finalizar a compra
+            checkout_command = CheckoutCommand(
+                shopping_cart,
+                customer_id,
+                products,
+                vending_machine.owner_id,
+                vending_machine.id,
+                vending_machine.name,
+                customer_dao,
+                seller_dao,
+                transaction_dao,
+                item_transaction_dao,
+                favorite_product_dao,
+                product_dao
+            )
             
-            # Calcular o total da compra
-            total_value = sum(products[product_id - 1].price * quantity for product_id, quantity in shopping_cart.items())
-            
-            # Verificar se o cliente tem coins suficientes
-            customer = customer_dao.get_customer_by_id(customer_id)
-            customer_coins = customer_dao.get_balance(customer_id)
-            
-            if  customer_coins < total_value:
-                print("\nVocê não tem coins suficientes para finalizar a compra.")
-                input("\n==> Pressione Enter para voltar ao menu.")
-                return
+            checkout_command.execute()
 
-            # Deduzir as coins do cliente
-            print("Cobrando o cliente...")
-            customer_dao.add_balance(customer_id, -(total_value))
-            print("Cliente cobrado!")
-
-            # Buscar o seller (vendedor) pela máquina de vendas (owner_id)
-            seller = seller_dao.get_seller_by_id(vending_machine.owner_id)
-            
-            print("Pagando o vendedor...")
-            # Transferir o valor da compra para o vendedor
-            seller_dao.add_balance(vending_machine.owner_id, total_value)
-            print("Vendedor pago!")
-            
-            # Atualizar o estoque
-            for product_id, quantity in shopping_cart.items():
-                product = products[product_id - 1]
-                new_quantity = product.quantity - quantity
-                product_dao.update_product_quantity(product.id, new_quantity)
-
-                # Notificar se o estoque ficou zero
-                if new_quantity == 0:
-                    # Notificar todos os usuários que favoritaram esse produto
-                    favorite_product_dao.notify_observers(product.id, f"O produto '{product.name}' da loja '{vending_machine.name}' ficou sem estoque!")
-
-            # criar a transação
-            transaction = Transaction(user_id=customer_id, seller_id = vending_machine.owner_id, vending_machine_id = vending_machine.id, total_amount=total_value)
-
-            # Inserir a transação no banco de dados e obter o id da nova transação para catalogar todos os itens da transação
-            print("Pegando id da transação...")
-            transaction_ID = transaction_dao.insert_transaction(transaction)
-            print(f"Id identificado!")
-            
-            # Adicionar itens da transação
-            for product_id, quantity in shopping_cart.items():
-                product = products[product_id - 1]
-                item_transaction = ItemTransaction(
-                    transaction_id=transaction_ID,  # Usar o ID da transação recém-criada
-                    product_id=product.id,
-                    quantity=quantity,
-                    price=product.price
-                )
-                
-                item_transaction_dao.insert_item_transaction(item_transaction)
-
-            print(f"\nCompra finalizada com sucesso! Total pago: R$ {total_value:.2f}")
             input("\n==> Pressione Enter para voltar ao menu.")
             return
 
@@ -193,17 +154,20 @@ def view_and_buy_vending_machine_products(customer_id, vending_machine, db_conne
                 
                 if 1 <= product_index <= len(products) and quantity > 0:
                     product = products[product_index - 1]  # Get the product by index
-                    if quantity > product.quantity:
+
+                    # Verificar a quantidade total no carrinho
+                    current_quantity_in_cart = shopping_cart.get(product_index, 0)  # Se não tiver no carrinho, será 0
+
+                    if current_quantity_in_cart + quantity > product.quantity:
                         print("\nQuantidade solicitada maior do que a disponível. Tente novamente.")
                     else:
-                        # Adiciona o produto ao carrinho
-                        if product_index in shopping_cart:
-                            shopping_cart[product_index] += quantity  # Incrementa a quantidade no carrinho
-                        else:
-                            shopping_cart[product_index] = quantity  # Adiciona o produto ao carrinho
+                        add_command = AddToCartCommand(shopping_cart, product_index, quantity, products)
+                        invoker.set_command(add_command)
+                        invoker.execute_last_command()
 
-                        print(f"\nProduto {product.name} adicionado ao carrinho, quantidade: {quantity}")
-                        input("\n==> Pressione Enter para escolher novamente.")
+                    input("\n==> Pressione Enter para continuar.")
+                else: 
+                    input("\n==> Ìndice inválido. Pressione Enter para escolher novamente")
 
         #### ADICIONAR/REMOVER DOS FAVORITOS 
             # Verificar se o número escolhido está dentro do intervalo válido de produtos
@@ -223,7 +187,6 @@ def view_and_buy_vending_machine_products(customer_id, vending_machine, db_conne
                     print(f"\n{product.name} adicionado aos favoritos.")
 
                 input("\n==> Pressione Enter para continuar.")
-        
         
 
             else:
