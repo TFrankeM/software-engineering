@@ -33,6 +33,7 @@ class VendingMachineDAO:
                 name TEXT NOT NULL,
                 location TEXT NOT NULL,
                 owner_id TEXT NOT NULL,                       -- Owner (Seller) ID as Foreign Key
+                average_rating REAL DEFAULT 0,
                 FOREIGN KEY (owner_id) REFERENCES usuarios(id) ON DELETE CASCADE
             );
         ''')
@@ -50,14 +51,14 @@ class VendingMachineDAO:
         cursor = self.connection.cursor()
         
         # Fetch all vending machines
-        cursor.execute("SELECT id, name, location, owner_id FROM vending_machines")
+        cursor.execute("SELECT id, name, location, owner_id, average_rating FROM vending_machines")
         rows = cursor.fetchall()
 
         vending_machines = []
         
         # Create VendingMachine objects for each row
         for row in rows:
-            vending_machine = VendingMachine(name=row[1], location=row[2], owner_id=row[3])
+            vending_machine = VendingMachine(name=row[1], location=row[2], owner_id=row[3], average_rating=row[4])
             vending_machine.id = row[0]  # Set the id from the database row
             vending_machines.append(vending_machine)
 
@@ -109,7 +110,7 @@ class VendingMachineDAO:
         
         # Fetch the vending machines where the owner_id matches the seller_id
         cursor.execute('''
-            SELECT id, name, location FROM vending_machines WHERE owner_id = ?
+            SELECT id, name, location, average_rating FROM vending_machines WHERE owner_id = ?
         ''', (seller_id,))
         rows = cursor.fetchall()
 
@@ -117,7 +118,7 @@ class VendingMachineDAO:
         
         # Create VendingMachine objects for each row
         for row in rows:
-            vending_machine = VendingMachine(name=row[1], location=row[2], owner_id=seller_id)
+            vending_machine = VendingMachine(name=row[1], location=row[2], owner_id=seller_id, average_rating=row[3])
             vending_machine.id = row[0]
             vending_machines.append(vending_machine)
         
@@ -162,6 +163,27 @@ class VendingMachineDAO:
             VALUES (?, ?, ?, ?)
         ''', (str(vending_machine.id), vending_machine.name, vending_machine.location, vending_machine.owner_id))
         #print("Chave inserida no db: ", str(vending_machine.id))
+        self.connection.commit()
+
+
+    def update_machine_average_rating(self, machine_id, avg_rating):
+        """
+        Update the average rating of a product based on a provided rating.
+
+        Parameters:
+            machine_id (str): The UUID of the machine to update.
+            avg_rating (float): The average rating to set for the product.
+        """
+        cursor = self.connection.cursor()
+
+        # Atualiza a média de avaliação do produto no banco de dados
+        cursor.execute("""
+            UPDATE vending_machines
+            SET average_rating = ?
+            WHERE id = ?
+        """, (avg_rating, machine_id))
+
+        # Commit das alterações no banco de dados
         self.connection.commit()
 
 

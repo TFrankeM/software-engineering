@@ -40,7 +40,7 @@ def seller_actions(seller_id, db_pool):
         SELECT name FROM sqlite_master 
         WHERE type='table' AND name IN ('vending_machines', 'products');
     """)
-    
+
     existing_tables = [table[0] for table in cursor.fetchall()]
     
     if 'vending_machines' not in existing_tables:

@@ -113,6 +113,42 @@ class ReviewDAO:
             return reviews
 
 
+    def calculate_average_rating_for_product(self, product_id):
+        """
+        Calculate the average rating for a given product.
+
+        Parameters:
+            product_id (str): The UUID of the product to calculate the average rating for.
+
+        Returns:
+            float: The average rating of the product.
+        """
+        cursor = self.connection.cursor()
+        cursor.execute('SELECT AVG(rating) FROM reviews WHERE product_id = ?', (product_id,))
+        avg_rating = cursor.fetchone()[0]
+
+        # Se não houver avaliações, retornar 0
+        return avg_rating if avg_rating is not None else 0.0
+
+
+    def calculate_average_rating_for_machine(self, machine_id):
+        """
+        Calculate the average rating for a given vending machine.
+
+        Parameters:
+            machine_id (str): The ID of the vending machine to calculate the average rating for.
+
+        Returns:
+            float: The average rating of the vending machine.
+        """
+        cursor = self.connection.cursor()
+        cursor.execute('SELECT AVG(rating) FROM reviews WHERE machine_id = ?', (machine_id,))
+        avg_rating = cursor.fetchone()[0]
+
+        # Se não houver avaliações, retornar 0
+        return avg_rating if avg_rating is not None else 0.0
+    
+
     def delete_review(self, review_id):
         """
             Delete a review from the database by its UUID.

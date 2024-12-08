@@ -33,6 +33,7 @@ class ProductDAO:
                 price REAL NOT NULL,
                 quantity INTEGER NOT NULL,
                 machine_id TEXT NOT NULL,  -- Foreign key referencing the vending machine
+                average_rating REAL DEFAULT 0,
                 FOREIGN KEY (machine_id) REFERENCES vending_machines(id)
             );
         """)
@@ -126,7 +127,8 @@ class ProductDAO:
                 name=row[1],            # Name of the product
                 description=row[2],     # Description of the product
                 price=row[3],           # Price of the product
-                quantity=row[4]         # Quantity of the product
+                quantity=row[4],        # Quantity of the product
+                average_rating=row[6]
             )
             product.id = row[0]           # Set the product ID
             product.machine_id = row[5]   # Set the machine ID
@@ -151,7 +153,7 @@ class ProductDAO:
 
         products = []
         for row in rows:
-            product = Product(name=row[1], description=row[2], price=row[3], quantity=row[4], machine_id=row[5])
+            product = Product(name=row[1], description=row[2], price=row[3], quantity=row[4], machine_id=row[5], average_rating=row[6])
             product.id = row[0]
             products.append(product)
         
@@ -175,6 +177,27 @@ class ProductDAO:
         self.connection.commit()
 
 
+    def update_product_average_rating(self, product_id, avg_rating):
+        """
+        Update the average rating of a product based on a provided rating.
+
+        Parameters:
+            product_id (str): The UUID of the product to update.
+            avg_rating (float): The average rating to set for the product.
+        """
+        cursor = self.connection.cursor()
+
+        # Atualiza a média de avaliação do produto no banco de dados
+        cursor.execute("""
+            UPDATE products
+            SET average_rating = ?
+            WHERE id = ?
+        """, (avg_rating, product_id))
+
+        # Commit das alterações no banco de dados
+        self.connection.commit()
+
+
     def delete_product(self, product_id):
         """
             Delete a product from the database by its UUID.
@@ -185,6 +208,7 @@ class ProductDAO:
         cursor = self.connection.cursor()
         cursor.execute("DELETE FROM products WHERE id = ?", (product_id,))
         self.connection.commit()
+
 
     def delete_products_by_vending_machine_id(self, vending_machine_id):
         """

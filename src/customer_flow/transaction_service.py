@@ -59,6 +59,7 @@ def view_and_buy_vending_machine_products(customer_id, vending_machine, db_conne
         "Nome": [],
         "Preço": [],
         "Quantidade": [],
+        "Avaliação Média": [],
         "Descrição": [],
         "Favorito": []
     }
@@ -71,6 +72,7 @@ def view_and_buy_vending_machine_products(customer_id, vending_machine, db_conne
         products_data["Nome"].append(product.name)
         products_data["Preço"].append(f"R$ {product.price:.2f}")
         products_data["Quantidade"].append(product.quantity)
+        products_data["Avaliação Média"].append(product.average_rating)
         products_data["Descrição"].append(product.description)
         products_data["Favorito"].append("Sim" if is_favorite else "Não")  #Sim se é favorito, Não cc
     
@@ -90,7 +92,7 @@ def view_and_buy_vending_machine_products(customer_id, vending_machine, db_conne
 
         # Exibir o valor total da compra
         total_value = sum(products[product_id - 1].price * quantity for product_id, quantity in shopping_cart.items())
-        print("~"*len(title))
+        print("~"*len(title)*2)
         print(f"\nValor total da compra: R$ {total_value:.2f}")
         
         # Exibir o carrinho
@@ -101,14 +103,14 @@ def view_and_buy_vending_machine_products(customer_id, vending_machine, db_conne
                 print(f"{product.name} - Quantidade: {quantity} - Preço unitário: R$ {product.price:.2f}")
         
         # Ask the user for input
-        print("~"*len(title))
+        print("~"*len(title)*2)
         print(">>>> Opções <<<<")
         print("\n- Digite o número do produto seguido pela quantidade desejada: '<opção>x<quantidade>' para adicionar ao carrinho")
         print("Por exemplo, para escolher duas unidades da opção 3, seria: '3x2'\n")
         print("- Digite '1000' para finalizar a compra e seguir para pagamento")
         print("- Digite o índice do produto para adicioná-lo ou removê-lo da lista de favoritos")
         print("\n- Digite 0 para cancelar e voltar ao menu anterior.")
-        print("~"*len(title))
+        print("~"*len(title)*2)
         
         choice = input("\nO que você deseja fazer? ")
 

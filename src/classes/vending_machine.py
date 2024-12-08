@@ -7,7 +7,7 @@ class VendingMachine:
     Class to represent a vending machine.
     """
     
-    def __init__(self, name, location, owner_id, products=None, reviews=None):
+    def __init__(self, name, location, owner_id, products=None, reviews=None, average_rating=None):
         """
         Initialize the vending machine with a name, location, owner (seller), and optional lists of products and reviews.
 
@@ -24,6 +24,7 @@ class VendingMachine:
         self.owner_id = owner_id  # New owner attribute
         self.products = products if products is not None else []
         self.reviews = reviews if reviews is not None else []
+        self.average_rating = average_rating
 
 
     def __str__(self):
