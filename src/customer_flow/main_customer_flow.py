@@ -16,6 +16,9 @@ from product_dao import ProductDAO
 from problem_report_dao import ProblemReportDAO
 from review_dao import ReviewDAO
 from notification_dao import NotificationDAO
+from favorite_product_machine_dao import FavoriteMachineDAO, FavoriteProductDAO
+from transaction_dao import TransactionDAO
+from item_transaction_dao import ItemTransactionDAO
 
 def clear_console():
     """
@@ -36,12 +39,17 @@ def customer_actions(customer_id, db_pool):
     product_dao = ProductDAO(db_connection)
     vending_machine_dao = VendingMachineDAO(db_connection)
     notification_dao = NotificationDAO(db_connection)
+    favorite_machines_dao = FavoriteMachineDAO(db_connection)
+    favorite_products_dao = FavoriteProductDAO(db_connection)
+    transactions_dao = TransactionDAO(db_connection)
+    item_transactions_dao = ItemTransactionDAO(db_connection)
 
     # Check if the 'problem_report' and 'reviews' tables exist and create them if necessary
     cursor = db_connection.cursor()
     cursor.execute("""
         SELECT name FROM sqlite_master 
-        WHERE type='table' AND name IN ('problem_report', 'reviews', 'products', 'vending_machines', 'notification');
+        WHERE type='table' AND name IN ('problem_report', 'reviews', 'products', 'vending_machines', 
+                   'notification', 'favorite_machines', 'favorite_products', 'transactions', 'item_transactions');
     """)
     
     existing_tables = [table[0] for table in cursor.fetchall()]
@@ -65,7 +73,22 @@ def customer_actions(customer_id, db_pool):
     if 'notification' not in existing_tables:
         print("Creating the notification table as it does not exist.")
         notification_dao.create_table()
-        input()
+    
+    if 'favorite_machines' not in existing_tables:
+        print("Creating the favorite_machines table as it does not exist.")
+        favorite_machines_dao.create_table()
+
+    if 'favorite_products' not in existing_tables:
+        print("Creating the favorite_products table as it does not exist.")
+        favorite_products_dao.create_table()
+
+    if 'transactions' not in existing_tables:
+        print("Creating the transactions table as it does not exist.")
+        transactions_dao.create_table()
+    
+    if 'item_transactions' not in existing_tables:
+        print("Creating the item_transactions table as it does not exist.")
+        item_transactions_dao.create_table()
 
     while True:
         clear_console()
