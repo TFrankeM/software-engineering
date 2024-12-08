@@ -10,6 +10,7 @@ from create_customer_account import create_customer_account
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "administrator_flow")))
 from main_administrator_flow import administrator_actions
+from create_administrator_account import create_administrator_account
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "seller_flow")))
 from main_seller_flow import seller_actions
@@ -37,7 +38,9 @@ def login_user(user_type, db_connection):
         int: User ID if login is successful, None otherwise.
     """
     clear_console()
-    if user_type == "Customer":
+    if user_type == "Administrator":
+        name = "Admin"
+    elif user_type == "Customer":
         name = "Cliente"
     elif user_type == "Seller":
         name = "Vendedor"
@@ -49,7 +52,12 @@ def login_user(user_type, db_connection):
 
     try:
         cursor = db_connection.cursor()
-        table = 'customers' if user_type == 'Customer' else 'sellers'
+        if user_type == 'Customer':
+            table = 'customers' 
+        elif user_type == 'Seller':
+            table = 'customers' 
+        else:
+            table = 'administrators'
         query = f"SELECT id, password FROM {table} WHERE name = ?"
         cursor.execute(query, (username,))
         result = cursor.fetchone()
@@ -125,10 +133,9 @@ def fazer_login(db_connection_pool):
             break
 
         elif login_type == "1":
-            # db_connection = db_connection_pool.get_connection()         # Pega uma conexão do pool
-            # customer_id = login_user("Administrator", db_connection)
-            # db_connection_pool.release_connection(db_connection)        # Devolve a conexão ao pool
-            # IMPLEMENTE O LOGIN PRA ADMINISTRADOR
+            db_connection = db_connection_pool.get_connection()         # Pega uma conexão do pool
+            customer_id = login_user("Administrator", db_connection)
+            db_connection_pool.release_connection(db_connection)        # Devolve a conexão ao pool
             administrator_actions(db_connection_pool)  # Chama as ações do administrador
 
         elif login_type == "2":
@@ -162,17 +169,21 @@ def criar_conta(db_connection):
         print("~"*10, "Criar conta", "~"*10, "\n")
 
         print("Selecione o tipo de conta:")
-        print("1. Cliente")
-        print("2. Vendedor")
+        print("1. Administrador")
+        print("2. Cliente")
+        print("3. Vendedor")
         print("0. Voltar")
         opcao = input("\nDigite o número correspondente: ")
 
         if opcao == "0":
             return
         elif opcao == "1":
-            create_customer_account(db_connection)
+            create_administrator_account(db_connection)
             break
         elif opcao == "2":
+            create_customer_account(db_connection)
+            break
+        elif opcao == "3":
             create_seller_account(db_connection)
             break
         else:
