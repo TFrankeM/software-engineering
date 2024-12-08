@@ -29,7 +29,7 @@ class TransactionDAO:
                     seller_id TEXT NOT NULL,
                     vending_machine_id TEXT NOT NULL,
                     total_amount REAL NOT NULL,
-                    transaction_date TEXT NOT NULL
+                    transaction_date TEXT NOT NULL,
                 );
             """)
             self.connection.commit()
@@ -50,3 +50,6 @@ class TransactionDAO:
             VALUES (?, ?, ?, ?, ?, ?)
         """, (str(transaction.id), transaction.user_id, transaction.seller_id, transaction.vending_machine_id, transaction.total_amount, transaction.transaction_date))
         self.connection.commit()
+        
+        # Obter o ID da transação recém-criada
+        return str(transaction.id)

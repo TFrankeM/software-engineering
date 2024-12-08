@@ -7,6 +7,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../d
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../classes")))
 
 from transaction import Transaction
+from item_transaction import ItemTransaction
 
 from vending_machine_dao import VendingMachineDAO
 from review_dao import ReviewDAO
@@ -14,6 +15,7 @@ from product_dao import ProductDAO
 from customer_dao import CustomerDAO
 from seller_dao import SellerDAO
 from transaction_dao import TransactionDAO
+from item_transaction_dao import ItemTransactionDAO
 
 def clear_console():
     """
@@ -38,6 +40,7 @@ def view_vending_machine_products(customer_id, vending_machine, db_connection):
     customer_dao = CustomerDAO(db_connection)
     seller_dao = SellerDAO(db_connection)  # Accessing the Seller table
     transaction_dao = TransactionDAO(db_connection)
+    item_transaction_dao = ItemTransactionDAO(db_connection)
     
     # Get products for the vending machine
     products = product_dao.get_products_by_vending_machine_id(vending_machine.id)
@@ -137,12 +140,25 @@ def view_vending_machine_products(customer_id, vending_machine, db_connection):
                 new_quantity = product.quantity - quantity
                 product_dao.update_product_quantity(product.id, new_quantity)
 
-            # Criar o objeto da transação
-            transaction_dao.create_table()
+            #criar a transação
             transaction = Transaction(user_id=customer_id, seller_id = vending_machine.owner_id, vending_machine_id = vending_machine.id, total_amount=total_value)
 
-            # Inserir a transação no banco de dados
-            transaction_dao.insert_transaction(transaction)
+            # Inserir a transação no banco de dados e obter o id da nova transação para catalogar todos os itens da transação
+            print("pegando id da transação")
+            transaction_ID = transaction_dao.insert_transaction(transaction)
+            print(f"concluido pegamos o id: {transaction_ID}")
+            
+            # Adicionar itens da transação
+            for product_id, quantity in shopping_cart.items():
+                product = products[product_id - 1]
+                item_transaction = ItemTransaction(
+                    transaction_id=transaction_ID,  # Usar o ID da transação recém-criada
+                    product_id=product.id,
+                    quantity=quantity,
+                    price=product.price
+                )
+                
+                item_transaction_dao.insert_item_transaction(item_transaction)
             
             print(f"\nCompra finalizada com sucesso! Total pago: R$ {total_value:.2f}")
             input("\n==> Pressione Enter para voltar ao menu.")
