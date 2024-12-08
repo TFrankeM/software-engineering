@@ -31,6 +31,9 @@ def view_vending_machine_details(vending_machine, db_connection, product_dao):
             print(f"\nDetalhes da Máquina: {vending_machine.name}")
             print(f"Localização: {vending_machine.location}\n")
 
+            print(f"Avaliação Média: {vending_machine.average_rating}\n")
+
+
             # Retrieve all products for this vending machine
             products = product_dao.get_products_by_vending_machine_id(vending_machine.id)
 
@@ -43,7 +46,8 @@ def view_vending_machine_details(vending_machine, db_connection, product_dao):
                     "Produto": [product.name for product in products],
                     "Quantidade": [product.quantity for product in products],
                     "Preço": [product.price for product in products],
-                    "Descrição": [product.description for product in products]
+                    "Descrição": [product.description for product in products],
+                    "Avaliação Média": [product.average_rating for product in products]
                 }
                 df = pd.DataFrame(product_data)
                 df.index = df.index + 1 #Set the index to start at 1

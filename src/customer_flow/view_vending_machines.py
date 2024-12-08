@@ -108,6 +108,8 @@ def vending_machine_details(customer_id, vending_machine, db_connection):
 
         print(f"\nNome: {vending_machine.name}")
         print(f"Localização: {vending_machine.location}\n")
+        print(f"Avaliação média: {vending_machine.average_rating}\n")
+
         
         # Se a máquina estiver nos favoritos, mostrar a opção para removê-la, caso contrário, mostrar para adicionar
         if favorite:
@@ -187,13 +189,15 @@ def view_vending_machines_for_customer(customer_id, db_connection):
     vending_machines_data = {
         "Index": [],
         "Nome": [],
-        "Localização": []
+        "Localização": [],
+        "Avaliação Média": []
     }
     
     for index, vm in enumerate(vending_machines, start=1):
         vending_machines_data["Index"].append(index)
         vending_machines_data["Nome"].append(vm.name)
         vending_machines_data["Localização"].append(vm.location)
+        vending_machines_data["Avaliação Média"].append(vm.average_rating)
 
     df = pd.DataFrame(vending_machines_data)
     

@@ -226,7 +226,20 @@ def create_review(customer_id, db_connection, review_dao, vending_machine_dao, p
         )
         # Insere a avaliação no banco de dados
         review_dao.insert_review(review)
-        print("\n==> Sua avaliação foi registrada com sucesso!")
+
+        # Atualizar a avaliação média do produto ou da máquina
+        if review_type == "product":
+            # Calcula a média de avaliações do produto
+            avg_rating = review_dao.calculate_average_rating_for_product(selected_item_id)
+            # Atualiza a avaliação média do produto no banco de dados
+            product_dao.update_product_average_rating(selected_item_id, avg_rating)
+        elif review_type == "machine":
+            # Calcula a média de avaliações da máquina
+            avg_rating = review_dao.calculate_average_rating_for_machine(selected_item_id)
+            # Atualiza a avaliação média da máquina no banco de dados
+            vending_machine_dao.update_machine_average_rating(selected_item_id, avg_rating)
+
+        print("\n==> Sua avaliação foi registrada com sucesso!") 
 
         input("\nPressione qualquer tecla para voltar.")
         return
