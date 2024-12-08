@@ -59,12 +59,34 @@ class FavoriteProductDAO(Subject):
         self.connection.commit()
 
 
+    def is_favorite_product(self, user_id, product_id):
+        """
+        Checks if a product is in a user's favorites list.
+
+        Parameters:
+            user_id (str): The user ID.
+            product_id (str): The product ID.
+
+        Returns:
+            bool: Returns True if the product is in the favorites list, otherwise False.
+        """
+        cursor = self.connection.cursor()
+        cursor.execute("""
+            SELECT 1 FROM favorite_products WHERE user_id = ? AND product_id = ? LIMIT 1
+        """, (user_id, product_id))
+        
+        result = cursor.fetchone()
+
+        return result is not None
+    
+
     def get_observers(self, product_id):
         cursor = self.connection.cursor()
         cursor.execute("""
             SELECT user_id FROM favorite_products WHERE product_id = ?
         """, (product_id,))
         observers = cursor.fetchall()
+        
         return [observer[0] for observer in observers]
 
 
@@ -120,6 +142,27 @@ class FavoriteMachineDAO(Subject):
         """, (user_id, machine_id))
         self.connection.commit()
 
+
+    def is_favorite_machine(self, user_id, machine_id):
+        """
+        Checks if a vending machine is in a user's favorites list.
+
+        Parameters:
+            user_id (str): The user ID.
+            machine_id (str): The ID of the vending machine.
+
+        Returns:
+            bool: Returns True if the machine is in the favorites, otherwise False.
+        """
+        cursor = self.connection.cursor()
+        cursor.execute("""
+            SELECT 1 FROM favorite_machines WHERE user_id = ? AND machine_id = ? LIMIT 1
+        """, (user_id, machine_id))
+        
+        result = cursor.fetchone()
+
+        return result is not None
+    
 
     def get_observers(self, machine_id):
         cursor = self.connection.cursor()
